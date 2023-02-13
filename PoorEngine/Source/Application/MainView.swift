@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct MainView: View {
+    @State var options = Options()
     var body: some View {
         HStack{
-            SceneView().frame(width: 400, height: 400).border(Color.black, width: 2)
+            SceneView(options: options).frame(width: 400, height: 400).border(Color.black, width: 2)
             InspectorView().frame(width: 200, height: 400).border(Color.black, width: 2)
         }
         .padding()
