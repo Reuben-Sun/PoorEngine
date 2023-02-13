@@ -43,6 +43,11 @@
 		2360157E299AA26500926ADB /* sun_sphere.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2360157D299AA26500926ADB /* sun_sphere.obj */; };
 		23601580299AA37C00926ADB /* icosphere.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2360157F299AA37C00926ADB /* icosphere.obj */; };
 		23601582299AA55400926ADB /* Lit.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23601581299AA55400926ADB /* Lit.metal */; };
+		23601588299AA65B00926ADB /* sun_sphere.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23601583299AA65B00926ADB /* sun_sphere.mtl */; };
+		23601589299AA65B00926ADB /* icosphere.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23601584299AA65B00926ADB /* icosphere.mtl */; };
+		2360158A299AA65B00926ADB /* large_plane.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23601585299AA65B00926ADB /* large_plane.mtl */; };
+		2360158B299AA65B00926ADB /* train.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23601586299AA65B00926ADB /* train.mtl */; };
+		2360158C299AA65B00926ADB /* treefir.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23601587299AA65B00926ADB /* treefir.mtl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +93,11 @@
 		2360157D299AA26500926ADB /* sun_sphere.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sun_sphere.obj; sourceTree = "<group>"; };
 		2360157F299AA37C00926ADB /* icosphere.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = icosphere.obj; sourceTree = "<group>"; };
 		23601581299AA55400926ADB /* Lit.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Lit.metal; sourceTree = "<group>"; };
+		23601583299AA65B00926ADB /* sun_sphere.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sun_sphere.mtl; sourceTree = "<group>"; };
+		23601584299AA65B00926ADB /* icosphere.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = icosphere.mtl; sourceTree = "<group>"; };
+		23601585299AA65B00926ADB /* large_plane.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = large_plane.mtl; sourceTree = "<group>"; };
+		23601586299AA65B00926ADB /* train.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.mtl; sourceTree = "<group>"; };
+		23601587299AA65B00926ADB /* treefir.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = treefir.mtl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +310,11 @@
 		23601576299AA0FB00926ADB /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				23601584299AA65B00926ADB /* icosphere.mtl */,
+				23601585299AA65B00926ADB /* large_plane.mtl */,
+				23601583299AA65B00926ADB /* sun_sphere.mtl */,
+				23601586299AA65B00926ADB /* train.mtl */,
+				23601587299AA65B00926ADB /* treefir.mtl */,
 				2360157F299AA37C00926ADB /* icosphere.obj */,
 				2360157D299AA26500926ADB /* sun_sphere.obj */,
 				2360157B299AA25800926ADB /* large_plane.obj */,
@@ -368,8 +383,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				23601580299AA37C00926ADB /* icosphere.obj in Resources */,
+				2360158A299AA65B00926ADB /* large_plane.mtl in Resources */,
+				23601588299AA65B00926ADB /* sun_sphere.mtl in Resources */,
+				23601589299AA65B00926ADB /* icosphere.mtl in Resources */,
 				2360157A299AA18C00926ADB /* treefir.obj in Resources */,
 				2360157E299AA26500926ADB /* sun_sphere.obj in Resources */,
+				2360158C299AA65B00926ADB /* treefir.mtl in Resources */,
+				2360158B299AA65B00926ADB /* train.mtl in Resources */,
 				23601578299AA17700926ADB /* train.obj in Resources */,
 				2360157C299AA25800926ADB /* large_plane.obj in Resources */,
 				23601520299A80A400926ADB /* Assets.xcassets in Resources */,
