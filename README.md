@@ -3,7 +3,8 @@
 
 ### 开发清单
 
-- [ ] TBDR
+- [x] TBDR
+- [ ] usd场景管理
 - [ ] Inspector Menu
 - [ ] 模型切换
 - [ ] Debug View
