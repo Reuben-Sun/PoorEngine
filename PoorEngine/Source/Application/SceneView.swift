@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  SceneView.swift
 //  PoorEngine
 //
 //  Created by 孙政 on 2023/2/13.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct SceneView: View {
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -19,8 +19,9 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct SceneView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        SceneView()
     }
 }
+
