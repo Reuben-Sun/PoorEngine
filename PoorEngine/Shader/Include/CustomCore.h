@@ -1,0 +1,43 @@
+//
+//  CustomCore.h
+//  PoorEngine
+//
+//  Created by 孙政 on 2023/2/14.
+//
+
+#ifndef CustomCore_h
+#define CustomCore_h
+
+#include <metal_stdlib>
+using namespace metal;
+
+#import "Common.h"
+
+struct VertexIn {
+    float4 position [[attribute(Position)]];
+    float3 normal [[attribute(Normal)]];
+    float2 uv [[attribute(UV)]];
+    float3 color [[attribute(Color)]];
+    float3 tangent [[attribute(Tangent)]];
+    float3 bitangent [[attribute(Bitangent)]];
+};
+
+struct VertexOut {
+    float4 position [[position]];
+    float3 normal;
+    float2 uv;
+    float3 color;
+    float3 positionWS;
+    float3 normalWS;
+    float3 tangentWS;
+    float3 bitangentWS;
+    float4 shadowPosition;
+};
+
+struct GBufferOut {
+    float4 albedo [[color(RenderTargetAlbedo)]];
+    float4 normal [[color(RenderTargetNormal)]];
+    float4 position [[color(RenderTargetPosition)]];
+};
+
+#endif /* CustomCore_h */
