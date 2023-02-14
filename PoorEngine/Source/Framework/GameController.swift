@@ -10,6 +10,7 @@ import MetalKit
 class GameController: NSObject {
     var scene: GameScene
     var renderer: Renderer
+    var cullingResult: CullingResult
     var options = Options()
     var fps: Double = 0
     var deltaTime: Double = 0
@@ -18,6 +19,7 @@ class GameController: NSObject {
     init(metalView: MTKView, options: Options) {
         renderer = Renderer(metalView: metalView, options: options)
         scene = GameScene()
+        cullingResult = CullingResult()
         super.init()
         self.options = options
         metalView.delegate = self
@@ -37,7 +39,8 @@ extension GameController: MTKViewDelegate {
         let deltaTime = (currentTime - lastTime)
         lastTime = currentTime
         scene.update(deltaTime: Float(deltaTime))
-        renderer.draw(scene: scene, in: view)
+        cullingResult.cull(scene: scene)
+        renderer.draw(cullingResult: cullingResult, in: view)
     }
 }
 

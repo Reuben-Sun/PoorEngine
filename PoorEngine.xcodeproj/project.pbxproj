@@ -49,6 +49,9 @@
 		2360158B299AA65B00926ADB /* train.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23601586299AA65B00926ADB /* train.mtl */; };
 		2360158C299AA65B00926ADB /* treefir.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23601587299AA65B00926ADB /* treefir.mtl */; };
 		2360158E299B1A3A00926ADB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2360158D299B1A3A00926ADB /* ContentView.swift */; };
+		23601590299B33E500926ADB /* RHI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2360158F299B33E500926ADB /* RHI.swift */; };
+		23601596299B4D7500926ADB /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23601595299B4D7500926ADB /* GameObject.swift */; };
+		2360159A299B570200926ADB /* CullingResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23601599299B570200926ADB /* CullingResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +103,9 @@
 		23601586299AA65B00926ADB /* train.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.mtl; sourceTree = "<group>"; };
 		23601587299AA65B00926ADB /* treefir.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = treefir.mtl; sourceTree = "<group>"; };
 		2360158D299B1A3A00926ADB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2360158F299B33E500926ADB /* RHI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHI.swift; sourceTree = "<group>"; };
+		23601595299B4D7500926ADB /* GameObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
+		23601599299B570200926ADB /* CullingResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CullingResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +207,7 @@
 		23601534299A890D00926ADB /* RHI */ = {
 			isa = PBXGroup;
 			children = (
+				2360158F299B33E500926ADB /* RHI.swift */,
 			);
 			path = RHI;
 			sourceTree = "<group>";
@@ -218,7 +225,6 @@
 		23601536299A895B00926ADB /* Input */ = {
 			isa = PBXGroup;
 			children = (
-				23601551299A95E300926ADB /* GameController.swift */,
 				23601553299A960600926ADB /* InputController.swift */,
 				23601555299A962400926ADB /* Movement.swift */,
 			);
@@ -241,6 +247,8 @@
 				23601539299A89C100926ADB /* Scene */,
 				23601545299A942700926ADB /* Transform.swift */,
 				23601549299A94BE00926ADB /* TextureController.swift */,
+				23601551299A95E300926ADB /* GameController.swift */,
+				23601599299B570200926ADB /* CullingResult.swift */,
 			);
 			path = Framework;
 			sourceTree = "<group>";
@@ -259,6 +267,7 @@
 				23601547299A946700926ADB /* Submesh.swift */,
 				2360154B299A94E800926ADB /* Mesh.swift */,
 				2360154D299A94FC00926ADB /* Model.swift */,
+				23601595299B4D7500926ADB /* GameObject.swift */,
 			);
 			path = Object;
 			sourceTree = "<group>";
@@ -413,9 +422,12 @@
 				23601573299A9C0D00926ADB /* Shadow.metal in Sources */,
 				2360151E299A80A300926ADB /* MainView.swift in Sources */,
 				23601568299A99E900926ADB /* Options.swift in Sources */,
+				23601590299B33E500926ADB /* RHI.swift in Sources */,
 				23601562299A974900926ADB /* ShadowCamera.swift in Sources */,
 				23601554299A960600926ADB /* InputController.swift in Sources */,
 				2360154A299A94BE00926ADB /* TextureController.swift in Sources */,
+				23601596299B4D7500926ADB /* GameObject.swift in Sources */,
+				2360159A299B570200926ADB /* CullingResult.swift in Sources */,
 				23601540299A90FA00926ADB /* TiledDeferredRenderPass.swift in Sources */,
 				2360158E299B1A3A00926ADB /* ContentView.swift in Sources */,
 				2360156A299A9AF000926ADB /* ShadowRenderPass.swift in Sources */,

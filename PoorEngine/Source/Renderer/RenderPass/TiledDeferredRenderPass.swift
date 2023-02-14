@@ -86,7 +86,7 @@ struct TiledDeferredRenderPass: RenderPass{
             storageMode: .memoryless)
     }
 
-    func draw(commandBuffer: MTLCommandBuffer, scene: GameScene, uniforms: Uniforms, params: Params) {
+    func draw(commandBuffer: MTLCommandBuffer, cullingResult: CullingResult, uniforms: Uniforms, params: Params) {
         guard let viewCurrentRenderPassDescriptor = descriptor else {
             return
         }
@@ -123,13 +123,13 @@ struct TiledDeferredRenderPass: RenderPass{
 
         drawGBufferRenderPass(
             renderEncoder: renderEncoder,
-            scene: scene,
+            cullingResult: cullingResult,
             uniforms: uniforms,
             params: params)
 
         drawLightingRenderPass(
             renderEncoder: renderEncoder,
-            scene: scene,
+            cullingResult: cullingResult,
             uniforms: uniforms,
             params: params)
         renderEncoder.endEncoding()
@@ -138,7 +138,7 @@ struct TiledDeferredRenderPass: RenderPass{
     // MARK: - G-buffer pass support
     func drawGBufferRenderPass(
         renderEncoder: MTLRenderCommandEncoder,
-        scene: GameScene,
+        cullingResult: CullingResult,
         uniforms: Uniforms,
         params: Params
     ) {
@@ -147,7 +147,7 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder.setRenderPipelineState(gBufferPSO)
         renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
 
-        for model in scene.models {
+        for model in cullingResult.models {
             model.render(
                 encoder: renderEncoder,
                 uniforms: uniforms,
@@ -158,7 +158,7 @@ struct TiledDeferredRenderPass: RenderPass{
     // MARK: - Lighting pass support
     func drawLightingRenderPass(
         renderEncoder: MTLRenderCommandEncoder,
-        scene: GameScene,
+        cullingResult: CullingResult,
         uniforms: Uniforms,
         params: Params
     ) {
@@ -172,29 +172,29 @@ struct TiledDeferredRenderPass: RenderPass{
 
         drawSunLight(
             renderEncoder: renderEncoder,
-            scene: scene,
+            cullingResult: cullingResult,
             params: params)
         drawPointLight(
             renderEncoder: renderEncoder,
-            scene: scene,
+            cullingResult: cullingResult,
             params: params)
     }
 
     func drawSunLight(
         renderEncoder: MTLRenderCommandEncoder,
-        scene: GameScene,
+        cullingResult: CullingResult,
         params: Params
     ) {
         renderEncoder.pushDebugGroup("Sun Light")
         renderEncoder.setRenderPipelineState(sunLightPSO)
         var params = params
-        params.lightCount = UInt32(scene.sceneLights.dirLights.count)
+        params.lightCount = UInt32(cullingResult.sceneLights.dirLights.count)
         renderEncoder.setFragmentBytes(
             &params,
             length: MemoryLayout<Params>.stride,
             index: ParamsBuffer.index)
         renderEncoder.setFragmentBuffer(
-            scene.sceneLights.dirBuffer,
+            cullingResult.sceneLights.dirBuffer,
             offset: 0,
             index: LightBuffer.index)
         renderEncoder.drawPrimitives(
@@ -206,17 +206,17 @@ struct TiledDeferredRenderPass: RenderPass{
 
     func drawPointLight(
         renderEncoder: MTLRenderCommandEncoder,
-        scene: GameScene,
+        cullingResult: CullingResult,
         params: Params
     ) {
         renderEncoder.pushDebugGroup("Point lights")
         renderEncoder.setRenderPipelineState(pointLightPSO)
         renderEncoder.setVertexBuffer(
-            scene.sceneLights.pointBuffer,
+            cullingResult.sceneLights.pointBuffer,
             offset: 0,
             index: LightBuffer.index)
         renderEncoder.setFragmentBuffer(
-            scene.sceneLights.pointBuffer,
+            cullingResult.sceneLights.pointBuffer,
             offset: 0,
             index: LightBuffer.index)
         guard let mesh = icosphere.meshes.first,
@@ -233,7 +233,7 @@ struct TiledDeferredRenderPass: RenderPass{
             indexType: submesh.indexType,
             indexBuffer: submesh.indexBuffer,
             indexBufferOffset: submesh.indexBufferOffset,
-            instanceCount: scene.sceneLights.pointLights.count)
+            instanceCount: cullingResult.sceneLights.pointLights.count)
         renderEncoder.popDebugGroup()
     }
 

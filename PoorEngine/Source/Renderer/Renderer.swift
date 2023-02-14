@@ -69,19 +69,19 @@ extension Renderer {
         tiledDeferredRenderPass?.resize(view: view, size: size)
     }
     
-    func draw(scene: GameScene, in view: MTKView) {
+    func draw(cullingResult: CullingResult, in view: MTKView) {
         guard let commandBuffer = Renderer.commandQueue.makeCommandBuffer(),
               let descriptor = view.currentRenderPassDescriptor else {
             return
         }
         
-        updateUniforms(scene: scene)
-        updateParams(scene: scene)
+        updateUniforms(cullingResult: cullingResult)
+        updateParams(cullingResult: cullingResult)
         
         
         //阴影投射
         shadowRenderPass.draw(commandBuffer: commandBuffer,
-                              scene: scene,
+                              cullingResult: cullingResult,
                               uniforms: uniforms,
                               params: params)
         //TBDR
@@ -89,7 +89,7 @@ extension Renderer {
         tiledDeferredRenderPass?.descriptor = descriptor
         tiledDeferredRenderPass?.draw(
             commandBuffer: commandBuffer,
-            scene: scene,
+            cullingResult: cullingResult,
             uniforms: uniforms,
             params: params)
         
@@ -100,21 +100,21 @@ extension Renderer {
         commandBuffer.commit()
     }
     
-    func updateUniforms(scene: GameScene) {
-        uniforms.viewMatrix = scene.camera.viewMatrix
-        uniforms.projectionMatrix = scene.camera.projectionMatrix
+    func updateUniforms(cullingResult: CullingResult) {
+        uniforms.viewMatrix = cullingResult.camera.viewMatrix
+        uniforms.projectionMatrix = cullingResult.camera.projectionMatrix
         
         shadowCamera.viewSize = 16
         shadowCamera.far = 16
-        let sun = scene.sceneLights.lights[0]
-        shadowCamera = OrthographicCamera.createShadowCamera(using: scene.camera, lightPosition: sun.position)
+        let sun = cullingResult.sceneLights.lights[0]
+        shadowCamera = OrthographicCamera.createShadowCamera(using: cullingResult.camera, lightPosition: sun.position)
         uniforms.shadowProjectionMatrix = shadowCamera.projectionMatrix
         uniforms.shadowViewMatrix = float4x4(eye: shadowCamera.position, center: shadowCamera.center, up: [0, 1, 0])
     }
     
-    func updateParams(scene: GameScene) {
-        params.lightCount = UInt32(scene.sceneLights.lights.count)
-        params.cameraPosition = scene.camera.position
+    func updateParams(cullingResult: CullingResult) {
+        params.lightCount = UInt32(cullingResult.sceneLights.lights.count)
+        params.cameraPosition = cullingResult.camera.position
     }
 }
 

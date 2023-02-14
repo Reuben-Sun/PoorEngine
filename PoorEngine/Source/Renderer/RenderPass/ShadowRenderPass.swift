@@ -25,7 +25,7 @@ struct ShadowRenderPass: RenderPass {
     }
     
     func draw(commandBuffer: MTLCommandBuffer,
-              scene: GameScene,
+              cullingResult: CullingResult,
               uniforms: Uniforms,
               params: Params) {
         guard let descriptor = descriptor else { return }
@@ -39,7 +39,7 @@ struct ShadowRenderPass: RenderPass {
         renderEncoder.label = "Shadow Encoder"
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(pipelineState)
-        for model in scene.models {
+        for model in cullingResult.models {
             renderEncoder.pushDebugGroup(model.name)
             model.render(
                 encoder: renderEncoder,

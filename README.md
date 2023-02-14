@@ -5,8 +5,10 @@
 
 - [x] TBDR
 - [ ] usd场景管理
-- [ ] Inspector Menu
+- [ ] 更好的PBR
 - [ ] 模型切换
+- [ ] Inspector Menu
+- [ ] 管线配置
 - [ ] Debug View
 - [ ] Shadow map
 - [ ] SSSR
