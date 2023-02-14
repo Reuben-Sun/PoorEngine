@@ -17,9 +17,9 @@ class Model: Transformable {
     /// 模型加载
     /// - Parameters:
     ///   - name: 模型名称（含后缀）
-    init(name: String, objectId: UInt32 = 0) {
-        guard let assetURL = Bundle.main.url(forResource: name, withExtension: nil) else {
-            fatalError("Model: \(name) not found")
+    init(name: String, exten: String = "obj", objectId: UInt32 = 0) {
+        guard let assetURL = Bundle.main.url(forResource: name, withExtension: exten) else {
+            fatalError("Model: \(name+exten) not found")
         }
         self.objectId = objectId
         let allocator = MTKMeshBufferAllocator(device: RHI.device)

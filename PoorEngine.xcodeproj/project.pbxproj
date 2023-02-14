@@ -46,8 +46,8 @@
 		2360158E299B1A3A00926ADB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2360158D299B1A3A00926ADB /* ContentView.swift */; };
 		23601596299B4D7500926ADB /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23601595299B4D7500926ADB /* GameObject.swift */; };
 		2360159A299B570200926ADB /* CullingResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23601599299B570200926ADB /* CullingResult.swift */; };
-		236015A6299BBA1600926ADB /* shaderBall.obj in Resources */ = {isa = PBXBuildFile; fileRef = 236015A5299BBA1600926ADB /* shaderBall.obj */; };
 		236015A8299BBA9600926ADB /* shaderBall.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 236015A7299BBA9600926ADB /* shaderBall.mtl */; };
+		236015AC299BE57F00926ADB /* shaderBall.obj in Resources */ = {isa = PBXBuildFile; fileRef = 236015AB299BE57F00926ADB /* shaderBall.obj */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,8 +96,8 @@
 		2360158D299B1A3A00926ADB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		23601595299B4D7500926ADB /* GameObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		23601599299B570200926ADB /* CullingResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CullingResult.swift; sourceTree = "<group>"; };
-		236015A5299BBA1600926ADB /* shaderBall.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shaderBall.obj; sourceTree = "<group>"; };
 		236015A7299BBA9600926ADB /* shaderBall.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shaderBall.mtl; sourceTree = "<group>"; };
+		236015AB299BE57F00926ADB /* shaderBall.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shaderBall.obj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,7 +309,7 @@
 		23601576299AA0FB00926ADB /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				236015A5299BBA1600926ADB /* shaderBall.obj */,
+				236015AB299BE57F00926ADB /* shaderBall.obj */,
 				236015A7299BBA9600926ADB /* shaderBall.mtl */,
 				23601584299AA65B00926ADB /* icosphere.mtl */,
 				23601585299AA65B00926ADB /* large_plane.mtl */,
@@ -391,10 +391,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				23601580299AA37C00926ADB /* icosphere.obj in Resources */,
+				236015AC299BE57F00926ADB /* shaderBall.obj in Resources */,
 				2360158A299AA65B00926ADB /* large_plane.mtl in Resources */,
 				23601588299AA65B00926ADB /* sun_sphere.mtl in Resources */,
 				23601589299AA65B00926ADB /* icosphere.mtl in Resources */,
-				236015A6299BBA1600926ADB /* shaderBall.obj in Resources */,
 				2360157E299AA26500926ADB /* sun_sphere.obj in Resources */,
 				236015A8299BBA9600926ADB /* shaderBall.mtl in Resources */,
 				2360157C299AA25800926ADB /* large_plane.obj in Resources */,

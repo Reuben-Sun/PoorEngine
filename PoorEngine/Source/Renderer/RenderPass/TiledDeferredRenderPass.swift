@@ -10,7 +10,7 @@ import MetalKit
 struct TiledDeferredRenderPass: RenderPass{
     var label = "Tiled Deferred Render Pass"
     var descriptor: MTLRenderPassDescriptor?
-
+    
     var gBufferPSO: MTLRenderPipelineState
     var sunLightPSO: MTLRenderPipelineState
     var pointLightPSO: MTLRenderPipelineState
@@ -21,8 +21,8 @@ struct TiledDeferredRenderPass: RenderPass{
     var normalTexture: MTLTexture?
     var positionTexture: MTLTexture?
     var depthTexture: MTLTexture?
-    var icosphere = Model(name: "icosphere.obj")
-
+    var icosphere = Model(name: "icosphere")
+    
     init(view: MTKView) {
         gBufferPSO = PipelineStates.createGBufferPSO(
             colorPixelFormat: view.colorPixelFormat,
@@ -36,7 +36,7 @@ struct TiledDeferredRenderPass: RenderPass{
         depthStencilState = Self.buildDepthStencilState()
         lightingDepthStencilState = Self.buildLightingDepthStencilState()
     }
-
+    
     static func buildDepthStencilState() -> MTLDepthStencilState? {
         let descriptor = MTLDepthStencilDescriptor()
         descriptor.depthCompareFunction = .less
@@ -48,8 +48,8 @@ struct TiledDeferredRenderPass: RenderPass{
         frontFaceStencil.depthStencilPassOperation = .incrementClamp
         descriptor.frontFaceStencil = frontFaceStencil
         return RHI.device.makeDepthStencilState(descriptor: descriptor)
-      }
-
+    }
+    
     static func buildLightingDepthStencilState() -> MTLDepthStencilState? {
         let descriptor = MTLDepthStencilDescriptor()
         descriptor.isDepthWriteEnabled = false
@@ -61,7 +61,7 @@ struct TiledDeferredRenderPass: RenderPass{
         descriptor.frontFaceStencil = frontFaceStencil
         return RHI.device.makeDepthStencilState(descriptor: descriptor)
     }
-
+    
     mutating func resize(view: MTKView, size: CGSize) {
         //将贴图类型设为memoryless
         albedoTexture = Self.makeTexture(
@@ -85,12 +85,12 @@ struct TiledDeferredRenderPass: RenderPass{
             label: "Depth Texture",
             storageMode: .memoryless)
     }
-
+    
     func draw(commandBuffer: MTLCommandBuffer, cullingResult: CullingResult, uniforms: Uniforms, params: Params) {
         guard let viewCurrentRenderPassDescriptor = descriptor else {
             return
         }
-
+        
         // MARK: G-buffer pass
         let descriptor = viewCurrentRenderPassDescriptor
         let textures = [
@@ -110,23 +110,23 @@ struct TiledDeferredRenderPass: RenderPass{
         }
         descriptor.depthAttachment.texture = depthTexture
         descriptor.stencilAttachment.texture = depthTexture
-
+        
         // MARK: 很离谱，显式指定Tile大小后，带宽、GPU时间大幅提高
-//        descriptor.tileWidth = 32
-//        descriptor.tileHeight = 32
-//        descriptor.threadgroupMemoryLength = MemoryLayout<Light>.size * 8
-
+        //        descriptor.tileWidth = 32
+        //        descriptor.tileHeight = 32
+        //        descriptor.threadgroupMemoryLength = MemoryLayout<Light>.size * 8
+        
         guard let renderEncoder =
                 commandBuffer.makeRenderCommandEncoder(
                     descriptor: descriptor
                 ) else { return }
-
+        
         drawGBufferRenderPass(
             renderEncoder: renderEncoder,
             cullingResult: cullingResult,
             uniforms: uniforms,
             params: params)
-
+        
         drawLightingRenderPass(
             renderEncoder: renderEncoder,
             cullingResult: cullingResult,
@@ -134,7 +134,7 @@ struct TiledDeferredRenderPass: RenderPass{
             params: params)
         renderEncoder.endEncoding()
     }
-
+    
     // MARK: - G-buffer pass support
     func drawGBufferRenderPass(
         renderEncoder: MTLRenderCommandEncoder,
@@ -146,7 +146,7 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(gBufferPSO)
         renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
-
+        
         for model in cullingResult.models {
             model.render(
                 encoder: renderEncoder,
@@ -154,7 +154,7 @@ struct TiledDeferredRenderPass: RenderPass{
                 params: params)
         }
     }
-
+    
     // MARK: - Lighting pass support
     func drawLightingRenderPass(
         renderEncoder: MTLRenderCommandEncoder,
@@ -169,7 +169,7 @@ struct TiledDeferredRenderPass: RenderPass{
             &uniforms,
             length: MemoryLayout<Uniforms>.stride,
             index: UniformsBuffer.index)
-
+        
         drawSunLight(
             renderEncoder: renderEncoder,
             cullingResult: cullingResult,
@@ -179,7 +179,7 @@ struct TiledDeferredRenderPass: RenderPass{
             cullingResult: cullingResult,
             params: params)
     }
-
+    
     func drawSunLight(
         renderEncoder: MTLRenderCommandEncoder,
         cullingResult: CullingResult,
@@ -203,12 +203,15 @@ struct TiledDeferredRenderPass: RenderPass{
             vertexCount: 6)
         renderEncoder.popDebugGroup()
     }
-
+    
     func drawPointLight(
         renderEncoder: MTLRenderCommandEncoder,
         cullingResult: CullingResult,
         params: Params
     ) {
+        if cullingResult.sceneLights.pointLights.isEmpty{
+            return
+        }
         renderEncoder.pushDebugGroup("Point lights")
         renderEncoder.setRenderPipelineState(pointLightPSO)
         renderEncoder.setVertexBuffer(
@@ -236,6 +239,6 @@ struct TiledDeferredRenderPass: RenderPass{
             instanceCount: cullingResult.sceneLights.pointLights.count)
         renderEncoder.popDebugGroup()
     }
-
+    
 }
 

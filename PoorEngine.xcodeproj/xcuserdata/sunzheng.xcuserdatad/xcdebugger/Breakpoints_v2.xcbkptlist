@@ -36,5 +36,53 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "900652D5-05A8-4E58-A5CA-68EC322ED73C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PoorEngine/Source/Framework/Resource/Model.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "init(name:exten:objectId:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "900652D5-05A8-4E58-A5CA-68EC322ED73C - a9af86ae5af6c825"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PoorEngine.Model.init(name: Swift.String, objectId: Swift.UInt32) -&gt; PoorEngine.Model"
+                  moduleName = "PoorEngine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sunzheng/code/Xcode/PoorEngine/PoorEngine/Source/Framework/Resource/Model.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "528">
+               </Location>
+               <Location
+                  uuid = "900652D5-05A8-4E58-A5CA-68EC322ED73C - a9af86ae5af6c825"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PoorEngine.Model.init(name: Swift.String, objectId: Swift.UInt32) -&gt; PoorEngine.Model"
+                  moduleName = "PoorEngine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sunzheng/code/Xcode/PoorEngine/PoorEngine/Source/Framework/Resource/Model.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "728">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

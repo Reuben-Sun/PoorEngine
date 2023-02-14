@@ -19,7 +19,7 @@ struct MainView: View {
                 ContentView().frame(width: size * 4, height: size).border(Color.black, width: 2)
             }
             
-            InspectorView().frame(maxWidth: .infinity, maxHeight: .infinity).border(Color.black, width: 2)
+            InspectorView().frame(maxWidth: size * 2, maxHeight: .infinity).border(Color.black, width: 2)
         }
         .padding()
     }

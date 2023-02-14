@@ -26,12 +26,16 @@ struct GameScene {
         camera.target = [0, 1, 0]
         camera.distance = 4
         
+//        sceneLights.addPointLight(count: 200, min: [-6, 0.1, -6], max: [6, 0.3, 6])
+        sceneLights.compileLightBuffer()
+        
         //TODO: scene加载逻辑，用usd做场景管理
-        var ballGO = GameObject(name: "shaderBall", meshName: "shaderBall.obj")
+//        var ballGO = GameObject(name: "star", meshName: "star", exten: "usdz")
+        var ballGO = GameObject(name: "shaderBall", meshName: "shaderBall", exten: "obj")
         ballGO.position = [0,0,0]
         ballGO.scale = 0.01
         ballGO.rotation = [0,0.5,0]
-        var largePlaneGO = GameObject(name: "large_plane", meshName: "large_plane.obj")
+        var largePlaneGO = GameObject(name: "large_plane", meshName: "large_plane", exten: "obj")
         goList = [ballGO, largePlaneGO]
     }
     
@@ -75,7 +79,7 @@ struct GameScene {
                 debugShadowCamera = OrthographicCamera()
                 debugShadowCamera?.viewSize = 16
                 debugShadowCamera?.far = 16
-                let sun = sceneLights.lights[0]
+                let sun = sceneLights.dirLights[0]
                 debugShadowCamera?.position = sun.position
                 camera.distance = 40
                 camera.far = 50
