@@ -11,7 +11,7 @@ enum PipelineStates {
     static func createPSO(descriptor: MTLRenderPipelineDescriptor) -> MTLRenderPipelineState {
         let pipelineState: MTLRenderPipelineState
         do {
-            pipelineState = try Renderer.device.makeRenderPipelineState(descriptor: descriptor)
+            pipelineState = try RHI.device.makeRenderPipelineState(descriptor: descriptor)
         } catch let error {
             fatalError(error.localizedDescription)
         }
@@ -19,7 +19,7 @@ enum PipelineStates {
     }
     
     static func createShadowPSO() -> MTLRenderPipelineState {
-        let vertexFunction = Renderer.library?.makeFunction(name: "vertex_depth")
+        let vertexFunction = RHI.library?.makeFunction(name: "vertex_depth")
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.colorAttachments[0].pixelFormat = .invalid
@@ -29,8 +29,8 @@ enum PipelineStates {
     }
     
     static func createGBufferPSO(colorPixelFormat: MTLPixelFormat, tiled: Bool = false) -> MTLRenderPipelineState {
-        let vertexFunction = Renderer.library?.makeFunction(name: "vertex_main")
-        let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_gBuffer")
+        let vertexFunction = RHI.library?.makeFunction(name: "vertex_main")
+        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_gBuffer")
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
@@ -50,9 +50,9 @@ enum PipelineStates {
     }
     
     static func createSunLightPSO(colorPixelFormat: MTLPixelFormat, tiled: Bool = false) -> MTLRenderPipelineState {
-        let vertexFunction = Renderer.library?.makeFunction(name: "vertex_quad")
+        let vertexFunction = RHI.library?.makeFunction(name: "vertex_quad")
         let fragment = tiled ? "fragment_tiled_deferredSun" : "fragment_deferredSun"
-        let fragmentFunction = Renderer.library?.makeFunction(name: fragment)
+        let fragmentFunction = RHI.library?.makeFunction(name: fragment)
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
@@ -69,9 +69,9 @@ enum PipelineStates {
     }
     
     static func createPointLightPSO(colorPixelFormat: MTLPixelFormat, tiled: Bool = false) -> MTLRenderPipelineState {
-        let vertexFunction = Renderer.library?.makeFunction(name: "vertex_pointLight")
+        let vertexFunction = RHI.library?.makeFunction(name: "vertex_pointLight")
         let fragment = tiled ? "fragment_tiled_pointLight" : "fragment_pointLight"
-        let fragmentFunction = Renderer.library?.makeFunction(name: fragment)
+        let fragmentFunction = RHI.library?.makeFunction(name: fragment)
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction

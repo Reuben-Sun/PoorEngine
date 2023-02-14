@@ -22,7 +22,7 @@ class Model: Transformable {
             fatalError("Model: \(name) not found")
         }
         self.objectId = objectId
-        let allocator = MTKMeshBufferAllocator(device: Renderer.device)
+        let allocator = MTKMeshBufferAllocator(device: RHI.device)
         let asset = MDLAsset(
             url: assetURL,
             vertexDescriptor: .defaultLayout,
@@ -36,7 +36,7 @@ class Model: Transformable {
                 forTextureCoordinateAttributeNamed: MDLVertexAttributeTextureCoordinate,
                 normalAttributeNamed: MDLVertexAttributeTangent,
                 tangentAttributeNamed: MDLVertexAttributeBitangent)
-            mtkMeshes.append(try! MTKMesh(mesh: mdlMesh, device: Renderer.device))
+            mtkMeshes.append(try! MTKMesh(mesh: mdlMesh, device: RHI.device))
         }
         
         meshes = zip(mdlMeshes, mtkMeshes).map {

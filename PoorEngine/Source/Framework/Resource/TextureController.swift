@@ -14,7 +14,7 @@ enum TextureController {
     /// - Parameter filename: 贴图名称（只支持png）
     /// - Returns: 贴图
     static func loadTexture(filename: String) throws -> MTLTexture? {
-        let textureLoader = MTKTextureLoader(device: Renderer.device)
+        let textureLoader = MTKTextureLoader(device: RHI.device)
         //优先使用Asset Catalog加载贴图
         if let texture = try? textureLoader.newTexture(name: filename, scaleFactor: 1.0, bundle: Bundle.main, options: nil){
             print("loaded texture: \(filename)")

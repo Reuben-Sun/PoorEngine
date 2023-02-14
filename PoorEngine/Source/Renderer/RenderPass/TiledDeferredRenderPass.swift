@@ -47,7 +47,7 @@ struct TiledDeferredRenderPass: RenderPass{
         frontFaceStencil.depthFailureOperation = .keep
         frontFaceStencil.depthStencilPassOperation = .incrementClamp
         descriptor.frontFaceStencil = frontFaceStencil
-        return Renderer.device.makeDepthStencilState(descriptor: descriptor)
+        return RHI.device.makeDepthStencilState(descriptor: descriptor)
       }
 
     static func buildLightingDepthStencilState() -> MTLDepthStencilState? {
@@ -59,7 +59,7 @@ struct TiledDeferredRenderPass: RenderPass{
         frontFaceStencil.depthFailureOperation = .keep
         frontFaceStencil.depthStencilPassOperation = .keep
         descriptor.frontFaceStencil = frontFaceStencil
-        return Renderer.device.makeDepthStencilState(descriptor: descriptor)
+        return RHI.device.makeDepthStencilState(descriptor: descriptor)
     }
 
     mutating func resize(view: MTKView, size: CGSize) {

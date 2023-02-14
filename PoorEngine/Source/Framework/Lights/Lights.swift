@@ -104,7 +104,7 @@ struct Lights {
     
     static func createBuffer(lights: [Light]) -> MTLBuffer {
       var lights = lights
-      return Renderer.device.makeBuffer(
+      return RHI.device.makeBuffer(
         bytes: &lights,
         length: MemoryLayout<Light>.stride * lights.count,
         options: [])!
