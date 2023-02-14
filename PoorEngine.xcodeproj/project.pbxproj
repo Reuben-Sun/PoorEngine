@@ -241,12 +241,11 @@
 		23601538299A899E00926ADB /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				2360159B299B693000926ADB /* Resource */,
 				2360155E299A970B00926ADB /* Lights */,
 				23601559299A96C300926ADB /* Camera */,
 				2360153A299A89CF00926ADB /* Object */,
 				23601539299A89C100926ADB /* Scene */,
-				23601545299A942700926ADB /* Transform.swift */,
-				23601549299A94BE00926ADB /* TextureController.swift */,
 				23601551299A95E300926ADB /* GameController.swift */,
 				23601599299B570200926ADB /* CullingResult.swift */,
 			);
@@ -264,9 +263,7 @@
 		2360153A299A89CF00926ADB /* Object */ = {
 			isa = PBXGroup;
 			children = (
-				23601547299A946700926ADB /* Submesh.swift */,
-				2360154B299A94E800926ADB /* Mesh.swift */,
-				2360154D299A94FC00926ADB /* Model.swift */,
+				23601545299A942700926ADB /* Transform.swift */,
 				23601595299B4D7500926ADB /* GameObject.swift */,
 			);
 			path = Object;
@@ -334,6 +331,17 @@
 				23601577299AA17700926ADB /* train.obj */,
 			);
 			path = Project;
+			sourceTree = "<group>";
+		};
+		2360159B299B693000926ADB /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				23601549299A94BE00926ADB /* TextureController.swift */,
+				2360154D299A94FC00926ADB /* Model.swift */,
+				23601547299A946700926ADB /* Submesh.swift */,
+				2360154B299A94E800926ADB /* Mesh.swift */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
