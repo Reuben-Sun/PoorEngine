@@ -27,15 +27,12 @@ struct GameScene {
         camera.distance = 4
         
         //TODO: scene加载逻辑，用usd做场景管理
-        var trainGO = GameObject(name: "train", meshName: "train.obj")
-        var treefir1GO = GameObject(name: "treefir1", meshName: "treefir.obj")
-        treefir1GO.position = [-1, 0, 2.5]
-        var treefir2GO = GameObject(name: "treefir2", meshName: "treefir.obj")
-        treefir2GO.position = [-3, 0, -2]
-        var treefir3GO = GameObject(name: "treefir3", meshName: "treefir.obj")
-        treefir3GO.position = [1.5, 0, -0.5]
+        var ballGO = GameObject(name: "shaderBall", meshName: "shaderBall.obj")
+        ballGO.position = [0,0,0]
+        ballGO.scale = 0.01
+        ballGO.rotation = [0,0.5,0]
         var largePlaneGO = GameObject(name: "large_plane", meshName: "large_plane.obj")
-        goList = [trainGO, treefir1GO, treefir2GO, treefir3GO, largePlaneGO]
+        goList = [ballGO, largePlaneGO]
     }
     
     

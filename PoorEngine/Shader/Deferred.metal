@@ -12,12 +12,38 @@ using namespace metal;
 #import "Include/CustomCore.h"
 #import "Include/Sample.h"
 
+vertex VertexOut vertex_main(VertexIn in [[stage_in]],
+                             constant Uniforms &uniforms [[buffer(11)]])
+{
+    VertexOut out;
+    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * in.position;
+    out.normal = in.normal;
+    out.uv = in.uv;
+    out.color = in.color;
+    out.positionWS = (uniforms.modelMatrix * in.position).xyz;
+    out.normalWS = uniforms.normalMatrix * in.normal;
+    out.tangentWS = uniforms.normalMatrix * in.tangent;
+    out.bitangentWS = uniforms.normalMatrix * in.bitangent;
+    out.shadowPosition = uniforms.shadowProjectionMatrix * uniforms.shadowViewMatrix * uniforms.modelMatrix * in.position;
+    return out;
+}
+
+
 fragment GBufferOut fragment_gBuffer(VertexOut in [[stage_in]],
+                                     constant Params &params [[buffer(ParamsBuffer)]],
                                      constant Material &material [[buffer(MaterialBuffer)]],
+                                     texture2d<float> baseColorTexture [[texture(BaseColor)]],
+                                     texture2d<float> normalTexture [[texture(NormalTexture)]],
+                                     texture2d<float> roughnessTexture [[texture(RoughnessTexture)]],
+                                     texture2d<float> metallicTexture [[texture(MetallicTexture)]],
+                                     texture2d<float> aoTexture [[texture(AOTexture)]],
+                                     texture2d<uint> idTexture [[texture(IdBuffer)]],
                                      depth2d<float> shadowTexture [[texture(ShadowTexture)]])
 {
+    Material _material = sampleTexture(material, baseColorTexture, roughnessTexture, metallicTexture, aoTexture, idTexture, in.uv, params);
+    
     GBufferOut out;
-    out.albedo = float4(material.baseColor, 1);
+    out.albedo = float4(_material.baseColor, 1);
     out.albedo.a = getShadowAttenuation(in.shadowPosition, shadowTexture);
     out.normal = float4(normalize(in.normalWS), 1.0);
     out.position = float4(in.positionWS, 1.0);
@@ -41,30 +67,6 @@ vertex VertexOut vertex_quad(uint vertexID [[vertex_id]])
     return out;
 }
 
-fragment float4 fragment_deferredSun(VertexOut in [[stage_in]],
-                                     constant Params &params [[buffer(ParamsBuffer)]],
-                                     constant Light *lights [[buffer(LightBuffer)]],
-                                     texture2d<float> albedoTexture [[texture(BaseColor)]],
-                                     texture2d<float> normalTexture [[texture(NormalTexture)]],
-                                     texture2d<float> positionTexture [[texture(NormalTexture + 1)]])
-{
-    uint2 coord = uint2(in.position.xy);
-    float4 albedo = albedoTexture.read(coord);
-    float3 normal = normalTexture.read(coord).xyz;
-    float3 position = positionTexture.read(coord).xyz;
-    Material material {
-        .baseColor = albedo.xyz,
-        .specularColor = float3(0),
-        .shininess = 500
-    };
-    float3 color = phongLighting(normal,
-                                 position,
-                                 params,
-                                 lights,
-                                 material);
-    color *= albedo.a;
-    return float4(color, 1);
-}
 
 fragment float4 fragment_tiled_deferredSun(VertexOut in [[stage_in]],
                                            constant Params &params [[buffer(ParamsBuffer)]],
@@ -112,24 +114,6 @@ vertex PointLightOut vertex_pointLight(PointLightIn in [[stage_in]],
     return out;
 }
 
-fragment float4 fragment_pointLight(PointLightOut in [[stage_in]],
-                                    texture2d<float> normalTexture [[texture(NormalTexture)]],
-                                    texture2d<float> positionTexture
-                                    [[texture(NormalTexture + 1)]],
-                                    constant Light *lights [[buffer(LightBuffer)]])
-{
-    Light light = lights[in.instanceId];
-    uint2 coords = uint2(in.position.xy);
-    float3 normal = normalTexture.read(coords).xyz;
-    float3 position = positionTexture.read(coords).xyz;
-    
-    Material material {
-        .baseColor = 1
-    };
-    float3 lighting = calculatePoint(light, position, normal, material);
-    lighting *= 0.5;
-    return float4(lighting, 1);
-}
 
 fragment float4 fragment_tiled_pointLight(PointLightOut in [[stage_in]],
                                           constant Light *lights [[buffer(LightBuffer)]],
