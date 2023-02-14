@@ -48,6 +48,7 @@
 		2360158A299AA65B00926ADB /* large_plane.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23601585299AA65B00926ADB /* large_plane.mtl */; };
 		2360158B299AA65B00926ADB /* train.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23601586299AA65B00926ADB /* train.mtl */; };
 		2360158C299AA65B00926ADB /* treefir.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23601587299AA65B00926ADB /* treefir.mtl */; };
+		2360158E299B1A3A00926ADB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2360158D299B1A3A00926ADB /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,7 @@
 		23601585299AA65B00926ADB /* large_plane.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = large_plane.mtl; sourceTree = "<group>"; };
 		23601586299AA65B00926ADB /* train.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.mtl; sourceTree = "<group>"; };
 		23601587299AA65B00926ADB /* treefir.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = treefir.mtl; sourceTree = "<group>"; };
+		2360158D299B1A3A00926ADB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				2360151D299A80A300926ADB /* MainView.swift */,
+				2360158D299B1A3A00926ADB /* ContentView.swift */,
 				2360151B299A80A300926ADB /* PoorEngineApp.swift */,
 				23601530299A839700926ADB /* SceneView.swift */,
 				23601532299A86D800926ADB /* InspectorView.swift */,
@@ -414,6 +417,7 @@
 				23601554299A960600926ADB /* InputController.swift in Sources */,
 				2360154A299A94BE00926ADB /* TextureController.swift in Sources */,
 				23601540299A90FA00926ADB /* TiledDeferredRenderPass.swift in Sources */,
+				2360158E299B1A3A00926ADB /* ContentView.swift in Sources */,
 				2360156A299A9AF000926ADB /* ShadowRenderPass.swift in Sources */,
 				23601544299A932000926ADB /* MathLibrary.swift in Sources */,
 				23601542299A913200926ADB /* RenderPass.swift in Sources */,
