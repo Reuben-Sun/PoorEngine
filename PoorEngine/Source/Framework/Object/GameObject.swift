@@ -9,12 +9,12 @@ import MetalKit
 
 class GameObject: Transformable {
     var transform = Transform()
-    let objectId: UInt32
     let name: String
+    let meshName: String
     
-    init(name: String, objectId: UInt32 = 0){
+    init(name: String, meshName: String){
         self.name = name
-        self.objectId = objectId
+        self.meshName = meshName
     }
     
 }

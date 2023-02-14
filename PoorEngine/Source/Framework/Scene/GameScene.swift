@@ -9,35 +9,9 @@ import MetalKit
 
 /// 创建场景
 struct GameScene {
-    static var objectId: UInt32 = 1
-    lazy var train: Model = {
-        createModel(name: "train.obj")
-    }()
-    lazy var treefir1: Model = {
-        createModel(name: "treefir.obj")
-    }()
-    lazy var treefir2: Model = {
-        createModel(name: "treefir.obj")
-    }()
-    lazy var treefir3: Model = {
-        createModel(name: "treefir.obj")
-    }()
-    lazy var ground: Model = {
-        Model(name: "large_plane.obj")
-    }()
-    
-    //    lazy var gizmo: Model = {
-    //        Model(name: "gizmo.usd")
-    //    }()
-    
-    lazy var sun: Model = {
-        Model(name: "sun_sphere.obj")
-    }()
-    
-    var models: [Model] = []
     var camera = ArcballCamera()
     var sceneLights = Lights()
-    
+    var goList: [GameObject] = []
     var debugMainCamera: ArcballCamera?
     var debugShadowCamera: OrthographicCamera?
     
@@ -51,16 +25,17 @@ struct GameScene {
         camera.transform = defaultView
         camera.target = [0, 1, 0]
         camera.distance = 4
-        treefir1.position = [-1, 0, 2.5]
-        treefir2.position = [-3, 0, -2]
-        treefir3.position = [1.5, 0, -0.5]
-        models = [treefir1, treefir2, treefir3, train, ground]
-    }
-    
-    func createModel(name: String) -> Model {
-        let model = Model(name: name, objectId: Self.objectId)
-        Self.objectId += 1
-        return model
+        
+        //TODO: scene加载逻辑，用usd做场景管理
+        var trainGO = GameObject(name: "train", meshName: "train.obj")
+        var treefir1GO = GameObject(name: "treefir1", meshName: "treefir.obj")
+        treefir1GO.position = [-1, 0, 2.5]
+        var treefir2GO = GameObject(name: "treefir2", meshName: "treefir.obj")
+        treefir2GO.position = [-3, 0, -2]
+        var treefir3GO = GameObject(name: "treefir3", meshName: "treefir.obj")
+        treefir3GO.position = [1.5, 0, -0.5]
+        var largePlaneGO = GameObject(name: "large_plane", meshName: "large_plane.obj")
+        goList = [trainGO, treefir1GO, treefir2GO, treefir3GO, largePlaneGO]
     }
     
     
@@ -112,8 +87,7 @@ struct GameScene {
         }
         input.keysPressed.removeAll()
         camera.update(deltaTime: deltaTime)
-        //        calculateGizmo()
-        sun.position = sceneLights.lights[0].position
+        //sun.position = sceneLights.lights[0].position
     }
     
     
