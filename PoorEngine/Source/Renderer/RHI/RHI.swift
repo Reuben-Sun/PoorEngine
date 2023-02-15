@@ -102,7 +102,7 @@ extension RHI {
     func updateUniforms(cullingResult: CullingResult) {
         uniforms.viewMatrix = cullingResult.camera.viewMatrix
         uniforms.projectionMatrix = cullingResult.camera.projectionMatrix
-        uniforms.inverseVPMatrix = (uniforms.viewMatrix * uniforms.projectionMatrix).inverse
+//        uniforms.inverseVPMatrix = (uniforms.viewMatrix * uniforms.projectionMatrix).inverse
         
         shadowCamera.viewSize = 16
         shadowCamera.far = 16
@@ -115,6 +115,7 @@ extension RHI {
     func updateParams(cullingResult: CullingResult) {
         params.lightCount = UInt32(cullingResult.sceneLights.pointLights.count)
         params.cameraPosition = cullingResult.camera.position
+        params.inverseVPMatrix = (cullingResult.camera.viewMatrix * cullingResult.camera.projectionMatrix).inverse
     }
 }
 

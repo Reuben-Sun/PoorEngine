@@ -18,7 +18,6 @@ typedef struct {
     matrix_float3x3 normalMatrix;   //将法线转化为世界空间
     matrix_float4x4 shadowProjectionMatrix;
     matrix_float4x4 shadowViewMatrix;
-    matrix_float4x4 inverseVPMatrix;    //VP矩阵的逆
 } Uniforms;
 
 //片元函数输入
@@ -31,6 +30,7 @@ typedef struct {
     uint objectId;
     uint touchX;
     uint touchY;
+    matrix_float4x4 inverseVPMatrix;    //VP矩阵的逆
 } Params;
 
 typedef enum {

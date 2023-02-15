@@ -46,7 +46,7 @@ fragment GBufferOut fragment_gBuffer(VertexOut in [[stage_in]],
     out.albedo = float4(_material.baseColor, 1);
     out.albedo.a = getShadowAttenuation(in.shadowPosition, shadowTexture);
     out.normal = float4(normalize(in.normalWS), 1.0);
-    out.position = float4(in.positionWS, 1.0);
+    out.position = float4(in.position.z, 0.0, 0.0, 1.0);
     return out;
 }
 
@@ -75,7 +75,9 @@ fragment float4 fragment_tiled_deferredSun(VertexOut in [[stage_in]],
 {
     float4 albedo = gBuffer.albedo;
     float3 normal = gBuffer.normal.xyz;
-    float3 position = gBuffer.position.xyz;
+    float4 pos = float4(in.uv.x, in.uv.y, 1, gBuffer.position.x);
+    float3 position = (params.inverseVPMatrix * pos).xyz;
+//    float3 position = gBuffer.position.xyz;
     Material material {
         .baseColor = albedo.xyz,
         .specularColor = float3(0),
