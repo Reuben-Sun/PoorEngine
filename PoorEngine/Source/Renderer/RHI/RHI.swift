@@ -102,6 +102,7 @@ extension RHI {
     func updateUniforms(cullingResult: CullingResult) {
         uniforms.viewMatrix = cullingResult.camera.viewMatrix
         uniforms.projectionMatrix = cullingResult.camera.projectionMatrix
+        uniforms.inverseVPMatrix = (uniforms.viewMatrix * uniforms.projectionMatrix).inverse
         
         shadowCamera.viewSize = 16
         shadowCamera.far = 16

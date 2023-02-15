@@ -111,7 +111,7 @@ struct TiledDeferredRenderPass: RenderPass{
         descriptor.depthAttachment.texture = depthTexture
         descriptor.stencilAttachment.texture = depthTexture
         
-        // MARK: 很离谱，显式指定Tile大小后，带宽、GPU时间大幅提高
+        // TODO: 很离谱，显式指定Tile大小后，带宽、GPU时间大幅提高
         //        descriptor.tileWidth = 32
         //        descriptor.tileHeight = 32
         //        descriptor.threadgroupMemoryLength = MemoryLayout<Light>.size * 8
@@ -135,7 +135,6 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder.endEncoding()
     }
     
-    // MARK: - G-buffer pass support
     func drawGBufferRenderPass(
         renderEncoder: MTLRenderCommandEncoder,
         cullingResult: CullingResult,
@@ -155,7 +154,6 @@ struct TiledDeferredRenderPass: RenderPass{
         }
     }
     
-    // MARK: - Lighting pass support
     func drawLightingRenderPass(
         renderEncoder: MTLRenderCommandEncoder,
         cullingResult: CullingResult,
