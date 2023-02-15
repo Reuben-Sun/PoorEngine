@@ -121,7 +121,7 @@ float3 phongLighting(float3 normalWS,
     for (uint i = 0; i < params.lightCount; i++){
         Light light = lights[i];
         float attenuation = getAttenuation(light, positionWS);
-        float3 lightDir = -normalize(light.position);
+        float3 lightDir = normalize(light.position);
         float3 reflectionDir = reflect(lightDir, normalWS);
         float3 viewDir = normalize(params.cameraPosition);
         color += BRDF(lightDir, viewDir, normalWS, material.specularColor, material) * light.color * attenuation;

@@ -75,7 +75,7 @@ fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
                                                 GBufferOut gBuffer)
 {
     float3 normal = gBuffer.MRT1.xyz;
-    float4 pos = float4(in.uv.x, in.uv.y, 1, gBuffer.MRT2.x);
+    float4 pos = float4(2 * in.uv -1, 1, gBuffer.MRT2.x);
     float3 position = (params.inverseVPMatrix * pos).xyz;
     Material material = decodeGBuffer(gBuffer);
     float3 color = phongLighting(normal, position, params, lights, material);
@@ -83,6 +83,6 @@ fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     return float4(color, 1);
 //    return float4(gBuffer.MRT2.x,gBuffer.MRT2.x,gBuffer.MRT2.x, 1);
 //    return float4(pos.xyz, 1);
-//    return float4(in.uv, 0, 1);
+//    return float4(2 * in.uv -1, 0, 1);
 //    return float4(position, 1);
 }
