@@ -9,6 +9,7 @@
 #define Sample_h
 
 #import "Common.h"
+#import "CustomCore.h"
 
 float getShadowAttenuation(float4 shadowPos, depth2d<float> shadowTexture);
 
@@ -20,6 +21,8 @@ Material sampleTexture(Material mat,
                        texture2d<uint> idTexture,
                        float2 uv,
                        Params params);
+
+Material decodeGBuffer(GBufferOut gBuffer);
 
 float3 getNormal(texture2d<float> normalTexture, float2 uv, float3 normalWS, float3 tangentWS, float3 bitangentWS, Params params);
 

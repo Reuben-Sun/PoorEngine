@@ -72,15 +72,10 @@ fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
                                                 constant Light *lights [[buffer(LightBuffer)]],
                                                 GBufferOut gBuffer)
 {
-    float3 albedo = gBuffer.MRT0.xyz;
     float3 normal = gBuffer.MRT1.xyz;
     float4 pos = float4(in.uv.x, in.uv.y, 1, gBuffer.MRT2.x);
     float3 position = (params.inverseVPMatrix * pos).xyz;
-    Material material {
-        .baseColor = albedo,
-        .specularColor = float3(0),
-        .shininess = 500
-    };
+    Material material = decodeGBuffer(gBuffer);
     float3 color = phongLighting(normal, position, params, lights, material);
     color *= gBuffer.MRT0.a;
     return float4(color, 1);

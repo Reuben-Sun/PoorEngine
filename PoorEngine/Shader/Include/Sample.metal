@@ -77,6 +77,18 @@ Material sampleTexture(Material _mat,
     return mat;
 }
 
+Material decodeGBuffer(GBufferOut gBuffer)
+{
+    Material mat;
+    mat.baseColor = gBuffer.MRT0.xyz,
+    mat.metallic = gBuffer.MRT2.y,
+    mat.roughness = gBuffer.MRT2.z,
+    mat.ambientOcclusion = gBuffer.MRT2.a,
+    mat.shininess = 0,
+    mat.specularColor = mix(float3(0.04, 0.04, 0.04), mat.baseColor, mat.metallic);
+    return mat;
+}
+
 //返回世界空间法线
 float3 getNormal(texture2d<float> normalTexture, float2 uv, float3 normalWS, float3 tangentWS, float3 bitangentWS, Params params)
 {
