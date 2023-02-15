@@ -11,7 +11,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-#map_Kd vbsieik_2K_Albedo.jpg
+map_Kd vbsieik_2K_Albedo.jpg
 #map_Kd barn-ground
 map_roughness vbsieik_2K_Roughness.jpg
 map_tangentSpaceNormal vbsieik_2K_Normal.jpg

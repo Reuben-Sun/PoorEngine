@@ -17,6 +17,7 @@ struct Lights {
     let sunlight: Light = {
         var light = Self.buildDefaultLight()
         light.position = [3, 3, -2]
+        light.color = [3, 3, 3]
         return light
     }()
     
@@ -94,7 +95,7 @@ struct Lights {
     
     /// 灯光初始化
     init() {
-        dirLights = [sunlight]
+        dirLights = [sunlight, ambientLight]
         dirBuffer = Self.createBuffer(lights: dirLights)
         pointLights = []
         //        pointBuffer = Self.createBuffer(lights: pointLights)
