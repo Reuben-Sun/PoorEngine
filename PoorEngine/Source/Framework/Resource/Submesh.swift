@@ -46,6 +46,7 @@ extension Submesh.Textures{
                   }
             return texture
         }
+        //MARK: 设置mtl文件中贴图名称，比如金属度贴图就叫"map_metallic"
         baseColor = property(with: MDLMaterialSemantic.baseColor)
         normal = property(with: .tangentSpaceNormal)
         roughness = property(with: .roughness)

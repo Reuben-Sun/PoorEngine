@@ -27,6 +27,8 @@
 
 #### MTL文件
 
+[MTL 意义](http://paulbourke.net/dataformats/mtl/)
+
 ### 贴图
 
 使用Asset Catalog加载贴图，贴图类型应该为AR and Textures/New Texture Set，并将Interpretation设为Data，以防止伽马矫正导致过黑
