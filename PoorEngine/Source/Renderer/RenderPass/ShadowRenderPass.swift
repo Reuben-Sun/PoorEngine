@@ -15,7 +15,7 @@ struct ShadowRenderPass: RenderPass {
     var shadowTexture: MTLTexture?
     
     init() {
-        pipelineState = PipelineStates.createShadowPSO()
+        pipelineState = PipelineStates.createShadowPassPSO()
         shadowTexture = Self.makeTexture(size: CGSize(width: 2048, height: 2048),
                                          pixelFormat: .depth32Float,
                                          label: "Shadow Depth Texture")

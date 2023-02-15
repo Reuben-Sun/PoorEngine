@@ -45,7 +45,7 @@ fragment GBufferOut fragment_gBuffer(VertexOut in [[stage_in]],
     GBufferOut out;
     out.MRT0 = float4(_material.baseColor, getShadowAttenuation(in.shadowPosition, shadowTexture));
     out.MRT1 = float4(normalize(in.normalWS), 1.0);
-    out.MRT2 = float4(in.position.z, 0.0, 0.0, 1.0);
+    out.MRT2 = float4(in.position.z, _material.metallic, _material.roughness, _material.ambientOcclusion);
     return out;
 }
 
@@ -67,10 +67,10 @@ vertex VertexOut vertex_quad(uint vertexID [[vertex_id]])
 }
 
 
-fragment float4 fragment_tiled_deferredSun(VertexOut in [[stage_in]],
-                                           constant Params &params [[buffer(ParamsBuffer)]],
-                                           constant Light *lights [[buffer(LightBuffer)]],
-                                           GBufferOut gBuffer)
+fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
+                                                constant Params &params [[buffer(ParamsBuffer)]],
+                                                constant Light *lights [[buffer(LightBuffer)]],
+                                                GBufferOut gBuffer)
 {
     float3 albedo = gBuffer.MRT0.xyz;
     float3 normal = gBuffer.MRT1.xyz;

@@ -7,6 +7,8 @@
 - [ ] usd场景管理
 - [ ] 更好的PBR
 - [ ] 模型切换
+- [ ] Compute Shader
+- [ ] Tile Base Culling Lighting
 - [ ] Inspector Menu
 - [ ] 管线配置
 - [ ] Debug View

@@ -95,7 +95,7 @@ struct Lights {
     /// 灯光初始化
     init() {
         dirLights = [sunlight, ambientLight]
-        //        dirBuffer = Self.createBuffer(lights: dirLights)
+        dirBuffer = Self.createBuffer(lights: dirLights)
         pointLights = []
         //        pointBuffer = Self.createBuffer(lights: pointLights)
     }

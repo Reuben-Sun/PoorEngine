@@ -11,8 +11,8 @@ struct TiledDeferredRenderPass: RenderPass{
     var label = "Tiled Deferred Render Pass"
     var descriptor: MTLRenderPassDescriptor?
     
-    var gBufferPSO: MTLRenderPipelineState
-    var sunLightPSO: MTLRenderPipelineState
+    var gBufferPassPSO: MTLRenderPipelineState
+    var lightingPassPSO: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState?
     let lightingDepthStencilState: MTLDepthStencilState?
     weak var shadowTexture: MTLTexture?
@@ -20,13 +20,12 @@ struct TiledDeferredRenderPass: RenderPass{
     var normalTexture: MTLTexture?
     var positionTexture: MTLTexture?
     var depthTexture: MTLTexture?
-    var icosphere = Model(name: "icosphere")
     
     init(view: MTKView) {
-        gBufferPSO = PipelineStates.createGBufferPSO(
+        gBufferPassPSO = PipelineStates.createGBufferPassPSO(
             colorPixelFormat: view.colorPixelFormat,
             tiled: true)
-        sunLightPSO = PipelineStates.createSunLightPSO(
+        lightingPassPSO = PipelineStates.createLightingPassPSO(
             colorPixelFormat: view.colorPixelFormat,
             tiled: true)
         depthStencilState = Self.buildDepthStencilState()
@@ -139,7 +138,7 @@ struct TiledDeferredRenderPass: RenderPass{
     ) {
         renderEncoder.label = "G-buffer render pass"
         renderEncoder.setDepthStencilState(depthStencilState)
-        renderEncoder.setRenderPipelineState(gBufferPSO)
+        renderEncoder.setRenderPipelineState(gBufferPassPSO)
         renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
         
         for model in cullingResult.models {
@@ -159,38 +158,24 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder.label = "Lighting render pass"
         renderEncoder.setDepthStencilState(lightingDepthStencilState)
         var uniforms = uniforms
-        renderEncoder.setVertexBytes(
-            &uniforms,
-            length: MemoryLayout<Uniforms>.stride,
-            index: UniformsBuffer.index)
+        renderEncoder.setVertexBytes(&uniforms,
+                                     length: MemoryLayout<Uniforms>.stride,
+                                     index: UniformsBuffer.index)
         
-        drawSunLight(
-            renderEncoder: renderEncoder,
-            cullingResult: cullingResult,
-            params: params)
-    }
-    
-    func drawSunLight(
-        renderEncoder: MTLRenderCommandEncoder,
-        cullingResult: CullingResult,
-        params: Params
-    ) {
-        renderEncoder.pushDebugGroup("Sun Light")
-        renderEncoder.setRenderPipelineState(sunLightPSO)
+        // MARK: DirLight support, Point Light un support
+        renderEncoder.pushDebugGroup("Dir Light")
+        renderEncoder.setRenderPipelineState(lightingPassPSO)
         var params = params
         params.lightCount = UInt32(cullingResult.sceneLights.dirLights.count)
-        renderEncoder.setFragmentBytes(
-            &params,
-            length: MemoryLayout<Params>.stride,
-            index: ParamsBuffer.index)
-        renderEncoder.setFragmentBuffer(
-            cullingResult.sceneLights.dirBuffer,
-            offset: 0,
-            index: LightBuffer.index)
-        renderEncoder.drawPrimitives(
-            type: .triangle,
-            vertexStart: 0,
-            vertexCount: 6)
+        renderEncoder.setFragmentBytes(&params,
+                                       length: MemoryLayout<Params>.stride,
+                                       index: ParamsBuffer.index)
+        renderEncoder.setFragmentBuffer(cullingResult.sceneLights.dirBuffer,
+                                        offset: 0,
+                                        index: LightBuffer.index)
+        renderEncoder.drawPrimitives(type: .triangle,
+                                     vertexStart: 0,
+                                     vertexCount: 6)
         renderEncoder.popDebugGroup()
     }
 }

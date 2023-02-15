@@ -27,7 +27,7 @@ struct GameScene {
         camera.distance = 4
         
 //        sceneLights.addPointLight(count: 200, min: [-6, 0.1, -6], max: [6, 0.3, 6])
-        sceneLights.compileLightBuffer()
+//        sceneLights.compileLightBuffer()
         
         //TODO: scene加载逻辑，用usd做场景管理
         var ballGO = GameObject(name: "shaderBall", meshName: "shaderBall", exten: "obj")
