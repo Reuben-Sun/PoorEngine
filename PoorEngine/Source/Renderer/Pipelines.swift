@@ -67,36 +67,6 @@ enum PipelineStates {
         
         return createPSO(descriptor: pipelineDescriptor)
     }
-    
-    static func createPointLightPSO(colorPixelFormat: MTLPixelFormat, tiled: Bool = false) -> MTLRenderPipelineState {
-        let vertexFunction = RHI.library?.makeFunction(name: "vertex_pointLight")
-        let fragment = tiled ? "fragment_tiled_pointLight" : "fragment_pointLight"
-        let fragmentFunction = RHI.library?.makeFunction(name: fragment)
-        let pipelineDescriptor = MTLRenderPipelineDescriptor()
-        pipelineDescriptor.vertexFunction = vertexFunction
-        pipelineDescriptor.fragmentFunction = fragmentFunction
-        pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
-        
-        if tiled {
-            pipelineDescriptor.setGBufferPixelFormats()
-        }
-        //pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float_stencil8
-        pipelineDescriptor.stencilAttachmentPixelFormat = .depth32Float_stencil8
-        
-        pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
-        let attachment = pipelineDescriptor.colorAttachments[0]
-        attachment?.isBlendingEnabled = true
-        attachment?.rgbBlendOperation = .add
-        attachment?.alphaBlendOperation = .add
-        attachment?.sourceRGBBlendFactor = .one
-        attachment?.sourceAlphaBlendFactor = .one
-        attachment?.destinationRGBBlendFactor = .one
-        attachment?.destinationAlphaBlendFactor = .zero
-        attachment?.sourceRGBBlendFactor = .one
-        attachment?.sourceAlphaBlendFactor = .one
-        return createPSO(descriptor: pipelineDescriptor)
-    }
 }
 
 extension MTLRenderPipelineDescriptor {
@@ -106,4 +76,3 @@ extension MTLRenderPipelineDescriptor {
         colorAttachments[RenderTarget2.index].pixelFormat = .rgba16Float
     }
 }
-

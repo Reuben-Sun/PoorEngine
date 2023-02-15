@@ -72,63 +72,16 @@ fragment float4 fragment_tiled_deferredSun(VertexOut in [[stage_in]],
                                            constant Light *lights [[buffer(LightBuffer)]],
                                            GBufferOut gBuffer)
 {
-    float4 albedo = gBuffer.MRT0;
+    float3 albedo = gBuffer.MRT0.xyz;
     float3 normal = gBuffer.MRT1.xyz;
     float4 pos = float4(in.uv.x, in.uv.y, 1, gBuffer.MRT2.x);
     float3 position = (params.inverseVPMatrix * pos).xyz;
-//    float3 position = gBuffer.position.xyz;
     Material material {
-        .baseColor = albedo.xyz,
+        .baseColor = albedo,
         .specularColor = float3(0),
         .shininess = 500
     };
-    float3 color = phongLighting(normal,
-                                 position,
-                                 params,
-                                 lights,
-                                 material);
-    color *= albedo.a;
+    float3 color = phongLighting(normal, position, params, lights, material);
+    color *= gBuffer.MRT0.a;
     return float4(color, 1);
-}
-
-struct PointLightIn {
-    float4 position [[attribute(Position)]];
-};
-
-struct PointLightOut {
-    float4 position [[position]];
-    uint instanceId [[flat]];
-};
-
-vertex PointLightOut vertex_pointLight(PointLightIn in [[stage_in]],
-                                       constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
-                                       constant Light *lights [[buffer(LightBuffer)]],
-                                       uint instanceId [[instance_id]])
-{
-    float4 lightPosition = float4(lights[instanceId].position, 0);
-    float4 position =
-    uniforms.projectionMatrix * uniforms.viewMatrix * (in.position + lightPosition);
-    PointLightOut out {
-        .position = position,
-        .instanceId = instanceId
-    };
-    return out;
-}
-
-
-fragment float4 fragment_tiled_pointLight(PointLightOut in [[stage_in]],
-                                          constant Light *lights [[buffer(LightBuffer)]],
-                                          GBufferOut gBuffer)
-{
-    Light light = lights[in.instanceId];
-    float3 normal = gBuffer.MRT1.xyz;
-    //TODO: 这里的MRT2不对，这个片元也要传入uv和param，视情况完全删除这个point pass，将LightingPass合并
-    float3 position = gBuffer.MRT2.xyz;
-    
-    Material material {
-        .baseColor = 1
-    };
-    float3 lighting = calculatePoint(light, position, normal, material);
-    lighting *= 0.5;
-    return float4(lighting, 1);
 }

@@ -30,7 +30,6 @@ struct GameScene {
         sceneLights.compileLightBuffer()
         
         //TODO: scene加载逻辑，用usd做场景管理
-//        var ballGO = GameObject(name: "star", meshName: "star", exten: "usdz")
         var ballGO = GameObject(name: "shaderBall", meshName: "shaderBall", exten: "obj")
         ballGO.position = [0,0,0]
         ballGO.scale = 0.01

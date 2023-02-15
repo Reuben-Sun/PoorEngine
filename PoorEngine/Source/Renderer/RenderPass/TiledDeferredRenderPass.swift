@@ -13,7 +13,6 @@ struct TiledDeferredRenderPass: RenderPass{
     
     var gBufferPSO: MTLRenderPipelineState
     var sunLightPSO: MTLRenderPipelineState
-    var pointLightPSO: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState?
     let lightingDepthStencilState: MTLDepthStencilState?
     weak var shadowTexture: MTLTexture?
@@ -28,9 +27,6 @@ struct TiledDeferredRenderPass: RenderPass{
             colorPixelFormat: view.colorPixelFormat,
             tiled: true)
         sunLightPSO = PipelineStates.createSunLightPSO(
-            colorPixelFormat: view.colorPixelFormat,
-            tiled: true)
-        pointLightPSO = PipelineStates.createPointLightPSO(
             colorPixelFormat: view.colorPixelFormat,
             tiled: true)
         depthStencilState = Self.buildDepthStencilState()
@@ -172,10 +168,6 @@ struct TiledDeferredRenderPass: RenderPass{
             renderEncoder: renderEncoder,
             cullingResult: cullingResult,
             params: params)
-        drawPointLight(
-            renderEncoder: renderEncoder,
-            cullingResult: cullingResult,
-            params: params)
     }
     
     func drawSunLight(
@@ -201,42 +193,5 @@ struct TiledDeferredRenderPass: RenderPass{
             vertexCount: 6)
         renderEncoder.popDebugGroup()
     }
-    
-    func drawPointLight(
-        renderEncoder: MTLRenderCommandEncoder,
-        cullingResult: CullingResult,
-        params: Params
-    ) {
-        if cullingResult.sceneLights.pointLights.isEmpty{
-            return
-        }
-        renderEncoder.pushDebugGroup("Point lights")
-        renderEncoder.setRenderPipelineState(pointLightPSO)
-        renderEncoder.setVertexBuffer(
-            cullingResult.sceneLights.pointBuffer,
-            offset: 0,
-            index: LightBuffer.index)
-        renderEncoder.setFragmentBuffer(
-            cullingResult.sceneLights.pointBuffer,
-            offset: 0,
-            index: LightBuffer.index)
-        guard let mesh = icosphere.meshes.first,
-              let submesh = mesh.submeshes.first else { return }
-        for (index, vertexBuffer) in mesh.vertexBuffers.enumerated() {
-            renderEncoder.setVertexBuffer(
-                vertexBuffer,
-                offset: 0,
-                index: index)
-        }
-        renderEncoder.drawIndexedPrimitives(
-            type: .triangle,
-            indexCount: submesh.indexCount,
-            indexType: submesh.indexType,
-            indexBuffer: submesh.indexBuffer,
-            indexBufferOffset: submesh.indexBufferOffset,
-            instanceCount: cullingResult.sceneLights.pointLights.count)
-        renderEncoder.popDebugGroup()
-    }
-    
 }
 
