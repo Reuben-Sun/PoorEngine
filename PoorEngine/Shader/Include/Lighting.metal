@@ -50,6 +50,68 @@ float getAttenuation(Light light, float3 positionWS){
     return attenuation;
 }
 
+float D_GGX(float NoH, float roughness)
+{
+    float alpha  = roughness * roughness;
+    float alpha2 = alpha * alpha;
+    float denom  = NoH * NoH * (alpha2 - 1.0) + 1.0;
+    return (alpha2) / (pi * denom * denom);
+}
+
+float G_SchlicksmithGGX(float NoL, float NoV, float roughness)
+{
+    float r  = (roughness + 1.0);
+    float k  = (r * r) / 8.0;
+    float GL = NoL / (NoL * (1.0 - k) + k);
+    float GV = NoV / (NoV * (1.0 - k) + k);
+    return GL * GV;
+}
+
+float Pow5(float x)
+{
+    return x*x*x*x*x;
+}
+
+float3 F_Schlick(float cosTheta, float3 F0)
+{
+    return F0 + (1.0 - F0) * Pow5(1.0 - cosTheta);
+}
+
+float3 F_SchlickR(float cosTheta, float3 F0, float roughness)
+{
+    return F0 + (max(float3(1.0 - roughness, 1.0 - roughness, 1.0 - roughness), F0) - F0) * Pow5(1.0 - cosTheta);
+}
+
+float3 BRDF(float3  L,
+            float3  V,
+            float3  N,
+            float3  F0,
+            float3  basecolor,
+            float metallic,
+            float roughness)
+{
+    float3  H     = normalize(V + L);
+    float NoV = clamp(dot(N, V), 0.0, 1.0);
+    float NoL = clamp(dot(N, L), 0.0, 1.0);
+    float LoH = clamp(dot(L, H), 0.0, 1.0);
+    float NoH = clamp(dot(N, H), 0.0, 1.0);
+    
+    float3 color = float3(0.0);
+    
+    float rroughness = max(0.05, roughness);
+    
+    float D = D_GGX(NoH, rroughness);
+    float G = G_SchlicksmithGGX(NoL, NoV, rroughness);
+    float3 F = F_Schlick(NoV, F0);
+    
+    float3 spec = D * F * G / (4.0 * NoL * NoV + 0.001);
+    float3 Kd   = (float3(1.0) - F) * (1.0 - metallic);
+    
+    color += (Kd * basecolor / pi + (1.0 - Kd) * spec);
+    
+    return color;
+}
+
 float3 phongLighting(float3 normalWS,
                      float3 positionWS,
                      constant Params &params,
