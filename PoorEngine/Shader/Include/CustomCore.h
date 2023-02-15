@@ -35,9 +35,12 @@ struct VertexOut {
 };
 
 struct GBufferOut {
-    float4 albedo [[color(RenderTargetAlbedo)]];
-    float4 normal [[color(RenderTargetNormal)]];
-    float4 position [[color(RenderTargetPosition)]];
+    // RGB: albedo, A: shadowAtten
+    float4 MRT0 [[color(RenderTarget0)]];
+    // RGB: normal
+    float4 MRT1 [[color(RenderTarget1)]];
+    // R: depth
+    float4 MRT2 [[color(RenderTarget2)]];
 };
 
 #endif /* CustomCore_h */

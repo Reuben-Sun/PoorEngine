@@ -101,7 +101,7 @@ struct TiledDeferredRenderPass: RenderPass{
         //将贴图存储操作设为dontCare
         for (index, texture) in textures.enumerated() {
             let attachment =
-            descriptor.colorAttachments[RenderTargetAlbedo.index + index]
+            descriptor.colorAttachments[RenderTarget0.index + index]
             attachment?.texture = texture
             attachment?.loadAction = .clear
             attachment?.storeAction = .dontCare

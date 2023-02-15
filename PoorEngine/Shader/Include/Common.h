@@ -96,9 +96,9 @@ typedef struct {
 } Material;     //Surface
 
 typedef enum {
-    RenderTargetAlbedo = 1,
-    RenderTargetNormal = 2,
-    RenderTargetPosition = 3
+    RenderTarget0 = 1,
+    RenderTarget1 = 2,
+    RenderTarget2 = 3
 } RenderTargetIndices;
 
 #endif /* Common_h */

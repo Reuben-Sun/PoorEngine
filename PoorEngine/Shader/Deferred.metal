@@ -43,10 +43,9 @@ fragment GBufferOut fragment_gBuffer(VertexOut in [[stage_in]],
     Material _material = sampleTexture(material, baseColorTexture, roughnessTexture, metallicTexture, aoTexture, idTexture, in.uv, params);
     
     GBufferOut out;
-    out.albedo = float4(_material.baseColor, 1);
-    out.albedo.a = getShadowAttenuation(in.shadowPosition, shadowTexture);
-    out.normal = float4(normalize(in.normalWS), 1.0);
-    out.position = float4(in.position.z, 0.0, 0.0, 1.0);
+    out.MRT0 = float4(_material.baseColor, getShadowAttenuation(in.shadowPosition, shadowTexture));
+    out.MRT1 = float4(normalize(in.normalWS), 1.0);
+    out.MRT2 = float4(in.position.z, 0.0, 0.0, 1.0);
     return out;
 }
 
@@ -73,9 +72,9 @@ fragment float4 fragment_tiled_deferredSun(VertexOut in [[stage_in]],
                                            constant Light *lights [[buffer(LightBuffer)]],
                                            GBufferOut gBuffer)
 {
-    float4 albedo = gBuffer.albedo;
-    float3 normal = gBuffer.normal.xyz;
-    float4 pos = float4(in.uv.x, in.uv.y, 1, gBuffer.position.x);
+    float4 albedo = gBuffer.MRT0;
+    float3 normal = gBuffer.MRT1.xyz;
+    float4 pos = float4(in.uv.x, in.uv.y, 1, gBuffer.MRT2.x);
     float3 position = (params.inverseVPMatrix * pos).xyz;
 //    float3 position = gBuffer.position.xyz;
     Material material {
@@ -122,8 +121,9 @@ fragment float4 fragment_tiled_pointLight(PointLightOut in [[stage_in]],
                                           GBufferOut gBuffer)
 {
     Light light = lights[in.instanceId];
-    float3 normal = gBuffer.normal.xyz;
-    float3 position = gBuffer.position.xyz;
+    float3 normal = gBuffer.MRT1.xyz;
+    //TODO: 这里的MRT2不对，这个片元也要传入uv和param，视情况完全删除这个point pass，将LightingPass合并
+    float3 position = gBuffer.MRT2.xyz;
     
     Material material {
         .baseColor = 1
