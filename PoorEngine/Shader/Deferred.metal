@@ -60,8 +60,10 @@ constant float3 vertices[6] = {
 
 vertex VertexOut vertex_quad(uint vertexID [[vertex_id]])
 {
+    float4 pos = float4(vertices[vertexID], 1);
     VertexOut out {
-        .position = float4(vertices[vertexID], 1)
+        .position = pos,
+        .uv = (pos.xy + float2(1, 1))/2
     };
     return out;
 }
@@ -79,4 +81,8 @@ fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     float3 color = phongLighting(normal, position, params, lights, material);
     color *= gBuffer.MRT0.a;
     return float4(color, 1);
+//    return float4(gBuffer.MRT2.x,gBuffer.MRT2.x,gBuffer.MRT2.x, 1);
+//    return float4(pos.xyz, 1);
+//    return float4(in.uv, 0, 1);
+//    return float4(position, 1);
 }

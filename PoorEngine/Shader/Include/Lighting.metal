@@ -86,9 +86,7 @@ float3 BRDF(float3  L,
             float3  V,
             float3  N,
             float3  F0,
-            float3  basecolor,
-            float metallic,
-            float roughness)
+            Material material)
 {
     float3  H     = normalize(V + L);
     float NoV = clamp(dot(N, V), 0.0, 1.0);
@@ -98,16 +96,16 @@ float3 BRDF(float3  L,
     
     float3 color = float3(0.0);
     
-    float rroughness = max(0.05, roughness);
+    float rroughness = max(0.05, material.roughness);
     
     float D = D_GGX(NoH, rroughness);
     float G = G_SchlicksmithGGX(NoL, NoV, rroughness);
     float3 F = F_Schlick(NoV, F0);
     
     float3 spec = D * F * G / (4.0 * NoL * NoV + 0.001);
-    float3 Kd   = (float3(1.0) - F) * (1.0 - metallic);
+    float3 Kd   = (float3(1.0) - F) * (1.0 - material.metallic);
     
-    color += (Kd * basecolor / pi + (1.0 - Kd) * spec);
+    color += (Kd * material.baseColor / pi + (1.0 - Kd) * spec);
     
     return color;
 }
@@ -118,30 +116,17 @@ float3 phongLighting(float3 normalWS,
                      constant Light *lights,
                      Material material)
 {
-    float3 diffuseColor = 0;
-    float3 ambientColor = 0;
-    float3 specularColor = 0;
-    
-    float3 baseColor = material.baseColor;
-    float materialShininess = material.shininess;
-    float3 materialSpecularColor = material.specularColor;
-    
-    
+    float3 color(0,0,0);
     
     for (uint i = 0; i < params.lightCount; i++){
         Light light = lights[i];
         float attenuation = getAttenuation(light, positionWS);
-        float3 lightDir = normalize(-light.position);
+        float3 lightDir = -normalize(light.position);
         float3 reflectionDir = reflect(lightDir, normalWS);
         float3 viewDir = normalize(params.cameraPosition);
-        
-        float diffuseIntensity = saturate(-dot(lightDir, normalWS));
-        float specularIntensity = pow(saturate(dot(reflectionDir, viewDir)), materialShininess);
-        
-        diffuseColor += light.color * baseColor * diffuseIntensity * attenuation;
-        specularColor += light.specularColor * materialSpecularColor * specularIntensity;
+        color += BRDF(lightDir, viewDir, normalWS, material.specularColor, material) * light.color * attenuation;
     }
-    return diffuseColor + specularColor + ambientColor;
+    return color;
 }
 
 

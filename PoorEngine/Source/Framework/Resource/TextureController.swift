@@ -10,7 +10,7 @@ import MetalKit
 enum TextureController {
     static var textures: [String: MTLTexture] = [:]
     
-    /// 加载贴图（只支持png）
+    /// 加载贴图
     static func loadTexture(filename: String) throws -> MTLTexture? {
         let textureLoader = MTKTextureLoader(device: RHI.device)
         //优先使用Asset Catalog加载贴图
@@ -34,7 +34,7 @@ enum TextureController {
         return texture
     }
     
-    /// 返回贴图，内置一个缓存机制（只支持png）
+    /// 返回贴图，内置一个缓存机制
     static func texture(filename: String) -> MTLTexture? {
         if let tex = textures[filename] {
             return tex

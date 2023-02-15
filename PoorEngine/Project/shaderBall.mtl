@@ -2,13 +2,18 @@
 # Material Count: 2
 
 newmtl Ball
-Ns 96.078431
+Ns 255
 Ka 0.000000 0.000000 0.000000
-Kd 0.008250 0.524743 0.001229
-Ks 0.000000 0.000000 0.000000
+#Kd 0.008250 0.524743 0.001229
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd barn-ground
-
+#map_Kd vbsieik_2K_Albedo.jpg
+#map_Kd barn-ground
+map_roughness vbsieik_2K_Roughness.jpg
+map_tangentSpaceNormal vbsieik_2K_Normal.jpg
+map_metallic vbsieik_2K_Displacement.jpg
+map_ao vbsieik_2K_AO.jpg

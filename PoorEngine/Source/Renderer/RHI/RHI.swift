@@ -115,7 +115,7 @@ extension RHI {
     func updateParams(cullingResult: CullingResult) {
         params.lightCount = UInt32(cullingResult.sceneLights.pointLights.count)
         params.cameraPosition = cullingResult.camera.position
-        params.inverseVPMatrix = (cullingResult.camera.viewMatrix * cullingResult.camera.projectionMatrix).inverse
+        params.inverseVPMatrix = (cullingResult.camera.viewMatrix.inverse * cullingResult.camera.projectionMatrix.inverse)
     }
 }
 
