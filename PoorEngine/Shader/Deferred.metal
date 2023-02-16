@@ -41,10 +41,11 @@ fragment GBufferOut fragment_gBuffer(VertexOut in [[stage_in]],
                                      depth2d<float> shadowTexture [[texture(ShadowTexture)]])
 {
     Material _material = sampleTexture(material, baseColorTexture, roughnessTexture, metallicTexture, aoTexture, idTexture, in.uv, params);
+    float3 normal = getNormal(normalTexture, in.uv, in.normalWS, in.tangentWS, in.bitangentWS, params);
     
     GBufferOut out;
     out.MRT0 = float4(_material.baseColor, getShadowAttenuation(in.shadowPosition, shadowTexture));
-    out.MRT1 = float4(normalize(in.normalWS), 1.0);
+    out.MRT1 = float4(normalize(normal), 1.0);
     out.MRT2 = float4(in.position.z, _material.metallic, _material.roughness, _material.ambientOcclusion);
     return out;
 }
@@ -61,6 +62,7 @@ constant float3 vertices[6] = {
 vertex VertexOut vertex_quad(uint vertexID [[vertex_id]])
 {
     float4 pos = float4(vertices[vertexID], 1);
+    // MARK: 左下角UV为(0,0), 右上角UV为(1,1)
     VertexOut out {
         .position = pos,
         .uv = (pos.xy + float2(1, 1))/2

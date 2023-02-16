@@ -140,6 +140,8 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(gBufferPassPSO)
         renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
+//        renderEncoder.setFrontFacing(.clockwise)
+//        renderEncoder.setCullMode(.back)
         
         for model in cullingResult.models {
             model.render(
