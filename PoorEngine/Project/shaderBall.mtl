@@ -1,7 +1,27 @@
-# Blender MTL File: 'TreeFir.blend'
-# Material Count: 2
 
-newmtl Ball
+newmtl lambert7SG
+Ns 255
+Ka 0.000000 0.000000 0.000000
+#Kd 0.008250 0.524743 0.001229
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+#map_Kd vbsieik_2K_Albedo.jpg
+#map_roughness vbsieik_2K_Roughness.jpg
+#map_tangentSpaceNormal vbsieik_2K_Normal.jpg
+#map_metallic vbsieik_2K_Displacement.jpg
+#map_ao vbsieik_2K_AO.jpg
+#
+map_Kd wmqjcfsg_2K_Albedo.jpg
+map_roughness wmqjcfsg_2K_Roughness.jpg
+#map_tangentSpaceNormal wmqjcfsg_2K_Normal.jpg
+map_metallic wmqjcfsg_2K_Displacement.jpg
+map_ao wmqjcfsg_2K_AO.jpg
+
+newmtl lambert6SG
 Ns 255
 Ka 0.000000 0.000000 0.000000
 #Kd 0.008250 0.524743 0.001229
@@ -12,9 +32,22 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd vbsieik_2K_Albedo.jpg
-#map_Kd barn-ground
 map_roughness vbsieik_2K_Roughness.jpg
-#map_tangentSpaceNormal vbsieik_2K_Normal.jpg
-map_tangentSpaceNormal wmqjcfsg_2K_Normal.jpg
+map_tangentSpaceNormal vbsieik_2K_Normal.jpg
 map_metallic vbsieik_2K_Displacement.jpg
 map_ao vbsieik_2K_AO.jpg
+
+newmtl initialShadingGroup
+Ns 255
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd schvfgwp_2K_Albedo.jpg
+map_roughness schvfgwp_2K_Roughness.jpg
+map_tangentSpaceNormal schvfgwp_2K_Normal.jpg
+map_metallic schvfgwp_2K_Displacement.jpg
+#map_ao schvfgwp_2K_AO.jpg

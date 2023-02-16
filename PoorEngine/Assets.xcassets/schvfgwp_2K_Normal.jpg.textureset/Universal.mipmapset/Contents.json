@@ -1,0 +1,12 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "levels" : [
+    {
+      "filename" : "schvfgwp_2K_Normal.jpg",
+      "mipmap-level" : "base"
+    }
+  ]
+}
