@@ -7,12 +7,26 @@
 
 import Foundation
 
-enum RenderChoice {
+enum RenderChoice: CaseIterable {
     case shadered, debugLight, selectItem
 }
 
-enum RenderPath {
-    case forward, deferred, tiled
+enum RenderPath: CaseIterable {
+    case forward
+    case deferred
+    case tiled
+    
+    var name: String{
+        switch self{
+        case .forward: return "Forward"
+        case .deferred: return "Deferred"
+        case .tiled: return "Tiled"
+        }
+    }
+}
+
+extension RenderPath: Identifiable{
+    var id: Self {self}
 }
 
 class Options: ObservableObject {

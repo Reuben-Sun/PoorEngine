@@ -10,7 +10,7 @@ import SwiftUI
 let size: CGFloat = 150
 
 struct MainView: View {
-    @State var options = Options()
+    @StateObject var options: Options = Options()
     var body: some View {
         HStack{
             VStack{
@@ -19,7 +19,7 @@ struct MainView: View {
                 ContentView().frame(width: size * 4, height: size).border(Color.black, width: 2)
             }
             
-            InspectorView().frame(maxWidth: size * 2, maxHeight: .infinity).border(Color.black, width: 2)
+            InspectorView(op: options).frame(maxWidth: size * 2, maxHeight: .infinity).border(Color.black, width: 2)
         }
         .padding()
     }
@@ -30,3 +30,4 @@ struct MainVIew_Previews: PreviewProvider {
         MainView()
     }
 }
+

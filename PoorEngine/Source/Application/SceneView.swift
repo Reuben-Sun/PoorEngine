@@ -21,13 +21,13 @@ struct SceneView: View {
                 renderer: renderer,
                 metalView: $metalView,
                 options: options)
-                .onAppear {
-                    renderer = Renderer(
-                        metalView: metalView,
-                        options: options)
-                }
-                .gesture(DragGesture(minimumDistance: 0)
-                            .onChanged { value in
+            .onAppear {
+                renderer = Renderer(
+                    metalView: metalView,
+                    options: options)
+            }
+            .gesture(DragGesture(minimumDistance: 0)
+                .onChanged { value in
                     InputController.shared.touchLocation = value.location
                     InputController.shared.touchDelta = CGSize(
                         width: value.translation.width - previousTranslation.width,
@@ -39,17 +39,17 @@ struct SceneView: View {
                         InputController.shared.touchLocation = nil
                     }
                 }
-                            .onEnded {_ in
+                .onEnded {_ in
                     previousTranslation = .zero
                 })
-                .gesture(MagnificationGesture()
-                            .onChanged { value in
+            .gesture(MagnificationGesture()
+                .onChanged { value in
                     let scroll = value - previousScroll
                     InputController.shared.mouseScroll.x = Float(scroll)
                     * Settings.touchZoomSensitivity
                     previousScroll = value
                 }
-                            .onEnded {_ in
+                .onEnded {_ in
                     previousScroll = 1
                 })
         }

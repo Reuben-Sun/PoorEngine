@@ -8,19 +8,27 @@
 import SwiftUI
 
 struct InspectorView: View {
+    @ObservedObject var op: Options
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        List{
+            Text("Setting").font(.largeTitle).padding(.bottom, 8)
+            Section(header: Text("AAAAA")){
+                Picker("Select Option", selection: $op.renderPath){
+                    ForEach(RenderPath.allCases, id: \.id){path in
+                        Text(path.name).tag(path)
+                    }
+                }
+                .pickerStyle(.menu)
+            }
+            Section(header: Text("BBBBB")){
+                
+            }
+            Section(header: Text("CCCCC")){
+                
+            }
         }
-        .padding()
+        
     }
 }
 
-struct InspectorView_Previews: PreviewProvider {
-    static var previews: some View {
-        InspectorView()
-    }
-}
