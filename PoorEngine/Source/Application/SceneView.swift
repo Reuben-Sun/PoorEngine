@@ -16,42 +16,48 @@ struct SceneView: View {
     @State private var previousScroll: CGFloat = 1
     
     var body: some View {
-        VStack {
-            MetalViewRepresentable(
-                renderer: renderer,
-                metalView: $metalView,
-                options: options)
-            .onAppear {
-                renderer = Renderer(
-                    metalView: metalView,
+        GeometryReader{
+            gp in
+            VStack {
+                MetalViewRepresentable(
+                    renderer: renderer,
+                    metalView: $metalView,
                     options: options)
-            }
-            .gesture(DragGesture(minimumDistance: 0)
-                .onChanged { value in
-                    InputController.shared.touchLocation = value.location
-                    InputController.shared.touchDelta = CGSize(
-                        width: value.translation.width - previousTranslation.width,
-                        height: value.translation.height - previousTranslation.height)
-                    previousTranslation = value.translation
-                    // if the user drags, cancel the tap touch
-                    if abs(value.translation.width) > 1 ||
-                        abs(value.translation.height) > 1 {
-                        InputController.shared.touchLocation = nil
+                .onAppear {
+                    renderer = Renderer(
+                        metalView: metalView,
+                        options: options)
+                }
+                .gesture(DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        let rect = gp.frame(in: .local)
+                        if rect.contains(value.location){
+                            InputController.shared.touchLocation = value.location
+                            InputController.shared.touchDelta = CGSize(
+                                width: value.translation.width - previousTranslation.width,
+                                height: value.translation.height - previousTranslation.height)
+                            previousTranslation = value.translation
+                            // if the user drags, cancel the tap touch
+                            if abs(value.translation.width) > 1 ||
+                                abs(value.translation.height) > 1 {
+                                InputController.shared.touchLocation = nil
+                            }
+                        }
                     }
-                }
-                .onEnded {_ in
-                    previousTranslation = .zero
-                })
-            .gesture(MagnificationGesture()
-                .onChanged { value in
-                    let scroll = value - previousScroll
-                    InputController.shared.mouseScroll.x = Float(scroll)
-                    * Settings.touchZoomSensitivity
-                    previousScroll = value
-                }
-                .onEnded {_ in
-                    previousScroll = 1
-                })
+                    .onEnded {_ in
+                        previousTranslation = .zero
+                    })
+                .gesture(MagnificationGesture()
+                    .onChanged { value in
+                        //TODO: 滚轮缩放有问题，后退有距离限制，不清楚是否是设备问题
+                        let scroll = value - previousScroll
+                        InputController.shared.mouseScroll.x = Float(scroll) * Settings.touchZoomSensitivity
+                        previousScroll = value
+                    }
+                    .onEnded {_ in
+                        previousScroll = 1
+                    })
+            }
         }
     }
     
