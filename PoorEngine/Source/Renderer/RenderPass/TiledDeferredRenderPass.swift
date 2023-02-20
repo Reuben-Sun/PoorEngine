@@ -81,7 +81,7 @@ struct TiledDeferredRenderPass: RenderPass{
             storageMode: .memoryless)
     }
     
-    func draw(commandBuffer: MTLCommandBuffer, cullingResult: CullingResult, uniforms: Uniforms, params: Params) {
+    func draw(commandBuffer: MTLCommandBuffer, cullingResult: CullingResult, uniforms: Uniforms, params: Params, options: Options) {
         guard let viewCurrentRenderPassDescriptor = descriptor else {
             return
         }
@@ -120,13 +120,15 @@ struct TiledDeferredRenderPass: RenderPass{
             renderEncoder: renderEncoder,
             cullingResult: cullingResult,
             uniforms: uniforms,
-            params: params)
+            params: params,
+            options: options)
         
         drawLightingRenderPass(
             renderEncoder: renderEncoder,
             cullingResult: cullingResult,
             uniforms: uniforms,
-            params: params)
+            params: params,
+            options: options)
         renderEncoder.endEncoding()
     }
     
@@ -134,20 +136,22 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder: MTLRenderCommandEncoder,
         cullingResult: CullingResult,
         uniforms: Uniforms,
-        params: Params
+        params: Params,
+        options: Options
     ) {
         renderEncoder.label = "G-buffer render pass"
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(gBufferPassPSO)
         renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
-//        renderEncoder.setFrontFacing(.clockwise)
-//        renderEncoder.setCullMode(.back)
+        //        renderEncoder.setFrontFacing(.clockwise)
+        //        renderEncoder.setCullMode(.back)
         
         for model in cullingResult.models {
             model.render(
                 encoder: renderEncoder,
                 uniforms: uniforms,
-                params: params)
+                params: params,
+                options: options)
         }
     }
     
@@ -155,7 +159,8 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder: MTLRenderCommandEncoder,
         cullingResult: CullingResult,
         uniforms: Uniforms,
-        params: Params
+        params: Params,
+        options: Options
     ) {
         renderEncoder.label = "Lighting render pass"
         renderEncoder.setDepthStencilState(lightingDepthStencilState)

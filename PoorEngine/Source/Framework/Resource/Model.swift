@@ -48,7 +48,7 @@ class Model: Transformable {
 // Rendering
 extension Model {
     func render(encoder: MTLRenderCommandEncoder, uniforms vertex: Uniforms,
-                params fragment:Params) {
+                params fragment:Params, options: Options) {
         var uniforms = vertex
         var params = fragment
         
@@ -88,7 +88,7 @@ extension Model {
                 encoder.setFragmentBytes(&material, length: MemoryLayout<Material>.stride, index: MaterialBuffer.index)
                 //绘制
                 encoder.drawIndexedPrimitives(
-                    type: .triangle,
+                    type: options.renderChoice == RenderChoice.wireframe ? .line : .triangle,
                     indexCount: submesh.indexCount,
                     indexType: submesh.indexType,
                     indexBuffer: submesh.indexBuffer,

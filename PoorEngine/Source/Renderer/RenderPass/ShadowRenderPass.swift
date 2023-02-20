@@ -27,7 +27,8 @@ struct ShadowRenderPass: RenderPass {
     func draw(commandBuffer: MTLCommandBuffer,
               cullingResult: CullingResult,
               uniforms: Uniforms,
-              params: Params) {
+              params: Params,
+              options: Options) {
         guard let descriptor = descriptor else { return }
         descriptor.depthAttachment.texture = shadowTexture
         descriptor.depthAttachment.loadAction = .clear
@@ -44,7 +45,8 @@ struct ShadowRenderPass: RenderPass {
             model.render(
                 encoder: renderEncoder,
                 uniforms: uniforms,
-                params: params)
+                params: params,
+                options: options)
             renderEncoder.popDebugGroup()
         }
         renderEncoder.endEncoding()

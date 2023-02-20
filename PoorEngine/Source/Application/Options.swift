@@ -8,7 +8,19 @@
 import Foundation
 
 enum RenderChoice: CaseIterable {
-    case shadered, debugLight, selectItem
+    case shadered
+    case wireframe
+    
+    var name: String{
+        switch self{
+        case .shadered: return "Shadered"
+        case .wireframe: return "Wireframe"
+        }
+    }
+}
+
+extension RenderChoice: Identifiable{
+    var id: Self {self}
 }
 
 enum RenderPath: CaseIterable {
