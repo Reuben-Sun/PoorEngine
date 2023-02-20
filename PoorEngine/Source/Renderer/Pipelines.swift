@@ -29,8 +29,10 @@ enum PipelineStates {
     }
     
     static func createGBufferPassPSO(colorPixelFormat: MTLPixelFormat, tiled: Bool = false) -> MTLRenderPipelineState {
+        //TODO: makeFunction后面添加constantValues，用于debug mode
+        let constantValues = createConstanntValue()
         let vertexFunction = RHI.library?.makeFunction(name: "vertex_main")
-        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_gBuffer")
+        let fragmentFunction = try! RHI.library?.makeFunction(name: "fragment_gBuffer", constantValues: constantValues)
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
@@ -66,6 +68,14 @@ enum PipelineStates {
         pipelineDescriptor.stencilAttachmentPixelFormat = .depth32Float_stencil8
         
         return createPSO(descriptor: pipelineDescriptor)
+    }
+    
+    static func createConstanntValue() -> MTLFunctionConstantValues{
+        let contantValues = MTLFunctionConstantValues()
+        var is_sharded = true
+        contantValues.setConstantValue(&is_sharded, type: .bool, index: 0)
+        
+        return contantValues
     }
 }
 

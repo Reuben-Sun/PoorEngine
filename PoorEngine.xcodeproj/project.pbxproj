@@ -98,6 +98,7 @@
 		23601599299B570200926ADB /* CullingResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CullingResult.swift; sourceTree = "<group>"; };
 		236015A7299BBA9600926ADB /* shaderBall.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shaderBall.mtl; sourceTree = "<group>"; };
 		236015AB299BE57F00926ADB /* shaderBall.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shaderBall.obj; sourceTree = "<group>"; };
+		23A36B5A29A359640028E92E /* ShaderType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderType.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +301,7 @@
 				2360156B299A9B5A00926ADB /* CustomCore.h */,
 				2360156C299A9B7C00926ADB /* Lighting.h */,
 				2360156D299A9B9200926ADB /* Sample.h */,
+				23A36B5A29A359640028E92E /* ShaderType.h */,
 				2360156E299A9BB300926ADB /* Lighting.metal */,
 				23601570299A9BCF00926ADB /* Sample.metal */,
 			);

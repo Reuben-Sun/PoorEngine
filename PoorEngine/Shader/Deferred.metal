@@ -11,6 +11,11 @@ using namespace metal;
 #import "Include/Lighting.h"
 #import "Include/CustomCore.h"
 #import "Include/Sample.h"
+#import "Include/ShaderType.h"
+
+constant bool is_shadered [[function_constant(ShaderedFunctionConstantIndex)]];
+constant bool is_albedo [[function_constant(AlbedoFunctionConstantIndex)]];
+
 
 vertex VertexOut vertex_main(VertexIn in [[stage_in]],
                              constant Uniforms &uniforms [[buffer(11)]])
