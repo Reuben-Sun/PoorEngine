@@ -13,7 +13,7 @@ class RHI: NSObject {
     static var library: MTLLibrary!
     
     var shadowRenderPass: ShadowRenderPass
-    var tiledDeferredRenderPass: TiledDeferredRenderPass?
+    var tiledDeferredRenderPass: TiledDeferredRenderPass
     
     var options: Options
     
@@ -37,18 +37,12 @@ class RHI: NSObject {
         Self.library = library
         self.options = options
         
-        shadowRenderPass = ShadowRenderPass()
-        
-        // tile-basez，仅支持苹果芯片
-        options.tiledSupported = device.supportsFamily(.apple3)
-        if options.tiledSupported{
-            tiledDeferredRenderPass = TiledDeferredRenderPass(view: metalView)
-        }
-        else{
+        // tile-base，仅支持苹果芯片
+        if !device.supportsFamily(.apple3){
             print("WARNING: TBDR features not supported. Reverting to Forward Rendering")
-            tiledDeferredRenderPass = nil
-            options.renderPath = .forward
         }
+        shadowRenderPass = ShadowRenderPass()
+        tiledDeferredRenderPass = TiledDeferredRenderPass(view: metalView, options: options)
         
         super.init()
         
@@ -66,8 +60,12 @@ class RHI: NSObject {
 extension RHI {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         shadowRenderPass.resize(view: view, size: size)
-        tiledDeferredRenderPass?.resize(view: view, size: size)
+        tiledDeferredRenderPass.resize(view: view, size: size)
     }
+//    func resetRenderPass(metalView: MTKView, options: Options) {
+//        shadowRenderPass = ShadowRenderPass()
+//        tiledDeferredRenderPass = TiledDeferredRenderPass(view: metalView, options: options)
+//    }
     /// update
     func draw(cullingResult: CullingResult, in view: MTKView) {
         guard let commandBuffer = RHI.commandQueue.makeCommandBuffer(),
@@ -86,13 +84,13 @@ extension RHI {
                               params: params,
                               options: options)
         //TBDR
-        tiledDeferredRenderPass?.shadowTexture = shadowRenderPass.shadowTexture
-        tiledDeferredRenderPass?.descriptor = descriptor
-        tiledDeferredRenderPass?.draw(commandBuffer: commandBuffer,
-                                      cullingResult: cullingResult,
-                                      uniforms: uniforms,
-                                      params: params,
-                                      options: options)
+        tiledDeferredRenderPass.shadowTexture = shadowRenderPass.shadowTexture
+        tiledDeferredRenderPass.descriptor = descriptor
+        tiledDeferredRenderPass.draw(commandBuffer: commandBuffer,
+                                     cullingResult: cullingResult,
+                                     uniforms: uniforms,
+                                     params: params,
+                                     options: options)
         
         guard let drawable = view.currentDrawable else {
             return

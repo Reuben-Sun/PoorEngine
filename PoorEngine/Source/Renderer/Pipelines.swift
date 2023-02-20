@@ -28,20 +28,14 @@ enum PipelineStates {
         return createPSO(descriptor: pipelineDescriptor)
     }
     
-    static func createGBufferPassPSO(colorPixelFormat: MTLPixelFormat, tiled: Bool = false) -> MTLRenderPipelineState {
-        //TODO: makeFunction后面添加constantValues，用于debug mode
-        let constantValues = createConstanntValue()
+    static func createGBufferPassPSO(colorPixelFormat: MTLPixelFormat, options: Options) -> MTLRenderPipelineState {
         let vertexFunction = RHI.library?.makeFunction(name: "vertex_main")
-        let fragmentFunction = try! RHI.library?.makeFunction(name: "fragment_gBuffer", constantValues: constantValues)
+        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_gBuffer")
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
         
-        pipelineDescriptor.colorAttachments[0].pixelFormat = .invalid
-        
-        if tiled {
-            pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
-        }
+        pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
         pipelineDescriptor.setGBufferPixelFormats()
 
         pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float_stencil8
@@ -51,18 +45,18 @@ enum PipelineStates {
         return createPSO(descriptor: pipelineDescriptor)
     }
     
-    static func createLightingPassPSO(colorPixelFormat: MTLPixelFormat, tiled: Bool = false) -> MTLRenderPipelineState {
+    static func createLightingPassPSO(colorPixelFormat: MTLPixelFormat, options: Options) -> MTLRenderPipelineState {
+        let constantValues = createConstanntValue(options: options)
         let vertexFunction = RHI.library?.makeFunction(name: "vertex_quad")
         let fragment = "fragment_tiled_deferredLighting"
-        let fragmentFunction = RHI.library?.makeFunction(name: fragment)
+        // MARK: makeFunction后面添加constantValues用于开启宏，类似于#pragma keyword?
+        let fragmentFunction = try! RHI.library?.makeFunction(name: fragment, constantValues: constantValues)
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
         pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
         
-        if tiled {
-            pipelineDescriptor.setGBufferPixelFormats()
-        }
+        pipelineDescriptor.setGBufferPixelFormats()
         //pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
         pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float_stencil8
         pipelineDescriptor.stencilAttachmentPixelFormat = .depth32Float_stencil8
@@ -70,11 +64,12 @@ enum PipelineStates {
         return createPSO(descriptor: pipelineDescriptor)
     }
     
-    static func createConstanntValue() -> MTLFunctionConstantValues{
+    static func createConstanntValue(options: Options) -> MTLFunctionConstantValues{
         let contantValues = MTLFunctionConstantValues()
-        var is_sharded = true
-        contantValues.setConstantValue(&is_sharded, type: .bool, index: 0)
-        
+//        var is_sharded = options.renderChoice == .shadered
+//        var is_alebdo = options.renderChoice == .albdeo
+//        contantValues.setConstantValue(&is_sharded, type: .bool, index: 0)
+//        contantValues.setConstantValue(&is_alebdo, type: .bool, index: 1)
         return contantValues
     }
 }

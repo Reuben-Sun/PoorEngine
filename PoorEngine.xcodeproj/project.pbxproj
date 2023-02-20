@@ -48,6 +48,7 @@
 		2360159A299B570200926ADB /* CullingResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23601599299B570200926ADB /* CullingResult.swift */; };
 		236015A8299BBA9600926ADB /* shaderBall.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 236015A7299BBA9600926ADB /* shaderBall.mtl */; };
 		236015AC299BE57F00926ADB /* shaderBall.obj in Resources */ = {isa = PBXBuildFile; fileRef = 236015AB299BE57F00926ADB /* shaderBall.obj */; };
+		23A36B5E29A3A3680028E92E /* ShaderType.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B5D29A3A3680028E92E /* ShaderType.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,7 @@
 		236015A7299BBA9600926ADB /* shaderBall.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shaderBall.mtl; sourceTree = "<group>"; };
 		236015AB299BE57F00926ADB /* shaderBall.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shaderBall.obj; sourceTree = "<group>"; };
 		23A36B5A29A359640028E92E /* ShaderType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderType.h; sourceTree = "<group>"; };
+		23A36B5D29A3A3680028E92E /* ShaderType.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ShaderType.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -304,6 +306,7 @@
 				23A36B5A29A359640028E92E /* ShaderType.h */,
 				2360156E299A9BB300926ADB /* Lighting.metal */,
 				23601570299A9BCF00926ADB /* Sample.metal */,
+				23A36B5D29A3A3680028E92E /* ShaderType.metal */,
 			);
 			path = Include;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				2360154A299A94BE00926ADB /* TextureController.swift in Sources */,
 				23601596299B4D7500926ADB /* GameObject.swift in Sources */,
 				2360159A299B570200926ADB /* CullingResult.swift in Sources */,
+				23A36B5E29A3A3680028E92E /* ShaderType.metal in Sources */,
 				23601540299A90FA00926ADB /* TiledDeferredRenderPass.swift in Sources */,
 				2360158E299B1A3A00926ADB /* ContentView.swift in Sources */,
 				2360156A299A9AF000926ADB /* ShadowRenderPass.swift in Sources */,

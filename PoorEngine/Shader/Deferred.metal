@@ -11,10 +11,9 @@ using namespace metal;
 #import "Include/Lighting.h"
 #import "Include/CustomCore.h"
 #import "Include/Sample.h"
-#import "Include/ShaderType.h"
+#import "Include/ShaderType.metal"
 
-constant bool is_shadered [[function_constant(ShaderedFunctionConstantIndex)]];
-constant bool is_albedo [[function_constant(AlbedoFunctionConstantIndex)]];
+
 
 
 vertex VertexOut vertex_main(VertexIn in [[stage_in]],
@@ -87,9 +86,8 @@ fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     Material material = decodeGBuffer(gBuffer);
     float3 color = phongLighting(normal, position, params, lights, material);
     color *= gBuffer.MRT0.a;
+//    if(is_albedo){
+//        return float4(gBuffer.MRT0.xyz,1);
+//    }
     return float4(color, 1);
-//    return float4(gBuffer.MRT2.x,gBuffer.MRT2.x,gBuffer.MRT2.x, 1);
-//    return float4(pos.xyz, 1);
-//    return float4(2 * in.uv -1, 0, 1);
-//    return float4(position, 1);
 }

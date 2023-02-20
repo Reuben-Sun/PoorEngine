@@ -20,6 +20,9 @@ struct InspectorView: View {
                     }
                 }
                 .pickerStyle(.menu)
+                .onChange(of: op.renderChoice){ v in
+                    print("Change to \(v)")
+                }
             }
             Section(header: Text("BBBBB")){
                 

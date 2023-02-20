@@ -10,11 +10,13 @@ import Foundation
 enum RenderChoice: CaseIterable {
     case shadered
     case wireframe
+    case albdeo
     
     var name: String{
         switch self{
         case .shadered: return "Shadered"
         case .wireframe: return "Wireframe"
+        case .albdeo: return "Albedo"
         }
     }
 }

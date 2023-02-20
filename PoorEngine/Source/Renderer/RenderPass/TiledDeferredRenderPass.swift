@@ -21,13 +21,13 @@ struct TiledDeferredRenderPass: RenderPass{
     var positionTexture: MTLTexture?
     var depthTexture: MTLTexture?
     
-    init(view: MTKView) {
+    init(view: MTKView, options: Options) {
         gBufferPassPSO = PipelineStates.createGBufferPassPSO(
             colorPixelFormat: view.colorPixelFormat,
-            tiled: true)
+            options: options)
         lightingPassPSO = PipelineStates.createLightingPassPSO(
             colorPixelFormat: view.colorPixelFormat,
-            tiled: true)
+            options: options)
         depthStencilState = Self.buildDepthStencilState()
         lightingDepthStencilState = Self.buildLightingDepthStencilState()
     }

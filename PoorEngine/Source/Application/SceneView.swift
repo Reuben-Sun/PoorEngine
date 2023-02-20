@@ -91,6 +91,7 @@ struct SceneView: View {
         
         func updateMetalView() {
             renderer?.options = options
+            //renderer?.rhi.resetRenderPass(metalView: metalView, options: options)
         }
     }
     
