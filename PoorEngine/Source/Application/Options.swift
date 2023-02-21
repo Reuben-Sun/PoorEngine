@@ -9,7 +9,7 @@ import Foundation
 
 enum RenderChoice: Int, CaseIterable {
     case shadered
-    case wireframe
+    case normal
     case albdeo
     case metallic
     case roughness
@@ -22,7 +22,7 @@ enum RenderChoice: Int, CaseIterable {
     var name: String{
         switch self{
         case .shadered: return "Shadered"
-        case .wireframe: return "Wireframe"
+        case .normal: return "Normal"
         case .albdeo: return "Albedo"
         case .metallic: return "Metallic"
         case .roughness: return "Roughness"

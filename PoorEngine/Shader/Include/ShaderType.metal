@@ -12,10 +12,13 @@ using namespace metal;
 
 
 
-void getDebugColor(Material mat, Params params, device float3& debugColor, float3 color){
+void getDebugColor(Material mat, Params params, device float3& debugColor, float3 color, float3 normal){
     // Options.swift
     float3 c = debugColor;
-    if(params.debugMode == DEBUG_ALBEDO){
+    if(params.debugMode == DEBUG_NORMAL_WS){
+        c = normal;
+    }
+    else if(params.debugMode == DEBUG_ALBEDO){
         c = mat.baseColor;
     }
     else if(params.debugMode == DEBUG_METALLIC){

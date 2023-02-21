@@ -88,7 +88,7 @@ extension Model {
                 encoder.setFragmentBytes(&material, length: MemoryLayout<Material>.stride, index: MaterialBuffer.index)
                 //绘制
                 encoder.drawIndexedPrimitives(
-                    type: options.renderChoice == RenderChoice.wireframe ? .line : .triangle,
+                    type: .triangle,
                     indexCount: submesh.indexCount,
                     indexType: submesh.indexType,
                     indexBuffer: submesh.indexBuffer,

@@ -174,9 +174,9 @@
             filePath = "PoorEngine/Shader/Include/ShaderType.metal"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "getDebugColor(Material mat, Params params, device float3&amp; debugColor, float3 color)"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "getDebugColor(Material mat, Params params, device float3&amp; debugColor, float3 color, float3 normal)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
