@@ -80,6 +80,8 @@ fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
                                                 constant Light *lights [[buffer(LightBuffer)]],
                                                 GBufferOut gBuffer)
 {
+    device float3* debugColor = 0;
+    
     float3 normal = gBuffer.MRT1.xyz;
     float4 pos = float4(2 * in.uv -1, 1, gBuffer.MRT2.x);
     float3 position = (params.inverseVPMatrix * pos).xyz;
@@ -88,7 +90,10 @@ fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     color *= gBuffer.MRT0.a;    //shadow
     
     //debug
-    color = getDebugColor(material, params, color);
-    
+    getDebugColor(material, params, *debugColor);
+    if(params.debugMode != 0){
+        color = *debugColor;
+    }
+
     return float4(color, 1);
 }
