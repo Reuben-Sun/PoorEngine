@@ -16,7 +16,7 @@ typedef enum DebugFunctionConstant {
     AlbedoFunctionConstantIndex
 } DebugFunctionConstant;
 
-void getDebugColor(Material mat, Params params, device float3& color);
+void getDebugColor(Material mat, Params params, device float3& debugColor, float3 color);
 
 constant bool is_shadered [[function_constant(ShaderedFunctionConstantIndex)]];
 constant bool is_albedo [[function_constant(AlbedoFunctionConstantIndex)]];

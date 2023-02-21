@@ -12,7 +12,7 @@ using namespace metal;
 
 
 
-void getDebugColor(Material mat, Params params, device float3& color){
+void getDebugColor(Material mat, Params params, device float3& debugColor, float3 color){
     // Options.swift
     float3 c = 0;
     if(params.debugMode == 2){
@@ -30,5 +30,9 @@ void getDebugColor(Material mat, Params params, device float3& color){
     else if(params.debugMode == 6){
         c = mat.shininess;
     }
-    color = c;
+    else{
+        debugColor = color;
+        return;
+    }
+    debugColor = c;
 }

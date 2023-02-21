@@ -90,7 +90,7 @@ fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     color *= gBuffer.MRT0.a;    //shadow
     
     //debug
-    getDebugColor(material, params, *debugColor);
+    getDebugColor(material, params, *debugColor, color);
     if(params.debugMode != 0){
         color = *debugColor;
     }
