@@ -39,26 +39,8 @@ extension RenderChoice: Identifiable{
     var id: Self {self}
 }
 
-enum RenderPath: CaseIterable {
-    case forward
-    case deferred
-    case tiled
-    
-    var name: String{
-        switch self{
-        case .forward: return "Forward"
-        case .deferred: return "Deferred"
-        case .tiled: return "Tiled"
-        }
-    }
-}
-
-extension RenderPath: Identifiable{
-    var id: Self {self}
-}
 
 class Options: ObservableObject {
     @Published var renderChoice = RenderChoice.shadered
-    @Published var renderPath = RenderPath.deferred
-    @Published var tiledSupported = false
+    @Published var drawTriangle = true
 }

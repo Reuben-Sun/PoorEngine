@@ -13,7 +13,7 @@ struct InspectorView: View {
     var body: some View {
         List{
             Text("Inspector").font(.largeTitle).padding(.bottom, 4)
-            Section(header: Text("AAAAA")){
+            Section(header: Text("Debug View")){
                 Picker("Draw mode", selection: $op.renderChoice){
                     ForEach(RenderChoice.allCases, id: \.id){choice in
                         Text(choice.name).tag(choice)
@@ -23,6 +23,7 @@ struct InspectorView: View {
                 .onChange(of: op.renderChoice){ v in
                     print("Change to \(v)")
                 }
+                Toggle("Draw Triangle", isOn: $op.drawTriangle).toggleStyle(.switch)
             }
             Section(header: Text("BBBBB")){
                 
