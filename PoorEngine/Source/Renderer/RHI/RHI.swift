@@ -74,7 +74,7 @@ extension RHI {
         }
         
         updateUniforms(cullingResult: cullingResult)
-        updateParams(cullingResult: cullingResult)
+        updateParams(cullingResult: cullingResult, options: options)
         
         
         //阴影投射
@@ -112,10 +112,12 @@ extension RHI {
         uniforms.shadowViewMatrix = float4x4(eye: shadowCamera.position, center: shadowCamera.center, up: [0, 1, 0])
     }
     
-    func updateParams(cullingResult: CullingResult) {
+    func updateParams(cullingResult: CullingResult, options: Options) {
         params.lightCount = UInt32(cullingResult.sceneLights.pointLights.count)
         params.cameraPosition = cullingResult.camera.position
         params.inverseVPMatrix = (cullingResult.camera.viewMatrix.inverse * cullingResult.camera.projectionMatrix.inverse)
+        //TODO: 通过Param传入Debug信息，未来会修改
+        params.debugMode = uint(options.renderChoice.rawValue)
     }
 }
 

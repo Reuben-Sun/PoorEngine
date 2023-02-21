@@ -31,6 +31,7 @@ typedef struct {
     uint touchX;
     uint touchY;
     matrix_float4x4 inverseVPMatrix;    //VP矩阵的逆
+    uint debugMode;
 } Params;
 
 typedef enum {

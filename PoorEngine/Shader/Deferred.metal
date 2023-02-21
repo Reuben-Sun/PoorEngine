@@ -11,7 +11,7 @@ using namespace metal;
 #import "Include/Lighting.h"
 #import "Include/CustomCore.h"
 #import "Include/Sample.h"
-#import "Include/ShaderType.metal"
+#import "Include/ShaderType.h"
 
 
 
@@ -85,9 +85,10 @@ fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     float3 position = (params.inverseVPMatrix * pos).xyz;
     Material material = decodeGBuffer(gBuffer);
     float3 color = phongLighting(normal, position, params, lights, material);
-    color *= gBuffer.MRT0.a;
-//    if(is_albedo){
-//        return float4(gBuffer.MRT0.xyz,1);
-//    }
+    color *= gBuffer.MRT0.a;    //shadow
+    
+    //debug
+    color = getDebugColor(material, params, color);
+    
     return float4(color, 1);
 }

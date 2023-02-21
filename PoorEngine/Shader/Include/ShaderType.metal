@@ -10,5 +10,24 @@ using namespace metal;
 
 #import "ShaderType.h"
 
-constant bool is_shadered [[function_constant(ShaderedFunctionConstantIndex)]];
-constant bool is_albedo [[function_constant(AlbedoFunctionConstantIndex)]];
+
+
+float3 getDebugColor(Material mat, Params params, float3 color){
+    // Options.swift
+    if(params.debugMode == 2){
+        color = mat.baseColor;
+    }
+    else if(params.debugMode == 3){
+        color = mat.metallic;
+    }
+    else if(params.debugMode == 4){
+        color = mat.roughness;
+    }
+    else if(params.debugMode == 5){
+        color = mat.ambientOcclusion;
+    }
+    else if(params.debugMode == 6){
+        color = mat.shininess;
+    }
+    return color;
+}

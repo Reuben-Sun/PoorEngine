@@ -7,16 +7,30 @@
 
 import Foundation
 
-enum RenderChoice: CaseIterable {
+enum RenderChoice: Int, CaseIterable {
     case shadered
     case wireframe
     case albdeo
+    case metallic
+    case roughness
+    case ambientOcclusion
+    case shininess
+    case diffuse
+    case specular
+    case lightOnly
     
     var name: String{
         switch self{
         case .shadered: return "Shadered"
         case .wireframe: return "Wireframe"
         case .albdeo: return "Albedo"
+        case .metallic: return "Metallic"
+        case .roughness: return "Roughness"
+        case .ambientOcclusion: return "AO"
+        case .shininess: return "Shininess"
+        case .diffuse: return "Diffuse"
+        case .specular: return "Specular"
+        case .lightOnly: return "LightOnly"
         }
     }
 }
