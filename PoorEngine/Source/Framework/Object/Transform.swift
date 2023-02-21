@@ -9,7 +9,7 @@ import Foundation
 
 struct Transform {
     var position: float3 = [0, 0, 0]
-    var rotation: float3 = [0, 0, 0]
+    var rotation: float3 = [0, 0, 0]    //MARK: 旋转的单位为弧度，3.14就是绕轴旋转180度
     var scale: Float = 1
 }
 

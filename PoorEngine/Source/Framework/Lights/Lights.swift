@@ -17,7 +17,7 @@ struct Lights {
     let sunlight: Light = {
         var light = Self.buildDefaultLight()
         light.position = [3, 3, -2]
-        light.color = [3, 3, 3]
+        light.color = [1, 1, 1]
         return light
     }()
     

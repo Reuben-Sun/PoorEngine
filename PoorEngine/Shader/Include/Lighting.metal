@@ -10,6 +10,7 @@ using namespace metal;
 
 #import "Lighting.h"
 #import "CustomCore.h"
+#import "ShaderType.h"
 
 //着色函数库
 constant float pi = 3.1415926535897932384626433832795;
@@ -91,10 +92,8 @@ float3 BRDF(float3  L,
     float3  H     = normalize(V + L);
     float NoV = clamp(dot(N, V), 0.0, 1.0);
     float NoL = clamp(dot(N, L), 0.0, 1.0);
-    float LoH = clamp(dot(L, H), 0.0, 1.0);
+    //float LoH = clamp(dot(L, H), 0.0, 1.0);
     float NoH = clamp(dot(N, H), 0.0, 1.0);
-    
-    float3 color = float3(0.0);
     
     float rroughness = max(0.05, material.roughness);
     
@@ -103,11 +102,10 @@ float3 BRDF(float3  L,
     float3 F = F_Schlick(NoV, F0);
     
     float3 spec = D * F * G / (4.0 * NoL * NoV + 0.001);
-    float3 Kd   = (float3(1.0) - F) * (1.0 - material.metallic);
+    //float3 Kd   = (float3(1.0) - F) * (1.0 - material.metallic);
+    //color += (Kd * material.baseColor / pi + (1.0 - Kd) * spec);
     
-    color += (Kd * material.baseColor / pi + (1.0 - Kd) * spec);
-    
-    return color;
+    return spec;
 }
 
 float3 phongLighting(float3 normalWS,
@@ -118,15 +116,37 @@ float3 phongLighting(float3 normalWS,
                      device float3& debugColor)
 {
     float3 color(0,0,0);
+    float3 diffuse = float3(0.0);
+    float3 specular = float3(0.0);
+    float3 tempColor = float3(0.0); //debug
     
     for (uint i = 0; i < params.lightCount; i++){
         Light light = lights[i];
         float attenuation = getAttenuation(light, positionWS);
         float3 lightDir = normalize(light.position);
-//        float3 reflectionDir = reflect(lightDir, normalWS);
+        //float3 reflectionDir = reflect(lightDir, normalWS);
         float3 viewDir = normalize(params.cameraPosition);
-        color += BRDF(lightDir, viewDir, normalWS, material.specularColor, material) * light.color * attenuation;
+        
+        float NoL = clamp(dot(normalWS, lightDir), 0.0, 1.0);
+        float3 intensity = light.color * attenuation * NoL;
+        color += intensity; //MARK: 这里是用于debug记录light only，后面会被覆盖为真正的着色结果
+        diffuse += material.baseColor * intensity;
+        specular += BRDF(lightDir, viewDir, normalWS, material.specularColor, material) * intensity;
     }
+    //debug
+    if(params.debugMode == DEBUG_DIFFUSE){
+        tempColor = diffuse;
+    }
+    else if(params.debugMode == DEBUG_SPECULAR){
+        tempColor = specular;
+    }
+    else if(params.debugMode == DEBUG_LIGHTONLY){
+        tempColor = color;
+    }
+    debugColor = tempColor;
+    
+    color = diffuse + specular;
+    
     return color;
 }
 

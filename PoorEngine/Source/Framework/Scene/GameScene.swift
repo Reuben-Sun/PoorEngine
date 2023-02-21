@@ -33,7 +33,7 @@ struct GameScene {
         var ballGO = GameObject(name: "shaderBall", meshName: "shaderBall", exten: "obj")
         ballGO.position = [0,0,0]
         ballGO.scale = 0.01
-        ballGO.rotation = [0,0.5,0]
+        ballGO.rotation = [0,1.57,0]
         ballGO.model.transform = ballGO.transform
         var largePlaneGO = GameObject(name: "large_plane", meshName: "large_plane", exten: "obj")
         goList = [ballGO, largePlaneGO]
