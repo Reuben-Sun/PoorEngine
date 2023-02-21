@@ -86,7 +86,7 @@ fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     float4 pos = float4(2 * in.uv -1, 1, gBuffer.MRT2.x);
     float3 position = (params.inverseVPMatrix * pos).xyz;
     Material material = decodeGBuffer(gBuffer);
-    float3 color = phongLighting(normal, position, params, lights, material);
+    float3 color = phongLighting(normal, position, params, lights, material, *debugColor);
     color *= gBuffer.MRT0.a;    //shadow
     
     //debug

@@ -23,7 +23,8 @@ float3 phongLighting(float3 normalWS,
                      float3 positionWS,
                      constant Params &params,
                      constant Light *lights,
-                     Material material);
+                     Material material,
+                     device float3& debugColor);
 
 float3 computeDiffuse(Material material,
                       float3 normalWS,

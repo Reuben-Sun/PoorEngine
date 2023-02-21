@@ -11,6 +11,12 @@
 #import "Common.h"
 #import "CustomCore.h"
 
+#define DEBUG_ALBEDO 2
+#define DEBUG_METALLIC 3
+#define DEBUG_ROUGHNESS 4
+#define DEBUG_AO 5
+#define DEBUG_SHININESS 6
+
 typedef enum DebugFunctionConstant {
     ShaderedFunctionConstantIndex,
     AlbedoFunctionConstantIndex
