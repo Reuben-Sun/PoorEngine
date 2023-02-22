@@ -11,10 +11,13 @@ import Metal
 class Quad: Transformable {
     var transform = Transform()
     var vertexBuffer: MTLBuffer
+    
+    // mac端最大细分数
+    static let maxTessellation: Int = 64
+    
     init() {
         vertexBuffer =  RHI.device.makeBuffer(bytes: vertices,
-                                              length: MemoryLayout<float3>.stride * vertices.count,
-                                              options: [])!
+                                              length: MemoryLayout<float3>.stride * vertices.count, options: [])!
     }
     let vertices: [float3] = [
         [-1,  0,  1],
@@ -24,10 +27,11 @@ class Quad: Transformable {
         [ 1,  0,  1],
         [ 1,  0, -1]
     ]
-    
-    
-    static func createControlPoint(patches: (horizontal: Int, vertical: Int),
-                                   size: (width: Float, height: Float)
+}
+
+extension Quad {
+    static func createControlPoints(patches: (horizontal: Int, vertical: Int),
+                            size: (width: Float, height: Float)
     )->[float3]{
         var points: [float3] = []
         

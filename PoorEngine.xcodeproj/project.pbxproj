@@ -51,6 +51,7 @@
 		23A36B5E29A3A3680028E92E /* ShaderType.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B5D29A3A3680028E92E /* ShaderType.metal */; };
 		23A36B6329A5CF830028E92E /* TerrainQuad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6229A5CF830028E92E /* TerrainQuad.swift */; };
 		23A36B6529A5F6280028E92E /* Terrain.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6429A5F6280028E92E /* Terrain.metal */; };
+		23A36B6929A656760028E92E /* TessellationComputePass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6829A656760028E92E /* TessellationComputePass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +106,7 @@
 		23A36B5D29A3A3680028E92E /* ShaderType.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ShaderType.metal; sourceTree = "<group>"; };
 		23A36B6229A5CF830028E92E /* TerrainQuad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainQuad.swift; sourceTree = "<group>"; };
 		23A36B6429A5F6280028E92E /* Terrain.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Terrain.metal; sourceTree = "<group>"; };
+		23A36B6829A656760028E92E /* TessellationComputePass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TessellationComputePass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +196,7 @@
 		2360152F299A823A00926ADB /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				23A36B6A29A656990028E92E /* ComputePass */,
 				23601535299A891500926ADB /* RenderPass */,
 				23601534299A890D00926ADB /* RHI */,
 				2360154F299A958600926ADB /* VertexDescriptor.swift */,
@@ -343,6 +346,14 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		23A36B6A29A656990028E92E /* ComputePass */ = {
+			isa = PBXGroup;
+			children = (
+				23A36B6829A656760028E92E /* TessellationComputePass.swift */,
+			);
+			path = ComputePass;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -427,6 +438,7 @@
 				23601573299A9C0D00926ADB /* Shadow.metal in Sources */,
 				2360151E299A80A300926ADB /* MainView.swift in Sources */,
 				23601568299A99E900926ADB /* Options.swift in Sources */,
+				23A36B6929A656760028E92E /* TessellationComputePass.swift in Sources */,
 				23601562299A974900926ADB /* ShadowCamera.swift in Sources */,
 				23601554299A960600926ADB /* InputController.swift in Sources */,
 				2360154A299A94BE00926ADB /* TextureController.swift in Sources */,

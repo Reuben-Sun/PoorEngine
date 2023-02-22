@@ -104,6 +104,7 @@ enum PipelineStates {
         vertexDescriptor.attributes[0].offset = 0
         vertexDescriptor.attributes[0].bufferIndex = 0
         vertexDescriptor.layouts[0].stride = MemoryLayout<float3>.stride
+        vertexDescriptor.layouts[0].stepFunction = .perPatchControlPoint
         pipelineDescriptor.vertexDescriptor = vertexDescriptor
         
         return createPSO(descriptor: pipelineDescriptor)
