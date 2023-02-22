@@ -18,6 +18,30 @@ enum PipelineStates {
         return pipelineState
     }
     
+    // 创建常量缓冲
+    static func createConstanntValue(options: Options) -> MTLFunctionConstantValues{
+        let contantValues = MTLFunctionConstantValues()
+        //        var is_sharded = options.renderChoice == .shadered
+        //        var is_alebdo = options.renderChoice == .albdeo
+        //        contantValues.setConstantValue(&is_sharded, type: .bool, index: 0)
+        //        contantValues.setConstantValue(&is_alebdo, type: .bool, index: 1)
+        return contantValues
+    }
+    
+    // 创建Compute Shader Pipeline
+    static func createComputePSO(function: String) -> MTLComputePipelineState {
+        guard let kernel = RHI.library.makeFunction(name: function) else {
+            fatalError("Unable to create \(function) PSO")
+        }
+        let pipelineState: MTLComputePipelineState
+        do {
+            pipelineState = try RHI.device.makeComputePipelineState(function: kernel)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+        return pipelineState
+    }
+    
     static func createShadowPassPSO() -> MTLRenderPipelineState {
         let vertexFunction = RHI.library?.makeFunction(name: "vertex_depth")
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -37,7 +61,7 @@ enum PipelineStates {
         
         pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
         pipelineDescriptor.setGBufferPixelFormats()
-
+        
         pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float_stencil8
         pipelineDescriptor.stencilAttachmentPixelFormat = .depth32Float_stencil8
         
@@ -64,14 +88,26 @@ enum PipelineStates {
         return createPSO(descriptor: pipelineDescriptor)
     }
     
-    static func createConstanntValue(options: Options) -> MTLFunctionConstantValues{
-        let contantValues = MTLFunctionConstantValues()
-//        var is_sharded = options.renderChoice == .shadered
-//        var is_alebdo = options.renderChoice == .albdeo
-//        contantValues.setConstantValue(&is_sharded, type: .bool, index: 0)
-//        contantValues.setConstantValue(&is_alebdo, type: .bool, index: 1)
-        return contantValues
+    static func createTerrainPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
+        let vertexFunction = RHI.library?.makeFunction(name: "vertex_main")
+        //TODO: change main to gbuffer
+        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_main")
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.vertexFunction = vertexFunction
+        pipelineDescriptor.fragmentFunction = fragmentFunction
+        pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+        //vertex descriptor
+        let vertexDescriptor = MTLVertexDescriptor()
+        vertexDescriptor.attributes[0].format = .float3
+        vertexDescriptor.attributes[0].offset = 0
+        vertexDescriptor.attributes[0].bufferIndex = 0
+        vertexDescriptor.layouts[0].stride = MemoryLayout<float3>.stride
+        pipelineDescriptor.vertexDescriptor = vertexDescriptor
+        
+        return createPSO(descriptor: pipelineDescriptor)
     }
+    
 }
 
 extension MTLRenderPipelineDescriptor {

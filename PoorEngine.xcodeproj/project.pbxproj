@@ -49,6 +49,7 @@
 		236015A8299BBA9600926ADB /* shaderBall.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 236015A7299BBA9600926ADB /* shaderBall.mtl */; };
 		236015AC299BE57F00926ADB /* shaderBall.obj in Resources */ = {isa = PBXBuildFile; fileRef = 236015AB299BE57F00926ADB /* shaderBall.obj */; };
 		23A36B5E29A3A3680028E92E /* ShaderType.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B5D29A3A3680028E92E /* ShaderType.metal */; };
+		23A36B6329A5CF830028E92E /* TerrainQuad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6229A5CF830028E92E /* TerrainQuad.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +102,7 @@
 		236015AB299BE57F00926ADB /* shaderBall.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shaderBall.obj; sourceTree = "<group>"; };
 		23A36B5A29A359640028E92E /* ShaderType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderType.h; sourceTree = "<group>"; };
 		23A36B5D29A3A3680028E92E /* ShaderType.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ShaderType.metal; sourceTree = "<group>"; };
+		23A36B6229A5CF830028E92E /* TerrainQuad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainQuad.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -333,6 +335,7 @@
 				2360154D299A94FC00926ADB /* Model.swift */,
 				23601547299A946700926ADB /* Submesh.swift */,
 				2360154B299A94E800926ADB /* Mesh.swift */,
+				23A36B6229A5CF830028E92E /* TerrainQuad.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				23601571299A9BCF00926ADB /* Sample.metal in Sources */,
 				2360155B299A96DA00926ADB /* Camera.swift in Sources */,
 				23601558299A966000926ADB /* GameScene.swift in Sources */,
+				23A36B6329A5CF830028E92E /* TerrainQuad.swift in Sources */,
 				2360153E299A904D00926ADB /* RHI.swift in Sources */,
 				23601564299A97FA00926ADB /* Pipelines.swift in Sources */,
 				23601548299A946700926ADB /* Submesh.swift in Sources */,
