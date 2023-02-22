@@ -89,14 +89,15 @@ enum PipelineStates {
     }
     
     static func createTerrainPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
-        let vertexFunction = RHI.library?.makeFunction(name: "vertex_main")
-        //TODO: change main to gbuffer
-        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_main")
+        let vertexFunction = RHI.library?.makeFunction(name: "vertex_terrain")
+        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_gBuffer")
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
         pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
-        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+        pipelineDescriptor.setGBufferPixelFormats()
+        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float_stencil8
+        pipelineDescriptor.stencilAttachmentPixelFormat = .depth32Float_stencil8
         //vertex descriptor
         let vertexDescriptor = MTLVertexDescriptor()
         vertexDescriptor.attributes[0].format = .float3

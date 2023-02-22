@@ -50,6 +50,7 @@
 		236015AC299BE57F00926ADB /* shaderBall.obj in Resources */ = {isa = PBXBuildFile; fileRef = 236015AB299BE57F00926ADB /* shaderBall.obj */; };
 		23A36B5E29A3A3680028E92E /* ShaderType.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B5D29A3A3680028E92E /* ShaderType.metal */; };
 		23A36B6329A5CF830028E92E /* TerrainQuad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6229A5CF830028E92E /* TerrainQuad.swift */; };
+		23A36B6529A5F6280028E92E /* Terrain.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6429A5F6280028E92E /* Terrain.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +104,7 @@
 		23A36B5A29A359640028E92E /* ShaderType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderType.h; sourceTree = "<group>"; };
 		23A36B5D29A3A3680028E92E /* ShaderType.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ShaderType.metal; sourceTree = "<group>"; };
 		23A36B6229A5CF830028E92E /* TerrainQuad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainQuad.swift; sourceTree = "<group>"; };
+		23A36B6429A5F6280028E92E /* Terrain.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Terrain.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 				23601565299A985600926ADB /* Include */,
 				23601572299A9C0D00926ADB /* Shadow.metal */,
 				23601574299A9CB100926ADB /* Deferred.metal */,
+				23A36B6429A5F6280028E92E /* Terrain.metal */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 				23601562299A974900926ADB /* ShadowCamera.swift in Sources */,
 				23601554299A960600926ADB /* InputController.swift in Sources */,
 				2360154A299A94BE00926ADB /* TextureController.swift in Sources */,
+				23A36B6529A5F6280028E92E /* Terrain.metal in Sources */,
 				23601596299B4D7500926ADB /* GameObject.swift in Sources */,
 				2360159A299B570200926ADB /* CullingResult.swift in Sources */,
 				23A36B5E29A3A3680028E92E /* ShaderType.metal in Sources */,

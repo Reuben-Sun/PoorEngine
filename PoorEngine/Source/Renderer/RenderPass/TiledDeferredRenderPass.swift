@@ -13,6 +13,7 @@ struct TiledDeferredRenderPass: RenderPass{
     
     var gBufferPassPSO: MTLRenderPipelineState
     var lightingPassPSO: MTLRenderPipelineState
+    var terrainPassPSO: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState?
     let lightingDepthStencilState: MTLDepthStencilState?
     weak var shadowTexture: MTLTexture?
@@ -30,6 +31,7 @@ struct TiledDeferredRenderPass: RenderPass{
             options: options)
         depthStencilState = Self.buildDepthStencilState()
         lightingDepthStencilState = Self.buildLightingDepthStencilState()
+        terrainPassPSO = PipelineStates.createTerrainPSO(colorPixelFormat: view.colorPixelFormat)
     }
     
     static func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -123,6 +125,13 @@ struct TiledDeferredRenderPass: RenderPass{
             params: params,
             options: options)
         
+        drawTerrainRenderPass(
+            renderEncoder: renderEncoder,
+            cullingResult: cullingResult,
+            uniforms: uniforms,
+            params: params,
+            options: options)
+        
         drawLightingRenderPass(
             renderEncoder: renderEncoder,
             cullingResult: cullingResult,
@@ -184,6 +193,43 @@ struct TiledDeferredRenderPass: RenderPass{
                                      vertexStart: 0,
                                      vertexCount: 6)
         renderEncoder.popDebugGroup()
+    }
+    
+    func drawTerrainRenderPass(
+        renderEncoder: MTLRenderCommandEncoder,
+        cullingResult: CullingResult,
+        uniforms: Uniforms,
+        params: Params,
+        options: Options
+    ) {
+        renderEncoder.label = "Terrain render pass"
+        renderEncoder.setDepthStencilState(depthStencilState)
+        renderEncoder.setRenderPipelineState(terrainPassPSO)
+        //        renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
+        var uniforms = uniforms
+        renderEncoder.setVertexBytes(
+            &uniforms,
+            length: MemoryLayout<Uniforms>.stride,
+            index: UniformsBuffer.index)
+        
+        var params = params
+        renderEncoder.setFragmentBytes(
+            &params,
+            length: MemoryLayout<Params>.stride,
+            index: ParamsBuffer.index)
+        
+        // draw
+        renderEncoder.setVertexBuffer(
+            cullingResult.terrainQuad.vertexBuffer,
+            offset: 0,
+            index: 0)
+//        let fillmode: MTLTriangleFillMode = options.isWireframe ? .lines : .fill
+//        renderEncoder.setTriangleFillMode(fillmode)
+        
+        renderEncoder.drawPrimitives(
+            type: .triangle,
+            vertexStart: 0,
+            vertexCount: cullingResult.terrainQuad.vertices.count)
     }
 }
 

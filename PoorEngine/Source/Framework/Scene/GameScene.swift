@@ -14,7 +14,7 @@ struct GameScene {
     var goList: [GameObject] = []
     var debugMainCamera: ArcballCamera?
     var debugShadowCamera: OrthographicCamera?
-    
+    var terrainQuad = Quad()
     var shouldDrawMainCamera = false
     var shouldDrawLightCamera = false
     var shouldDrawBoundingSphere = false
