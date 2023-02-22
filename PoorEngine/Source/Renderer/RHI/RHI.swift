@@ -62,10 +62,7 @@ extension RHI {
         shadowRenderPass.resize(view: view, size: size)
         tiledDeferredRenderPass.resize(view: view, size: size)
     }
-//    func resetRenderPass(metalView: MTKView, options: Options) {
-//        shadowRenderPass = ShadowRenderPass()
-//        tiledDeferredRenderPass = TiledDeferredRenderPass(view: metalView, options: options)
-//    }
+
     /// update
     func draw(cullingResult: CullingResult, in view: MTKView) {
         guard let commandBuffer = RHI.commandQueue.makeCommandBuffer(),
@@ -102,7 +99,6 @@ extension RHI {
     func updateUniforms(cullingResult: CullingResult) {
         uniforms.viewMatrix = cullingResult.camera.viewMatrix
         uniforms.projectionMatrix = cullingResult.camera.projectionMatrix
-        //        uniforms.inverseVPMatrix = (uniforms.viewMatrix * uniforms.projectionMatrix).inverse
         
         shadowCamera.viewSize = 16
         shadowCamera.far = 16
