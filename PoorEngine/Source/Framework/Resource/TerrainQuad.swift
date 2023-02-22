@@ -10,12 +10,12 @@ import Metal
 
 struct Quad {
     let vertices: [float3] = [
-        [-1,  0,  1],
-        [ 1,  0, -1],
-        [-1,  0, -1],
-        [-1,  0,  1],
-        [ 1,  0, -1],
-        [ 1,  0,  1]
+        [-1,  1,  1],
+        [ 1,  1, -1],
+        [-1,  1, -1],
+        [-1,  1,  1],
+        [ 1,  1, -1],
+        [ 1,  1,  1]
     ]
     
     var vertexBuffer: MTLBuffer {
@@ -41,10 +41,10 @@ struct Quad {
                 let right = left + width
                 let top = bottom + height
                 
-                points.append([left, 0, top])
-                points.append([right, 0, top])
-                points.append([right, 0, bottom])
-                points.append([left, 0, bottom])
+                points.append([left, 1, top])
+                points.append([right, 1, top])
+                points.append([right, 1, bottom])
+                points.append([left, 1, bottom])
             }
         }
         
