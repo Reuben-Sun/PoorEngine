@@ -235,8 +235,8 @@ struct TiledDeferredRenderPass: RenderPass{
             offset: 0,
             index: 0)
         
-        renderEncoder.setTriangleFillMode(.fill)
-
+        // MARK: 线框debug，由于我们使用TBDR，只有一个Encoder，因此执行CS后要恢复.fill
+        renderEncoder.setTriangleFillMode(options.drawTriangle ? .fill : .lines)
         
         renderEncoder.drawPatches(
               numberOfPatchControlPoints: 4,
@@ -246,6 +246,8 @@ struct TiledDeferredRenderPass: RenderPass{
               patchIndexBufferOffset: 0,
               instanceCount: 1,
               baseInstance: 0)
+        
+        renderEncoder.setTriangleFillMode(.fill)
     }
 }
 
