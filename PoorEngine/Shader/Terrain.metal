@@ -23,8 +23,18 @@ vertex VertexOut vertex_terrain(patch_control_point<TerrainVertexIn> in [[stage_
     float v = patch_coord.y;
 
     VertexOut out;
-//    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * in.position;
-    out.position = float4(u,v,0,1);
+    // 顶点结构为
+    // 0  1
+    // 3  2
+    // 这里是根据patch_coord进行插值
+    float2 top = mix(in[0].position.xz, in[1].position.xz, u);
+    float2 bottom = mix(in[3].position.xz, in[2].position.xz, u);
+    // MARK: 由(top, bottom, v)改为(bottom, top, v)，以实现面片翻转
+    float2 interpolated = mix(bottom, top, v);
+    // 模型空间position
+    float4 pos = float4(interpolated.x, 0.0, interpolated.y, 1.0);
+    // NDC position
+    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * pos;
     out.color = float3(u,v,0);
     return out;
 }
