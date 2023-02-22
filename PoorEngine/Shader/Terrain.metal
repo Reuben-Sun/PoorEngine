@@ -35,6 +35,7 @@ vertex VertexOut vertex_terrain(patch_control_point<TerrainVertexIn> in [[stage_
     float4 pos = float4(interpolated.x, 0.0, interpolated.y, 1.0);
     // NDC position
     out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * pos;
+    // TODO: uv颜色方向好像不对
     out.color = float3(u,v,0);
     return out;
 }
