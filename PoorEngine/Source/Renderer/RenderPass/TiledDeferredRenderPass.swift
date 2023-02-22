@@ -223,12 +223,9 @@ struct TiledDeferredRenderPass: RenderPass{
             cullingResult.terrainQuad.vertexBuffer,
             offset: 0,
             index: 0)
-<<<<<<< Updated upstream
-//        let fillmode: MTLTriangleFillMode = options.isWireframe ? .lines : .fill
-//        renderEncoder.setTriangleFillMode(fillmode)
-=======
-        renderEncoder.setTriangleFillMode(.fill)
->>>>>>> Stashed changes
+        
+        renderEncoder.setTriangleFillMode(.lines)
+
         
         renderEncoder.drawPrimitives(
             type: .triangle,
