@@ -228,11 +228,11 @@ struct TiledDeferredRenderPass: RenderPass{
             offset: 0,
             index: 0)
         
-        renderEncoder.setTriangleFillMode(options.terrainFill ? .fill : .lines)
+        renderEncoder.setTriangleFillMode(.fill)
 
         
         renderEncoder.drawPrimitives(
-            type: .triangle,
+            type: options.drawTriangle ? .triangle : .line,
             vertexStart: 0,
             vertexCount: cullingResult.terrainQuad.vertices.count)
     }

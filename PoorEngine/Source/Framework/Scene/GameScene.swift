@@ -39,8 +39,8 @@ struct GameScene {
 //        goList = [ballGO, largePlaneGO]
         goList = [ballGO]
         
-        terrainQuad.position = [1.5,0,1.5]
-        terrainQuad.scale = 3
+        terrainQuad.position = [0,0,0]
+        terrainQuad.scale = 5
         terrainQuad.rotation = [0,1.57,0]
     }
     

@@ -24,7 +24,6 @@ struct InspectorView: View {
                     print("Change to \(v)")
                 }
                 Toggle("Draw Triangle", isOn: $op.drawTriangle).toggleStyle(.switch)
-                Toggle("Terrain Fill", isOn: $op.terrainFill).toggleStyle(.switch)
             }
             Section(header: Text("BBBBB")){
                 
