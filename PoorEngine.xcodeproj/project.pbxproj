@@ -195,7 +195,6 @@
 				23601534299A890D00926ADB /* RHI */,
 				2360154F299A958600926ADB /* VertexDescriptor.swift */,
 				23601551299A95E300926ADB /* Renderer.swift */,
-				23601563299A97FA00926ADB /* Pipelines.swift */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -203,6 +202,7 @@
 		23601534299A890D00926ADB /* RHI */ = {
 			isa = PBXGroup;
 			children = (
+				23601563299A97FA00926ADB /* Pipelines.swift */,
 				2360153D299A904D00926ADB /* RHI.swift */,
 			);
 			path = RHI;
