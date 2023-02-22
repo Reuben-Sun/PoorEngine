@@ -52,6 +52,7 @@
 		23A36B6329A5CF830028E92E /* TerrainQuad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6229A5CF830028E92E /* TerrainQuad.swift */; };
 		23A36B6529A5F6280028E92E /* Terrain.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6429A5F6280028E92E /* Terrain.metal */; };
 		23A36B6929A656760028E92E /* TessellationComputePass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6829A656760028E92E /* TessellationComputePass.swift */; };
+		23A36B6C29A65C5C0028E92E /* Tessellation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6B29A65C5C0028E92E /* Tessellation.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +108,7 @@
 		23A36B6229A5CF830028E92E /* TerrainQuad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainQuad.swift; sourceTree = "<group>"; };
 		23A36B6429A5F6280028E92E /* Terrain.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Terrain.metal; sourceTree = "<group>"; };
 		23A36B6829A656760028E92E /* TessellationComputePass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TessellationComputePass.swift; sourceTree = "<group>"; };
+		23A36B6B29A65C5C0028E92E /* Tessellation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Tessellation.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 				23601572299A9C0D00926ADB /* Shadow.metal */,
 				23601574299A9CB100926ADB /* Deferred.metal */,
 				23A36B6429A5F6280028E92E /* Terrain.metal */,
+				23A36B6B29A65C5C0028E92E /* Tessellation.metal */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 				23A36B5E29A3A3680028E92E /* ShaderType.metal in Sources */,
 				23601540299A90FA00926ADB /* TiledDeferredRenderPass.swift in Sources */,
 				2360158E299B1A3A00926ADB /* ContentView.swift in Sources */,
+				23A36B6C29A65C5C0028E92E /* Tessellation.metal in Sources */,
 				2360156A299A9AF000926ADB /* ShadowRenderPass.swift in Sources */,
 				23601544299A932000926ADB /* MathLibrary.swift in Sources */,
 				23601542299A913200926ADB /* RenderPass.swift in Sources */,

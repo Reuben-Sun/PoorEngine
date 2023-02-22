@@ -14,19 +14,18 @@ struct TerrainVertexIn {
     float4 position [[attribute(0)]];
 };
 
-vertex VertexOut vertex_terrain(TerrainVertexIn in [[stage_in]],
-                                constant Uniforms &uniforms [[buffer(11)]])
+[[patch(quad, 4)]]
+vertex VertexOut vertex_terrain(patch_control_point<TerrainVertexIn> in [[stage_in]],
+                                constant Uniforms &uniforms [[buffer(11)]],
+                                float2 patch_coord [[position_in_patch]])
 {
+    float u = patch_coord.x;
+    float v = patch_coord.y;
+
     VertexOut out;
-    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * in.position;
-    out.normal = 0;
-    out.uv = 0;
-    out.color = 0;
-    out.positionWS = 0;
-    out.normalWS = 0;
-    out.tangentWS = 0;
-    out.bitangentWS = 0;
-    out.shadowPosition = 0;
+//    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * in.position;
+    out.position = float4(u,v,0,1);
+    out.color = float3(u,v,0);
     return out;
 }
 

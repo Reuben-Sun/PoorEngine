@@ -14,6 +14,7 @@ struct TiledDeferredRenderPass: RenderPass{
     var gBufferPassPSO: MTLRenderPipelineState
     var lightingPassPSO: MTLRenderPipelineState
     var terrainPassPSO: MTLRenderPipelineState
+    var tessellationComputePass: TessellationComputePass
     
     let depthStencilState: MTLDepthStencilState?
     let lightingDepthStencilState: MTLDepthStencilState?
@@ -35,6 +36,8 @@ struct TiledDeferredRenderPass: RenderPass{
         
         depthStencilState = Self.buildDepthStencilState()
         lightingDepthStencilState = Self.buildLightingDepthStencilState()
+        
+        tessellationComputePass = TessellationComputePass(view: view, options: options)
     }
     
     static func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -90,6 +93,8 @@ struct TiledDeferredRenderPass: RenderPass{
         guard let viewCurrentRenderPassDescriptor = descriptor else {
             return
         }
+        // MARK: tesselation pass
+        tessellationComputePass.tessellation(commandBuffer: commandBuffer)
         
         // MARK: G-buffer pass
         let descriptor = viewCurrentRenderPassDescriptor
@@ -223,18 +228,24 @@ struct TiledDeferredRenderPass: RenderPass{
             index: ParamsBuffer.index)
         
         // draw
+        renderEncoder.setTessellationFactorBuffer(tessellationComputePass.tessellationFactorsBuffer, offset: 0, instanceStride: 0)
+        
         renderEncoder.setVertexBuffer(
-            cullingResult.terrainQuad.vertexBuffer,
+            tessellationComputePass.controlPointsBuffer,
             offset: 0,
             index: 0)
         
         renderEncoder.setTriangleFillMode(.fill)
 
         
-        renderEncoder.drawPrimitives(
-            type: options.drawTriangle ? .triangle : .line,
-            vertexStart: 0,
-            vertexCount: cullingResult.terrainQuad.vertices.count)
+        renderEncoder.drawPatches(
+              numberOfPatchControlPoints: 4,
+              patchStart: 0,
+              patchCount: tessellationComputePass.patchCount,
+              patchIndexBuffer: nil,
+              patchIndexBufferOffset: 0,
+              instanceCount: 1,
+              baseInstance: 0)
     }
 }
 
