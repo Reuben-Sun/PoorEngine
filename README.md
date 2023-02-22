@@ -9,19 +9,27 @@
   - [ ] 提高阴影精度
 
 - [ ] 材质逻辑
-  - [ ] 材质参数
-  - [ ] 贴图加载（贴图的Gamma矫正、贴图和参数的同时使用）
-- [ ] usd场景管理
+  - [x] 材质参数
+  - [x] 贴图加载（贴图的Gamma矫正、贴图和参数的同时使用）
+  - [ ] 材质编辑器
+- [ ] 场景管理
+  - [ ] usd/xml
+
 - [ ] 更好的PBR
 - [ ] 模型切换
-- [ ] Compute Shader
+- [x] Compute Shader
 - [ ] Tile Base Culling Lighting
-- [ ] Inspector Menu
+- [x] Inspector Menu
 - [ ] 管线配置
-- [ ] Debug View
+- [x] Debug View
 - [ ] Shadow map
 - [ ] SSSR
 - [ ] SPH流体
+- [ ] Terrain
+  - [x] 根据相机位置曲面细分
+  - [ ] 地表着色
+  - [ ] 贴图融合（RVT）
+
 
 ### 材质
 
