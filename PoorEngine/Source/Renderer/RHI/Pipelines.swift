@@ -90,7 +90,7 @@ enum PipelineStates {
     
     static func createTerrainPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
         let vertexFunction = RHI.library?.makeFunction(name: "vertex_terrain")
-        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_terrain_gBuffer")
+        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_gBuffer")
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction

@@ -15,7 +15,6 @@ struct TiledDeferredRenderPass: RenderPass{
     var lightingPassPSO: MTLRenderPipelineState
     var terrainPassPSO: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState?
-    let terrainDepthStencilState: MTLDepthStencilState?
     let lightingDepthStencilState: MTLDepthStencilState?
     weak var shadowTexture: MTLTexture?
     var albedoTexture: MTLTexture?
@@ -30,11 +29,9 @@ struct TiledDeferredRenderPass: RenderPass{
         lightingPassPSO = PipelineStates.createLightingPassPSO(
             colorPixelFormat: view.colorPixelFormat,
             options: options)
-        terrainPassPSO = PipelineStates.createTerrainPSO(colorPixelFormat: view.colorPixelFormat)
-        
         depthStencilState = Self.buildDepthStencilState()
         lightingDepthStencilState = Self.buildLightingDepthStencilState()
-        terrainDepthStencilState = Self.buildDepthStencilState()
+        terrainPassPSO = PipelineStates.createTerrainPSO(colorPixelFormat: view.colorPixelFormat)
     }
     
     static func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -206,7 +203,7 @@ struct TiledDeferredRenderPass: RenderPass{
         options: Options
     ) {
         renderEncoder.label = "Terrain render pass"
-        renderEncoder.setDepthStencilState(terrainDepthStencilState)
+        renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(terrainPassPSO)
         //        renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
         var uniforms = uniforms
@@ -226,7 +223,12 @@ struct TiledDeferredRenderPass: RenderPass{
             cullingResult.terrainQuad.vertexBuffer,
             offset: 0,
             index: 0)
-        renderEncoder.setTriangleFillMode(.lines)
+<<<<<<< Updated upstream
+//        let fillmode: MTLTriangleFillMode = options.isWireframe ? .lines : .fill
+//        renderEncoder.setTriangleFillMode(fillmode)
+=======
+        renderEncoder.setTriangleFillMode(.fill)
+>>>>>>> Stashed changes
         
         renderEncoder.drawPrimitives(
             type: .triangle,

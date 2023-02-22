@@ -21,22 +21,11 @@ vertex VertexOut vertex_terrain(TerrainVertexIn in [[stage_in]],
     out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * in.position;
     out.normal = 0;
     out.uv = 0;
-    out.color = float3(1,0,1);
+    out.color = 0;
     out.positionWS = 0;
     out.normalWS = 0;
     out.tangentWS = 0;
     out.bitangentWS = 0;
     out.shadowPosition = 0;
-    return out;
-}
-
-fragment GBufferOut fragment_terrain_gBuffer(VertexOut in [[stage_in]],
-                                     constant Params &params [[buffer(ParamsBuffer)]],
-                                     constant Material &material [[buffer(MaterialBuffer)]])
-{
-    GBufferOut out;
-    out.MRT0 = float4(1,0,1, 1);
-    out.MRT1 = float4(0.0);
-    out.MRT2 = float4(0.0);
     return out;
 }
