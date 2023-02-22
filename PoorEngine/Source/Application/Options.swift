@@ -43,4 +43,5 @@ extension RenderChoice: Identifiable{
 class Options: ObservableObject {
     @Published var renderChoice = RenderChoice.shadered
     @Published var drawTriangle = true
+    @Published var terrainFill = true
 }
