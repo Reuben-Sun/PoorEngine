@@ -12,7 +12,7 @@ struct TessellationComputePass {
     // 曲面细分PSO
     var tessellationComputePSO: MTLComputePipelineState
     
-    let patches = (horizontal: 6, vertical: 6)
+    let patches = (horizontal: 2, vertical: 2)
     var patchCount: Int {
         patches.horizontal * patches.vertical
     }
@@ -24,10 +24,12 @@ struct TessellationComputePass {
     
     var controlPointsBuffer: MTLBuffer?
     
+    var terrain = Terrain(size: [2, 2], height: 1, maxTessellation: UInt32(Quad.maxTessellation))
+    
     init(view: MTKView, options: Options){
         tessellationComputePSO = PipelineStates.createComputePSO(function: "tessellation_main")
         
-        let controlPoints = Quad.createControlPoints(patches: patches, size: (2, 2))
+        let controlPoints = Quad.createControlPoints(patches: patches, size: (terrain.size.x, terrain.size.y))
         controlPointsBuffer = RHI.device.makeBuffer(bytes: controlPoints,
                                                     length: MemoryLayout<float3>.stride * controlPoints.count)
         
@@ -36,7 +38,7 @@ struct TessellationComputePass {
             options: .storageModePrivate)
     }
     
-    func tessellation(commandBuffer: MTLCommandBuffer) {
+    func tessellation(commandBuffer: MTLCommandBuffer, cullingResult: CullingResult) {
         guard let computeEncoder = commandBuffer.makeComputeCommandEncoder() else { return }
         computeEncoder.setComputePipelineState(tessellationComputePSO)
         var edgeFactors = edgeFactors
@@ -50,6 +52,22 @@ struct TessellationComputePass {
         computeEncoder.setBuffer(tessellationFactorsBuffer,
                                  offset: 0,
                                  index: 2)
+        
+        var cameraPos = float4(cullingResult.camera.position, 0)
+        computeEncoder.setBytes(&cameraPos,
+                                length: MemoryLayout<float4>.stride,
+                                index: 3)
+        var matrix = cullingResult.terrainQuad.transform.modelMatrix
+        computeEncoder.setBytes(&matrix,
+                                length: MemoryLayout<float4x4>.stride,
+                                index: 4)
+        computeEncoder.setBuffer(controlPointsBuffer,
+                                 offset: 0,
+                                 index: 5)
+        var terrain = terrain
+        computeEncoder.setBytes(&terrain,
+                                length: MemoryLayout<Terrain>.stride,
+                                index: 6)
         
         let width = min(patchCount, tessellationComputePSO.threadExecutionWidth)
         let gridSize = MTLSize(width: patchCount, height: 1, depth: 1)

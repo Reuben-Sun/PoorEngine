@@ -96,10 +96,17 @@ typedef struct {
     float shininess;   //emission
 } Material;     //Surface
 
+// GBuffer index
 typedef enum {
     RenderTarget0 = 1,
     RenderTarget1 = 2,
     RenderTarget2 = 3
 } RenderTargetIndices;
 
+// Terrain
+typedef struct {
+    vector_float2 size;
+    float height;
+    uint maxTessellation;
+} Terrain;
 #endif /* Common_h */

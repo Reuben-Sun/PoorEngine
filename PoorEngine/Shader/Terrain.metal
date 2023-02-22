@@ -26,6 +26,10 @@ vertex VertexOut vertex_terrain(patch_control_point<TerrainVertexIn> in [[stage_
     // 顶点结构为
     // 0  1
     // 3  2
+    // 边的结构为
+    //   1
+    // 0   2
+    //   3
     // 这里是根据patch_coord进行插值
     float2 top = mix(in[0].position.xz, in[1].position.xz, u);
     float2 bottom = mix(in[3].position.xz, in[2].position.xz, u);

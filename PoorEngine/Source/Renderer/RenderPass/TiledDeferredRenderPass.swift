@@ -94,7 +94,7 @@ struct TiledDeferredRenderPass: RenderPass{
             return
         }
         // MARK: tesselation pass
-        tessellationComputePass.tessellation(commandBuffer: commandBuffer)
+        tessellationComputePass.tessellation(commandBuffer: commandBuffer, cullingResult: cullingResult)
         
         // MARK: G-buffer pass
         let descriptor = viewCurrentRenderPassDescriptor

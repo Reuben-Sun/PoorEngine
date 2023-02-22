@@ -106,6 +106,11 @@ enum PipelineStates {
         vertexDescriptor.layouts[0].stride = MemoryLayout<float3>.stride
         vertexDescriptor.layouts[0].stepFunction = .perPatchControlPoint
         pipelineDescriptor.vertexDescriptor = vertexDescriptor
+        //tessellation
+        pipelineDescriptor.tessellationFactorStepFunction = .perPatch
+        pipelineDescriptor.maxTessellationFactor = Quad.maxTessellation
+        //设置细分数值四舍五入(round)模式，默认为二的幂，这里设为最近的偶数
+        pipelineDescriptor.tessellationPartitionMode = .fractionalEven
         
         return createPSO(descriptor: pipelineDescriptor)
     }
