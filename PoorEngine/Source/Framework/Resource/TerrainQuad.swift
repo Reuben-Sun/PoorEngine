@@ -8,21 +8,23 @@
 import Foundation
 import Metal
 
-struct Quad {
+class Quad: Transformable {
+    var transform = Transform()
+    var vertexBuffer: MTLBuffer
+    init() {
+        vertexBuffer =  RHI.device.makeBuffer(bytes: vertices,
+                                              length: MemoryLayout<float3>.stride * vertices.count,
+                                              options: [])!
+    }
     let vertices: [float3] = [
-        [-1,  1,  1],
-        [ 1,  1, -1],
-        [-1,  1, -1],
-        [-1,  1,  1],
-        [ 1,  1, -1],
-        [ 1,  1,  1]
+        [-1,  0,  1],
+        [ 1,  0, -1],
+        [-1,  0, -1],
+        [-1,  0,  1],
+        [ 1,  0, -1],
+        [ 1,  0,  1]
     ]
     
-    var vertexBuffer: MTLBuffer {
-        RHI.device.makeBuffer(bytes: vertices,
-                              length: MemoryLayout<float3>.stride * vertices.count,
-                              options: [])!
-    }
     
     static func createControlPoint(patches: (horizontal: Int, vertical: Int),
                                    size: (width: Float, height: Float)

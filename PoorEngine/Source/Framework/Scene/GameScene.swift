@@ -35,8 +35,13 @@ struct GameScene {
         ballGO.scale = 0.01
         ballGO.rotation = [0,1.57,0]
         ballGO.model.transform = ballGO.transform
-        var largePlaneGO = GameObject(name: "large_plane", meshName: "large_plane", exten: "obj")
-        goList = [ballGO, largePlaneGO]
+//        var largePlaneGO = GameObject(name: "large_plane", meshName: "large_plane", exten: "obj")
+//        goList = [ballGO, largePlaneGO]
+        goList = [ballGO]
+        
+        terrainQuad.position = [1.5,0,1.5]
+        terrainQuad.scale = 3
+        terrainQuad.rotation = [0,1.57,0]
     }
     
     

@@ -14,8 +14,10 @@ struct TiledDeferredRenderPass: RenderPass{
     var gBufferPassPSO: MTLRenderPipelineState
     var lightingPassPSO: MTLRenderPipelineState
     var terrainPassPSO: MTLRenderPipelineState
+    
     let depthStencilState: MTLDepthStencilState?
     let lightingDepthStencilState: MTLDepthStencilState?
+    
     weak var shadowTexture: MTLTexture?
     var albedoTexture: MTLTexture?
     var normalTexture: MTLTexture?
@@ -29,9 +31,10 @@ struct TiledDeferredRenderPass: RenderPass{
         lightingPassPSO = PipelineStates.createLightingPassPSO(
             colorPixelFormat: view.colorPixelFormat,
             options: options)
+        terrainPassPSO = PipelineStates.createTerrainPSO(colorPixelFormat: view.colorPixelFormat)
+        
         depthStencilState = Self.buildDepthStencilState()
         lightingDepthStencilState = Self.buildLightingDepthStencilState()
-        terrainPassPSO = PipelineStates.createTerrainPSO(colorPixelFormat: view.colorPixelFormat)
     }
     
     static func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -207,6 +210,7 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder.setRenderPipelineState(terrainPassPSO)
         //        renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
         var uniforms = uniforms
+        uniforms.modelMatrix = cullingResult.terrainQuad.transform.modelMatrix
         renderEncoder.setVertexBytes(
             &uniforms,
             length: MemoryLayout<Uniforms>.stride,
