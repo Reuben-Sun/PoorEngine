@@ -243,7 +243,10 @@ struct TiledDeferredRenderPass: RenderPass{
             offset: 0,
             index: 0)
         
-        renderEncoder.setVertexTexture(heightMap, index: 0)
+        if options.useHeightmap {
+            renderEncoder.setVertexTexture(heightMap, index: 0)
+        }
+        
         var terrain = tessellationComputePass.terrain
         renderEncoder.setVertexBytes(&terrain, length: MemoryLayout<Terrain>.stride, index: TerrainBuffer.index)
         
