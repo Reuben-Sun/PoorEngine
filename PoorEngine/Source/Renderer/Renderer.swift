@@ -39,7 +39,7 @@ extension Renderer: MTKViewDelegate {
         let deltaTime = (currentTime - lastTime)
         lastTime = currentTime
         scene.update(deltaTime: Float(deltaTime))
-        cullingResult.cull(scene: scene)
+        cullingResult.cull(scene: scene, options: options)
         rhi.draw(cullingResult: cullingResult, in: view)
     }
 }

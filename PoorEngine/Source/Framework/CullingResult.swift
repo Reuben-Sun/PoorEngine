@@ -15,12 +15,14 @@ struct CullingResult{
     var isPaused = false
     var terrainQuad = Quad()
     
-    mutating func cull(scene: GameScene){
+    mutating func cull(scene: GameScene, options: Options){
         models = []
-        for gameObject in scene.goList{
-            models.append(gameObject.model)
-            Self.objectId += 1
-        }
+        if options.drawGameObject {
+            for gameObject in scene.goList{
+                models.append(gameObject.model)
+                Self.objectId += 1
+            }
+        }     
         camera = scene.camera
         isPaused = scene.isPaused
         sceneLights = scene.sceneLights
