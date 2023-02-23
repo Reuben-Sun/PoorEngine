@@ -12,7 +12,7 @@ struct TessellationComputePass {
     // 曲面细分PSO
     var tessellationComputePSO: MTLComputePipelineState
     
-    let patches = (horizontal: 2, vertical: 2)
+    let patches = (horizontal: 6, vertical: 6)
     var patchCount: Int {
         patches.horizontal * patches.vertical
     }
@@ -24,7 +24,7 @@ struct TessellationComputePass {
     
     var controlPointsBuffer: MTLBuffer?
     
-    var terrain = Terrain(size: [2, 2], height: 1, maxTessellation: UInt32(Quad.maxTessellation))
+    var terrain = Terrain(size: [8, 8], height: 1, maxTessellation: UInt32(Quad.maxTessellation))
     
 
     
