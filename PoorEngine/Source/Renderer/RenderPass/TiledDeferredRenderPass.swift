@@ -24,6 +24,8 @@ struct TiledDeferredRenderPass: RenderPass{
     var normalTexture: MTLTexture?
     var positionTexture: MTLTexture?
     var depthTexture: MTLTexture?
+
+    var heightMap: MTLTexture?
     
     init(view: MTKView, options: Options) {
         gBufferPassPSO = PipelineStates.createGBufferPassPSO(
@@ -87,6 +89,12 @@ struct TiledDeferredRenderPass: RenderPass{
             pixelFormat: .depth32Float_stencil8,
             label: "Depth Texture",
             storageMode: .memoryless)
+        
+        do {
+            heightMap = try TextureController.loadTexture(filename: "mountain")
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
     
     func draw(commandBuffer: MTLCommandBuffer, cullingResult: CullingResult, uniforms: Uniforms, params: Params, options: Options) {
@@ -234,6 +242,10 @@ struct TiledDeferredRenderPass: RenderPass{
             tessellationComputePass.controlPointsBuffer,
             offset: 0,
             index: 0)
+        
+        renderEncoder.setVertexTexture(heightMap, index: 0)
+        var terrain = tessellationComputePass.terrain
+        renderEncoder.setVertexBytes(&terrain, length: MemoryLayout<Terrain>.stride, index: TerrainBuffer.index)
         
         // MARK: 线框debug，由于我们使用TBDR，只有一个Encoder，因此执行CS后要恢复.fill
         renderEncoder.setTriangleFillMode(options.drawTriangle ? .fill : .lines)

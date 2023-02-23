@@ -16,7 +16,9 @@ struct TerrainVertexIn {
 
 [[patch(quad, 4)]]
 vertex VertexOut vertex_terrain(patch_control_point<TerrainVertexIn> in [[stage_in]],
-                                constant Uniforms &uniforms [[buffer(11)]],
+                                constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
+                                texture2d<float> heightMap [[texture(0)]],
+                                constant Terrain &terrain [[buffer(TerrainBuffer)]],
                                 float2 patch_coord [[position_in_patch]])
 {
     float u = patch_coord.x;
@@ -37,10 +39,18 @@ vertex VertexOut vertex_terrain(patch_control_point<TerrainVertexIn> in [[stage_
     float2 interpolated = mix(bottom, top, v);
     // 模型空间position
     float4 pos = float4(interpolated.x, 0.0, interpolated.y, 1.0);
+    
+    // heightmap
+    float2 xy = (pos.xz + terrain.size / 2.0) / terrain.size;
+    constexpr sampler sample;
+    float encodeHeight = heightMap.sample(sample, xy).r;
+    float decodeHeight = (encodeHeight * 2 - 1) * terrain.height;
+    pos.y = decodeHeight;
+    
     // NDC position
     out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * pos;
     // TODO: uv颜色方向好像不对
-    out.color = float3(u,v,0);
+    out.color = float3(decodeHeight);
     return out;
 }
 

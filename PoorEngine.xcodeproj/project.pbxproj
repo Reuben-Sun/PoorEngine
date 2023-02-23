@@ -53,6 +53,7 @@
 		23A36B6529A5F6280028E92E /* Terrain.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6429A5F6280028E92E /* Terrain.metal */; };
 		23A36B6929A656760028E92E /* TessellationComputePass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6829A656760028E92E /* TessellationComputePass.swift */; };
 		23A36B6C29A65C5C0028E92E /* Tessellation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6B29A65C5C0028E92E /* Tessellation.metal */; };
+		23A36B6E29A727920028E92E /* DrawModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6D29A727920028E92E /* DrawModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +110,7 @@
 		23A36B6429A5F6280028E92E /* Terrain.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Terrain.metal; sourceTree = "<group>"; };
 		23A36B6829A656760028E92E /* TessellationComputePass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TessellationComputePass.swift; sourceTree = "<group>"; };
 		23A36B6B29A65C5C0028E92E /* Tessellation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Tessellation.metal; sourceTree = "<group>"; };
+		23A36B6D29A727920028E92E /* DrawModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 			children = (
 				23601563299A97FA00926ADB /* Pipelines.swift */,
 				2360153D299A904D00926ADB /* RHI.swift */,
+				23A36B6D29A727920028E92E /* DrawModel.swift */,
 			);
 			path = RHI;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				23601571299A9BCF00926ADB /* Sample.metal in Sources */,
 				2360155B299A96DA00926ADB /* Camera.swift in Sources */,
 				23601558299A966000926ADB /* GameScene.swift in Sources */,
+				23A36B6E29A727920028E92E /* DrawModel.swift in Sources */,
 				23A36B6329A5CF830028E92E /* TerrainQuad.swift in Sources */,
 				2360153E299A904D00926ADB /* RHI.swift in Sources */,
 				23601564299A97FA00926ADB /* Pipelines.swift in Sources */,

@@ -49,6 +49,7 @@ typedef enum {
     ColorBuffer = 2,
     TangentBuffer = 3,
     BitangentBuffer = 4,
+    TerrainBuffer = 6,
     UniformsBuffer = 11,
     ParamsBuffer = 12,
     LightBuffer = 13,

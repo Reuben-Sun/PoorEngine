@@ -26,6 +26,8 @@ struct TessellationComputePass {
     
     var terrain = Terrain(size: [2, 2], height: 1, maxTessellation: UInt32(Quad.maxTessellation))
     
+
+    
     init(view: MTKView, options: Options){
         tessellationComputePSO = PipelineStates.createComputePSO(function: "tessellation_main")
         
