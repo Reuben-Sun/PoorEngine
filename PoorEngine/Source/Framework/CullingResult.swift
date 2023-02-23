@@ -19,13 +19,27 @@ struct CullingResult{
         models = []
         if options.drawGameObject {
             for gameObject in scene.goList{
-                models.append(gameObject.model)
-                Self.objectId += 1
+                if gameObject.tag == .opaque {
+                    models.append(gameObject.model)
+                    Self.objectId += 1
+                }
+                else if gameObject.tag == .ground {
+                    if !options.terrainReplacePlane {
+                        models.append(gameObject.model)
+                        Self.objectId += 1
+                    }
+                }
             }
         }     
         camera = scene.camera
         isPaused = scene.isPaused
         sceneLights = scene.sceneLights
-        terrainQuad = scene.terrainQuad
+        if options.terrainReplacePlane {
+            terrainQuad = scene.terrainQuad
+        } else {
+            terrainQuad = nil
+        }
+        
+        
     }
 }

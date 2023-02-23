@@ -27,6 +27,7 @@ struct InspectorView: View {
                 
             }
             Section(header: Text("Terrain")){
+                Toggle("Terrain Replace Plane", isOn: $op.terrainReplacePlane).toggleStyle(.switch)
                 Toggle("Draw GameObject", isOn: $op.drawGameObject).toggleStyle(.switch)
                 Toggle("Use Heightmap", isOn: $op.useHeightmap).toggleStyle(.switch)
             }
