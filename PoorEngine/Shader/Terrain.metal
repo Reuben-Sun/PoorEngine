@@ -35,10 +35,10 @@ vertex VertexOut vertex_terrain(patch_control_point<TerrainVertexIn> in [[stage_
     // 这里是根据patch_coord进行插值
     float2 top = mix(in[0].position.xz, in[1].position.xz, u);
     float2 bottom = mix(in[3].position.xz, in[2].position.xz, u);
-    // MARK: 由(top, bottom, v)改为(bottom, top, v)，以实现面片翻转
-    float2 interpolated = mix(bottom, top, v);
-    // 模型空间position
-    float4 pos = float4(interpolated.x, 0.0, interpolated.y, 1.0);
+    // MARK: 由(top, bottom, v)改为(bottom, top, v), 以实现面片翻转
+    float2 interpolated = mix(top, bottom, v);
+    // MARK: 模型空间position, 由(x, 0, y, 1)替换为(y, 0, x, 1), 不然会有裂缝
+    float4 pos = float4(interpolated.y, 0.0, interpolated.x, 1.0);
     
     // heightmap
     float2 xy = (pos.xz + terrain.size / 2.0) / terrain.size;
