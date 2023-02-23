@@ -1,4 +1,24 @@
 
 {
-    "name": "Ball"
+    "sceneName": "BallScene",
+    "gameObject": [
+        {
+            "name": "shaderBallGO",
+            "modelName": "shaderBall",
+            "exten": "obj",
+            "position" : [0, 0, 0],
+            "scale": 0.01,
+            "rotation": [0, 90, 0],
+            "tag": "opaque",
+        },
+        {
+            "name": "largePlaneGO",
+            "modelName": "large_plane",
+            "exten": "obj",
+            "position" : [0, 0, 0],
+            "scale": 1,
+            "rotation": [0, 0, 0],
+            "tag": "ground",
+        },
+    ],
 }

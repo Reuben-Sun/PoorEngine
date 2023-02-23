@@ -8,7 +8,18 @@
 import Foundation
 
 struct SceneContent: Codable {
+    var sceneName: String
+    var gameObject: [GOContent]
+}
+
+struct GOContent: Codable {
     var name: String
+    var modelName: String
+    var exten: String
+    var position: [Float]
+    var scale: Float
+    var rotation: [Float]
+    var tag: String
 }
 
 enum SceneJson {

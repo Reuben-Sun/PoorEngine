@@ -28,6 +28,40 @@ struct GameScene {
         goList = []        
     }
     
+    init(sceneJsonName: String) {
+        camera.far = 10
+        camera.transform = defaultView
+        camera.target = [0, 1, 0]
+        camera.distance = 4
+        goList = []
+        var scene = SceneJson.loadScene(fileName: sceneJsonName)
+        for go in scene.gameObject {
+            var gameObject = GameObject(name: go.name, meshName: go.modelName, exten: go.exten)
+            gameObject.position = [go.position[0], go.position[1], go.position[2]]
+            gameObject.scale = go.scale
+            gameObject.rotation = [go.rotation[0].degreesToRadians,
+                                   go.rotation[1].degreesToRadians,
+                                   go.rotation[2].degreesToRadians]
+            gameObject.model.transform = gameObject.transform
+            gameObject.tag = GameObjectTag(rawValue: go.tag) ?? .opaque
+            goList.append(gameObject)
+        }
+        
+//        var ballGO = GameObject(name: "shaderBall", meshName: "shaderBall", exten: "obj")
+//        ballGO.position = [0,0,0]
+//        ballGO.scale = 0.01
+//        ballGO.rotation = [0,Float(90).degreesToRadians,0]
+//        ballGO.model.transform = ballGO.transform
+//        scene.goList.append(ballGO)
+//        scene.terrainQuad = Quad()
+//        scene.terrainQuad!.position = [0,0,0]
+//        scene.terrainQuad!.rotation = [0,Float(90).degreesToRadians,0]
+//        var largePlaneGO = GameObject(name: "large_plane", meshName: "large_plane", exten: "obj")
+//        largePlaneGO.tag = .ground
+//        scene.goList.append(largePlaneGO)
+
+    }
+    
     
     /// 更新场景
     /// Swift知识：mutating是异变函数的关键词，使得不可变的结构体，通过创建新结构体赋值的方式可变
