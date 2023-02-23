@@ -34,6 +34,9 @@ class Renderer: NSObject {
         largePlaneGO.tag = .ground
         scene.goList.append(largePlaneGO)
         
+        var ballScene = SceneJson.loadScene(fileName: "BallScene")
+        print(ballScene.name)
+        
         cullingResult = CullingResult()
         super.init()
         self.options = options

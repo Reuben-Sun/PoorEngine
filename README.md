@@ -16,6 +16,8 @@
   - [ ] usd/xml
 
 - [ ] 更好的PBR
+  - [ ] Stencil Light Pass
+
 - [ ] 模型切换
 - [x] Compute Shader
 - [ ] Tile Base Culling Lighting
