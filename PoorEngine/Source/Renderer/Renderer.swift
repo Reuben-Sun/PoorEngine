@@ -19,7 +19,6 @@ class Renderer: NSObject {
     init(metalView: MTKView, options: Options) {
         rhi = RHI(metalView: metalView, options: options)
         scene = GameScene(sceneJsonName: "BallScene")
-        
         cullingResult = CullingResult()
         super.init()
         self.options = options

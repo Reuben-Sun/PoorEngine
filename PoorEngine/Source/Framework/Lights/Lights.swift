@@ -16,7 +16,7 @@ struct Lights {
     
     let sunlight: Light = {
         var light = Self.buildDefaultLight()
-        light.position = [3, 3, -2]
+        light.direction = [3, 3, -2]
         light.color = [1, 1, 1]
         return light
     }()
@@ -78,6 +78,7 @@ struct Lights {
     static func buildDefaultLight() -> Light {
         var light = Light()
         light.position = [0, 0, 0]
+        light.direction = [0, 0, 0]
         light.color = [1, 1, 1]
         light.specularColor = [0.6, 0.6, 0.6]
         light.attenuation = [1, 0, 0]

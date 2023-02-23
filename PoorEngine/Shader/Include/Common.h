@@ -79,6 +79,7 @@ typedef enum {
 typedef struct {
     LightType type;
     vector_float3 position;     //MARK: 对于方向光，这是方向光的方向，这个逻辑需不需要改？
+    vector_float3 direction;
     vector_float3 color;
     vector_float3 specularColor;
     float radius;

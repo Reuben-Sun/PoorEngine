@@ -16,6 +16,7 @@ using namespace metal;
 constant float pi = 3.1415926535897932384626433832795;
 
 //获得灯光衰减信息
+// TODO: 修改灯光逻辑后，衰减要进行迭代
 float getAttenuation(Light light, float3 positionWS){
     float attenuation = 0;
     
@@ -123,7 +124,7 @@ float3 phongLighting(float3 normalWS,
     for (uint i = 0; i < params.lightCount; i++){
         Light light = lights[i];
         float attenuation = getAttenuation(light, positionWS);
-        float3 lightDir = normalize(light.position);
+        float3 lightDir = normalize(light.direction);
         //float3 reflectionDir = reflect(lightDir, normalWS);
         float3 viewDir = normalize(params.cameraPosition);
         
