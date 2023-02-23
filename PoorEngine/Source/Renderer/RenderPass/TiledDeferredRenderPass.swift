@@ -37,7 +37,7 @@ struct TiledDeferredRenderPass: RenderPass{
         lightingPassPSO = PipelineStates.createLightingPassPSO(
             colorPixelFormat: view.colorPixelFormat,
             options: options)
-        terrainPassPSO = PipelineStates.createTerrainPassPSO(colorPixelFormat: view.colorPixelFormat)
+        terrainPassPSO = PipelineStates.createTerrainPSO(colorPixelFormat: view.colorPixelFormat)
         
         depthStencilState = Self.buildDepthStencilState()
         lightingDepthStencilState = Self.buildLightingDepthStencilState()
@@ -229,7 +229,7 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder.setRenderPipelineState(terrainPassPSO)
         //        renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
         var uniforms = uniforms
-        uniforms.modelMatrix = cullingResult.terrainQuad?.transform.modelMatrix
+        uniforms.modelMatrix = cullingResult.terrainQuad.transform.modelMatrix
         renderEncoder.setVertexBytes(
             &uniforms,
             length: MemoryLayout<Uniforms>.stride,
