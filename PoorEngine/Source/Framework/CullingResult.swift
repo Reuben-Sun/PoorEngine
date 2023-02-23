@@ -13,15 +13,33 @@ struct CullingResult{
     var camera = ArcballCamera()
     var sceneLights = Lights()
     var isPaused = false
+    var terrainQuad: Quad?
     
-    mutating func cull(scene: GameScene){
+    mutating func cull(scene: GameScene, options: Options){
         models = []
-        for gameObject in scene.goList{
-            models.append(gameObject.model)
-            Self.objectId += 1
-        }
+        if options.drawGameObject {
+            for gameObject in scene.goList{
+                if gameObject.tag == .opaque {
+                    models.append(gameObject.model)
+                    Self.objectId += 1
+                }
+                else if gameObject.tag == .ground {
+                    if !options.terrainReplacePlane {
+                        models.append(gameObject.model)
+                        Self.objectId += 1
+                    }
+                }
+            }
+        }     
         camera = scene.camera
         isPaused = scene.isPaused
         sceneLights = scene.sceneLights
+        if options.terrainReplacePlane {
+            terrainQuad = scene.terrainQuad
+        } else {
+            terrainQuad = nil
+        }
+        
+        
     }
 }

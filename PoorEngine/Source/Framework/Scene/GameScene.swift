@@ -14,7 +14,7 @@ struct GameScene {
     var goList: [GameObject] = []
     var debugMainCamera: ArcballCamera?
     var debugShadowCamera: OrthographicCamera?
-    
+    var terrainQuad: Quad?
     var shouldDrawMainCamera = false
     var shouldDrawLightCamera = false
     var shouldDrawBoundingSphere = false
@@ -25,18 +25,7 @@ struct GameScene {
         camera.transform = defaultView
         camera.target = [0, 1, 0]
         camera.distance = 4
-        
-//        sceneLights.addPointLight(count: 200, min: [-6, 0.1, -6], max: [6, 0.3, 6])
-//        sceneLights.compileLightBuffer()
-        
-        //TODO: scene加载逻辑，用usd做场景管理
-        var ballGO = GameObject(name: "shaderBall", meshName: "shaderBall", exten: "obj")
-        ballGO.position = [0,0,0]
-        ballGO.scale = 0.01
-        ballGO.rotation = [0,1.57,0]
-        ballGO.model.transform = ballGO.transform
-        var largePlaneGO = GameObject(name: "large_plane", meshName: "large_plane", exten: "obj")
-        goList = [ballGO, largePlaneGO]
+        goList = []        
     }
     
     

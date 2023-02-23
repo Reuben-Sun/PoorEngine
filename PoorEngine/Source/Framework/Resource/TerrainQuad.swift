@@ -8,24 +8,30 @@
 import Foundation
 import Metal
 
-struct Quad {
+class Quad: Transformable {
+    var transform = Transform()
+    var vertexBuffer: MTLBuffer
+    
+    // mac端最大细分数
+    static let maxTessellation: Int = 64
+    
+    init() {
+        vertexBuffer =  RHI.device.makeBuffer(bytes: vertices,
+                                              length: MemoryLayout<float3>.stride * vertices.count, options: [])!
+    }
     let vertices: [float3] = [
         [-1,  0,  1],
         [ 1,  0, -1],
         [-1,  0, -1],
         [-1,  0,  1],
-        [ 1,  0, -1],
-        [ 1,  0,  1]
+        [ 1,  0,  1],
+        [ 1,  0, -1]
     ]
-    
-    var vertexBuffer: MTLBuffer {
-        RHI.device.makeBuffer(bytes: vertices,
-                              length: MemoryLayout<float3>.stride * vertices.count,
-                              options: [])!
-    }
-    
-    static func createControlPoint(patches: (horizontal: Int, vertical: Int),
-                                   size: (width: Float, height: Float)
+}
+
+extension Quad {
+    static func createControlPoints(patches: (horizontal: Int, vertical: Int),
+                            size: (width: Float, height: Float)
     )->[float3]{
         var points: [float3] = []
         
@@ -41,10 +47,10 @@ struct Quad {
                 let right = left + width
                 let top = bottom + height
                 
-                points.append([left, 0, top])
-                points.append([right, 0, top])
-                points.append([right, 0, bottom])
-                points.append([left, 0, bottom])
+                points.append([left, 1, top])
+                points.append([right, 1, top])
+                points.append([right, 1, bottom])
+                points.append([left, 1, bottom])
             }
         }
         

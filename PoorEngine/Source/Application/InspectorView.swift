@@ -24,9 +24,12 @@ struct InspectorView: View {
                     print("Change to \(v)")
                 }
                 Toggle("Draw Triangle", isOn: $op.drawTriangle).toggleStyle(.switch)
-            }
-            Section(header: Text("BBBBB")){
                 
+            }
+            Section(header: Text("Terrain")){
+                Toggle("Terrain Replace Plane", isOn: $op.terrainReplacePlane).toggleStyle(.switch)
+                Toggle("Draw GameObject", isOn: $op.drawGameObject).toggleStyle(.switch)
+                Toggle("Use Heightmap", isOn: $op.useHeightmap).toggleStyle(.switch)
             }
             Section(header: Text("CCCCC")){
                 

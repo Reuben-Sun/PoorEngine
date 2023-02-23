@@ -19,6 +19,21 @@ class Renderer: NSObject {
     init(metalView: MTKView, options: Options) {
         rhi = RHI(metalView: metalView, options: options)
         scene = GameScene()
+        
+        //TODO: 使用json管理场景，向scene中添加物体
+        var ballGO = GameObject(name: "shaderBall", meshName: "shaderBall", exten: "obj")
+        ballGO.position = [0,0,0]
+        ballGO.scale = 0.01
+        ballGO.rotation = [0,Float(90).degreesToRadians,0]
+        ballGO.model.transform = ballGO.transform
+        scene.goList.append(ballGO)
+        scene.terrainQuad = Quad()
+        scene.terrainQuad!.position = [0,0,0]
+        scene.terrainQuad!.rotation = [0,Float(90).degreesToRadians,0]
+        var largePlaneGO = GameObject(name: "large_plane", meshName: "large_plane", exten: "obj")
+        largePlaneGO.tag = .ground
+        scene.goList.append(largePlaneGO)
+        
         cullingResult = CullingResult()
         super.init()
         self.options = options
@@ -39,7 +54,7 @@ extension Renderer: MTKViewDelegate {
         let deltaTime = (currentTime - lastTime)
         lastTime = currentTime
         scene.update(deltaTime: Float(deltaTime))
-        cullingResult.cull(scene: scene)
+        cullingResult.cull(scene: scene, options: options)
         rhi.draw(cullingResult: cullingResult, in: view)
     }
 }

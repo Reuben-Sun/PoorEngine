@@ -89,21 +89,28 @@ enum PipelineStates {
     }
     
     static func createTerrainPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
-        let vertexFunction = RHI.library?.makeFunction(name: "vertex_main")
-        //TODO: change main to gbuffer
-        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_main")
+        let vertexFunction = RHI.library?.makeFunction(name: "vertex_terrain")
+        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_terrain_gBuffer")
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
         pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
-        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+        pipelineDescriptor.setGBufferPixelFormats()
+        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float_stencil8
+        pipelineDescriptor.stencilAttachmentPixelFormat = .depth32Float_stencil8
         //vertex descriptor
         let vertexDescriptor = MTLVertexDescriptor()
         vertexDescriptor.attributes[0].format = .float3
         vertexDescriptor.attributes[0].offset = 0
         vertexDescriptor.attributes[0].bufferIndex = 0
         vertexDescriptor.layouts[0].stride = MemoryLayout<float3>.stride
+        vertexDescriptor.layouts[0].stepFunction = .perPatchControlPoint
         pipelineDescriptor.vertexDescriptor = vertexDescriptor
+        //tessellation
+        pipelineDescriptor.tessellationFactorStepFunction = .perPatch
+        pipelineDescriptor.maxTessellationFactor = Quad.maxTessellation
+        //设置细分数值四舍五入(round)模式
+        pipelineDescriptor.tessellationPartitionMode = .pow2
         
         return createPSO(descriptor: pipelineDescriptor)
     }

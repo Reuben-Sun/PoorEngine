@@ -17,7 +17,7 @@ using namespace metal;
 
 
 vertex VertexOut vertex_main(VertexIn in [[stage_in]],
-                             constant Uniforms &uniforms [[buffer(11)]])
+                             constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
 {
     VertexOut out;
     out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * in.position;

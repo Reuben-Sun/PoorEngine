@@ -13,13 +13,22 @@ struct TiledDeferredRenderPass: RenderPass{
     
     var gBufferPassPSO: MTLRenderPipelineState
     var lightingPassPSO: MTLRenderPipelineState
+    var terrainPassPSO: MTLRenderPipelineState
+    var tessellationComputePass: TessellationComputePass
+    
     let depthStencilState: MTLDepthStencilState?
     let lightingDepthStencilState: MTLDepthStencilState?
+    
     weak var shadowTexture: MTLTexture?
     var albedoTexture: MTLTexture?
     var normalTexture: MTLTexture?
     var positionTexture: MTLTexture?
     var depthTexture: MTLTexture?
+
+    var heightMap: MTLTexture?
+    var cliffTexture: MTLTexture?
+    var snowTexture: MTLTexture?
+    var grassTexture: MTLTexture?
     
     init(view: MTKView, options: Options) {
         gBufferPassPSO = PipelineStates.createGBufferPassPSO(
@@ -28,8 +37,12 @@ struct TiledDeferredRenderPass: RenderPass{
         lightingPassPSO = PipelineStates.createLightingPassPSO(
             colorPixelFormat: view.colorPixelFormat,
             options: options)
+        terrainPassPSO = PipelineStates.createTerrainPSO(colorPixelFormat: view.colorPixelFormat)
+        
         depthStencilState = Self.buildDepthStencilState()
         lightingDepthStencilState = Self.buildLightingDepthStencilState()
+        
+        tessellationComputePass = TessellationComputePass(view: view, options: options)
     }
     
     static func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -79,12 +92,23 @@ struct TiledDeferredRenderPass: RenderPass{
             pixelFormat: .depth32Float_stencil8,
             label: "Depth Texture",
             storageMode: .memoryless)
+        
+        do {
+            heightMap = try TextureController.loadTexture(filename: "mountain")
+            cliffTexture = try TextureController.loadTexture(filename: "cliff-color")
+            snowTexture = try TextureController.loadTexture(filename: "snow-color")
+            grassTexture = try TextureController.loadTexture(filename: "grass-color")
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
     
     func draw(commandBuffer: MTLCommandBuffer, cullingResult: CullingResult, uniforms: Uniforms, params: Params, options: Options) {
         guard let viewCurrentRenderPassDescriptor = descriptor else {
             return
         }
+        // MARK: tesselation pass
+        tessellationComputePass.tessellation(commandBuffer: commandBuffer, cullingResult: cullingResult)
         
         // MARK: G-buffer pass
         let descriptor = viewCurrentRenderPassDescriptor
@@ -117,6 +141,13 @@ struct TiledDeferredRenderPass: RenderPass{
                 ) else { return }
         
         drawGBufferRenderPass(
+            renderEncoder: renderEncoder,
+            cullingResult: cullingResult,
+            uniforms: uniforms,
+            params: params,
+            options: options)
+        
+        drawTerrainRenderPass(
             renderEncoder: renderEncoder,
             cullingResult: cullingResult,
             uniforms: uniforms,
@@ -184,6 +215,67 @@ struct TiledDeferredRenderPass: RenderPass{
                                      vertexStart: 0,
                                      vertexCount: 6)
         renderEncoder.popDebugGroup()
+    }
+    
+    func drawTerrainRenderPass(
+        renderEncoder: MTLRenderCommandEncoder,
+        cullingResult: CullingResult,
+        uniforms: Uniforms,
+        params: Params,
+        options: Options
+    ) {
+        if cullingResult.terrainQuad == nil {
+            return
+        }
+        renderEncoder.label = "Terrain render pass"
+        renderEncoder.setDepthStencilState(depthStencilState)
+        renderEncoder.setRenderPipelineState(terrainPassPSO)
+        //        renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
+        var uniforms = uniforms
+        uniforms.modelMatrix = cullingResult.terrainQuad!.transform.modelMatrix
+        renderEncoder.setVertexBytes(
+            &uniforms,
+            length: MemoryLayout<Uniforms>.stride,
+            index: UniformsBuffer.index)
+        
+        var params = params
+        renderEncoder.setFragmentBytes(
+            &params,
+            length: MemoryLayout<Params>.stride,
+            index: ParamsBuffer.index)
+        
+        // draw
+        renderEncoder.setTessellationFactorBuffer(tessellationComputePass.tessellationFactorsBuffer, offset: 0, instanceStride: 0)
+        
+        renderEncoder.setVertexBuffer(
+            tessellationComputePass.controlPointsBuffer,
+            offset: 0,
+            index: 0)
+        
+        if options.useHeightmap {
+            renderEncoder.setVertexTexture(heightMap, index: 0)
+        }
+        
+        var terrain = tessellationComputePass.terrain
+        renderEncoder.setVertexBytes(&terrain, length: MemoryLayout<Terrain>.stride, index: TerrainBuffer.index)
+        
+        renderEncoder.setFragmentTexture(cliffTexture, index: 1)
+        renderEncoder.setFragmentTexture(snowTexture, index: 2)
+        renderEncoder.setFragmentTexture(grassTexture, index: 3)
+        
+        // MARK: 线框debug，由于我们使用TBDR，只有一个Encoder，因此执行CS后要恢复.fill
+        renderEncoder.setTriangleFillMode(options.drawTriangle ? .fill : .lines)
+        
+        renderEncoder.drawPatches(
+              numberOfPatchControlPoints: 4,
+              patchStart: 0,
+              patchCount: tessellationComputePass.patchCount,
+              patchIndexBuffer: nil,
+              patchIndexBufferOffset: 0,
+              instanceCount: 1,
+              baseInstance: 0)
+        
+        renderEncoder.setTriangleFillMode(.fill)
     }
 }
 

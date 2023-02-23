@@ -13,11 +13,18 @@ class GameObject: Transformable {
     let meshName: String
     let meshExten: String
     var model: Model
+    var tag: GameObjectTag
     
     init(name: String, meshName: String, exten: String = "obj"){
         self.name = name
         self.meshName = meshName
         self.meshExten = exten
         self.model = Model(name: name, exten: exten)
+        self.tag = .opaque
     }
+}
+
+enum GameObjectTag {
+    case opaque
+    case ground
 }
