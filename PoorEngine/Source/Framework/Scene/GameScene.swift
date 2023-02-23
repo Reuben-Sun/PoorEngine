@@ -10,7 +10,7 @@ import MetalKit
 /// 创建场景
 struct GameScene {
     var camera = ArcballCamera()
-    var sceneLights = Lights()
+    var sceneLights: Lights
     var goList: [GameObject] = []
     var debugMainCamera: ArcballCamera?
     var debugShadowCamera: OrthographicCamera?
@@ -21,6 +21,7 @@ struct GameScene {
     var isPaused = false
     
     init() {
+        sceneLights = Lights()
         camera.far = 10
         camera.transform = defaultView
         camera.target = [0, 1, 0]
@@ -29,6 +30,7 @@ struct GameScene {
     }
     
     init(sceneJsonName: String) {
+        sceneLights = Lights()
         camera.far = 10
         camera.transform = defaultView
         camera.target = [0, 1, 0]
