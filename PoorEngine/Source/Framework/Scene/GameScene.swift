@@ -14,7 +14,7 @@ struct GameScene {
     var goList: [GameObject] = []
     var debugMainCamera: ArcballCamera?
     var debugShadowCamera: OrthographicCamera?
-    var terrainQuad = Quad()
+    var terrainQuad: Quad?
     var shouldDrawMainCamera = false
     var shouldDrawLightCamera = false
     var shouldDrawBoundingSphere = false
@@ -39,8 +39,9 @@ struct GameScene {
 //        goList = [ballGO, largePlaneGO]
         goList = [ballGO]
         
-        terrainQuad.position = [0,0,0]
-        terrainQuad.rotation = [0,Float(90).degreesToRadians,0]
+        terrainQuad = Quad()
+        terrainQuad!.position = [0,0,0]
+        terrainQuad!.rotation = [0,Float(90).degreesToRadians,0]
     }
     
     

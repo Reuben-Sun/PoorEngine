@@ -13,7 +13,7 @@ struct CullingResult{
     var camera = ArcballCamera()
     var sceneLights = Lights()
     var isPaused = false
-    var terrainQuad = Quad()
+    var terrainQuad: Quad?
     
     mutating func cull(scene: GameScene, options: Options){
         models = []

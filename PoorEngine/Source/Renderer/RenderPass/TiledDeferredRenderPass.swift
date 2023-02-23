@@ -224,12 +224,15 @@ struct TiledDeferredRenderPass: RenderPass{
         params: Params,
         options: Options
     ) {
+        if cullingResult.terrainQuad == nil {
+            return
+        }
         renderEncoder.label = "Terrain render pass"
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(terrainPassPSO)
         //        renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
         var uniforms = uniforms
-        uniforms.modelMatrix = cullingResult.terrainQuad.transform.modelMatrix
+        uniforms.modelMatrix = cullingResult.terrainQuad!.transform.modelMatrix
         renderEncoder.setVertexBytes(
             &uniforms,
             length: MemoryLayout<Uniforms>.stride,

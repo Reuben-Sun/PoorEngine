@@ -41,6 +41,9 @@ struct TessellationComputePass {
     }
     
     func tessellation(commandBuffer: MTLCommandBuffer, cullingResult: CullingResult) {
+        if cullingResult.terrainQuad == nil {
+            return
+        }
         guard let computeEncoder = commandBuffer.makeComputeCommandEncoder() else { return }
         computeEncoder.setComputePipelineState(tessellationComputePSO)
         var edgeFactors = edgeFactors
@@ -59,7 +62,7 @@ struct TessellationComputePass {
         computeEncoder.setBytes(&cameraPos,
                                 length: MemoryLayout<float4>.stride,
                                 index: 3)
-        var matrix = cullingResult.terrainQuad.transform.modelMatrix
+        var matrix = cullingResult.terrainQuad!.transform.modelMatrix
         computeEncoder.setBytes(&matrix,
                                 length: MemoryLayout<float4x4>.stride,
                                 index: 4)
