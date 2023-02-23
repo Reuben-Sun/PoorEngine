@@ -21,4 +21,10 @@
             "tag": "ground",
         },
     ],
+    "terrain": {
+        "haveTerrain": true,
+        "position" : [0, 0, 0],
+        "scale": 1,
+        "rotation": [0, 90, 0],
+    },
 }

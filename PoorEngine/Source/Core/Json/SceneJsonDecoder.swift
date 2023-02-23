@@ -10,6 +10,7 @@ import Foundation
 struct SceneContent: Codable {
     var sceneName: String
     var gameObject: [GOContent]
+    var terrain: TerrainContent
 }
 
 struct GOContent: Codable {
@@ -20,6 +21,13 @@ struct GOContent: Codable {
     var scale: Float
     var rotation: [Float]
     var tag: String
+}
+
+struct TerrainContent: Codable {
+    var haveTerrain: Bool
+    var position: [Float]
+    var scale: Float
+    var rotation: [Float]
 }
 
 enum SceneJson {

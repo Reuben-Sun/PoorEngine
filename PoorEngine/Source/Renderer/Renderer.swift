@@ -20,12 +20,6 @@ class Renderer: NSObject {
         rhi = RHI(metalView: metalView, options: options)
         scene = GameScene(sceneJsonName: "BallScene")
         
-
-        scene.terrainQuad = Quad()
-        scene.terrainQuad!.position = [0,0,0]
-        scene.terrainQuad!.rotation = [0,Float(90).degreesToRadians,0]
-
-        
         cullingResult = CullingResult()
         super.init()
         self.options = options

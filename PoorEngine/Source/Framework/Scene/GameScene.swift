@@ -25,7 +25,7 @@ struct GameScene {
         camera.transform = defaultView
         camera.target = [0, 1, 0]
         camera.distance = 4
-        goList = []        
+        goList = []
     }
     
     init(sceneJsonName: String) {
@@ -34,7 +34,7 @@ struct GameScene {
         camera.target = [0, 1, 0]
         camera.distance = 4
         goList = []
-        var scene = SceneJson.loadScene(fileName: sceneJsonName)
+        let scene = SceneJson.loadScene(fileName: sceneJsonName)
         for go in scene.gameObject {
             var gameObject = GameObject(name: go.name, meshName: go.modelName, exten: go.exten)
             gameObject.position = [go.position[0], go.position[1], go.position[2]]
@@ -46,20 +46,17 @@ struct GameScene {
             gameObject.tag = GameObjectTag(rawValue: go.tag) ?? .opaque
             goList.append(gameObject)
         }
+        if scene.terrain.haveTerrain {
+            terrainQuad = Quad()
+            terrainQuad?.position = [scene.terrain.position[0],
+                                     scene.terrain.position[1],
+                                     scene.terrain.position[2]]
+            terrainQuad?.scale = scene.terrain.scale
+            terrainQuad?.rotation = [scene.terrain.rotation[0].degreesToRadians,
+                                     scene.terrain.rotation[1].degreesToRadians,
+                                     scene.terrain.rotation[2].degreesToRadians]
+        }
         
-//        var ballGO = GameObject(name: "shaderBall", meshName: "shaderBall", exten: "obj")
-//        ballGO.position = [0,0,0]
-//        ballGO.scale = 0.01
-//        ballGO.rotation = [0,Float(90).degreesToRadians,0]
-//        ballGO.model.transform = ballGO.transform
-//        scene.goList.append(ballGO)
-//        scene.terrainQuad = Quad()
-//        scene.terrainQuad!.position = [0,0,0]
-//        scene.terrainQuad!.rotation = [0,Float(90).degreesToRadians,0]
-//        var largePlaneGO = GameObject(name: "large_plane", meshName: "large_plane", exten: "obj")
-//        largePlaneGO.tag = .ground
-//        scene.goList.append(largePlaneGO)
-
     }
     
     
