@@ -109,8 +109,8 @@ enum PipelineStates {
         //tessellation
         pipelineDescriptor.tessellationFactorStepFunction = .perPatch
         pipelineDescriptor.maxTessellationFactor = Quad.maxTessellation
-        //设置细分数值四舍五入(round)模式，默认为二的幂，这里设为最近的偶数
-        pipelineDescriptor.tessellationPartitionMode = .fractionalEven
+        //设置细分数值四舍五入(round)模式
+        pipelineDescriptor.tessellationPartitionMode = .pow2
         
         return createPSO(descriptor: pipelineDescriptor)
     }

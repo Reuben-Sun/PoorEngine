@@ -32,6 +32,7 @@ struct VertexOut {
     float3 tangentWS;
     float3 bitangentWS;
     float4 shadowPosition;
+    float4 custom;  //为特殊用途预留的结构
 };
 
 struct GBufferOut {

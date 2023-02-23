@@ -26,6 +26,9 @@ struct TiledDeferredRenderPass: RenderPass{
     var depthTexture: MTLTexture?
 
     var heightMap: MTLTexture?
+    var cliffTexture: MTLTexture?
+    var snowTexture: MTLTexture?
+    var grassTexture: MTLTexture?
     
     init(view: MTKView, options: Options) {
         gBufferPassPSO = PipelineStates.createGBufferPassPSO(
@@ -92,6 +95,9 @@ struct TiledDeferredRenderPass: RenderPass{
         
         do {
             heightMap = try TextureController.loadTexture(filename: "mountain")
+            cliffTexture = try TextureController.loadTexture(filename: "cliff-color")
+            snowTexture = try TextureController.loadTexture(filename: "snow-color")
+            grassTexture = try TextureController.loadTexture(filename: "grass-color")
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -249,6 +255,10 @@ struct TiledDeferredRenderPass: RenderPass{
         
         var terrain = tessellationComputePass.terrain
         renderEncoder.setVertexBytes(&terrain, length: MemoryLayout<Terrain>.stride, index: TerrainBuffer.index)
+        
+        renderEncoder.setFragmentTexture(cliffTexture, index: 1)
+        renderEncoder.setFragmentTexture(snowTexture, index: 2)
+        renderEncoder.setFragmentTexture(grassTexture, index: 3)
         
         // MARK: 线框debug，由于我们使用TBDR，只有一个Encoder，因此执行CS后要恢复.fill
         renderEncoder.setTriangleFillMode(options.drawTriangle ? .fill : .lines)
