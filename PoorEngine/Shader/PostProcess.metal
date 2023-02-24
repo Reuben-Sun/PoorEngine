@@ -13,19 +13,19 @@ using namespace metal;
 #import "Include/Sample.h"
 #import "Include/ShaderType.h"
 
-fragment float4 fragment_postprocess(VertexOut in [[stage_in]],
-                                                constant Params &params [[buffer(ParamsBuffer)]],
-                                                constant Light *lights [[buffer(LightBuffer)]])
-{
-    return float4(1, 1, 1, 1);
-}
-
 //fragment float4 fragment_postprocess(VertexOut in [[stage_in]],
-//                                     constant Params &params [[buffer(ParamsBuffer)]],
-//                                     texture2d<float> preTexture [[texture(1)]])
+//                                                constant Params &params [[buffer(ParamsBuffer)]],
+//                                                constant Light *lights [[buffer(LightBuffer)]])
 //{
-//    constexpr sampler sample(filter::linear, address::repeat);
-//    float tiling = 16.0;
-//    float4 color = preTexture.sample(sample, in.uv);
-//    return float4(color.xyz, 1);
+//    return float4(1, 1, 1, 1);
 //}
+
+fragment float4 fragment_postprocess(VertexOut in [[stage_in]],
+                                     constant Params &params [[buffer(ParamsBuffer)]],
+                                     texture2d<float> preTexture [[texture(1)]])
+{
+    constexpr sampler sample(filter::linear, address::repeat);
+    float tiling = 16.0;
+    float4 color = preTexture.sample(sample, in.uv);
+    return float4(color.xyz, 1);
+}
