@@ -119,21 +119,19 @@ struct TiledDeferredRenderPass: RenderPass{
         ]
         //将贴图存储操作设为dontCare
         for (index, texture) in textures.enumerated() {
-            let attachment =
-            descriptor.colorAttachments[RenderTarget0.index + index]
+            let attachment = descriptor.colorAttachments[RenderTarget0.index + index]
             attachment?.texture = texture
             attachment?.loadAction = .clear
             attachment?.storeAction = .dontCare
-            attachment?.clearColor =
-            MTLClearColor(red: 0.73, green: 0.92, blue: 1, alpha: 1)
+            attachment?.clearColor = MTLClearColor(red: 0.73, green: 0.92, blue: 1, alpha: 1)
         }
         descriptor.depthAttachment.texture = depthTexture
         descriptor.stencilAttachment.texture = depthTexture
         
         // TODO: 很离谱，显式指定Tile大小后，带宽、GPU时间大幅提高
-        //        descriptor.tileWidth = 32
-        //        descriptor.tileHeight = 32
-        //        descriptor.threadgroupMemoryLength = MemoryLayout<Light>.size * 8
+        descriptor.tileWidth = Int(TileWidth)
+        descriptor.tileHeight = Int(TileHeight)
+        descriptor.imageblockSampleLength = 32
         
         guard let renderEncoder =
                 commandBuffer.makeRenderCommandEncoder(
@@ -171,6 +169,7 @@ struct TiledDeferredRenderPass: RenderPass{
         options: Options
     ) {
         renderEncoder.label = "G-buffer render pass"
+        renderEncoder.pushDebugGroup("Gbuffer pass")
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(gBufferPassPSO)
         renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
@@ -184,6 +183,7 @@ struct TiledDeferredRenderPass: RenderPass{
                 params: params,
                 options: options)
         }
+        renderEncoder.popDebugGroup()
     }
     
     func drawLightingRenderPass(
@@ -228,6 +228,7 @@ struct TiledDeferredRenderPass: RenderPass{
             return
         }
         renderEncoder.label = "Terrain render pass"
+        renderEncoder.pushDebugGroup("Terrain Pass")
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(terrainPassPSO)
         //        renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
@@ -276,6 +277,7 @@ struct TiledDeferredRenderPass: RenderPass{
               baseInstance: 0)
         
         renderEncoder.setTriangleFillMode(.fill)
+        renderEncoder.popDebugGroup()
     }
 }
 
