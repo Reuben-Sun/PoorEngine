@@ -56,6 +56,8 @@
 		23A36B6E29A727920028E92E /* DrawModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6D29A727920028E92E /* DrawModel.swift */; };
 		23A36B7129A7C06E0028E92E /* SceneJsonDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B7029A7C06E0028E92E /* SceneJsonDecoder.swift */; };
 		23A36B7329A7C5F80028E92E /* BallScene.json in Resources */ = {isa = PBXBuildFile; fileRef = 23A36B7229A7C5F80028E92E /* BallScene.json */; };
+		23A36B7529A8C8C80028E92E /* PostProcessRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B7429A8C8C80028E92E /* PostProcessRenderPass.swift */; };
+		23A36B7729A8D6C10028E92E /* PostProcess.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B7629A8D6C10028E92E /* PostProcess.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,6 +117,8 @@
 		23A36B6D29A727920028E92E /* DrawModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawModel.swift; sourceTree = "<group>"; };
 		23A36B7029A7C06E0028E92E /* SceneJsonDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneJsonDecoder.swift; sourceTree = "<group>"; };
 		23A36B7229A7C5F80028E92E /* BallScene.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BallScene.json; sourceTree = "<group>"; };
+		23A36B7429A8C8C80028E92E /* PostProcessRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProcessRenderPass.swift; sourceTree = "<group>"; };
+		23A36B7629A8D6C10028E92E /* PostProcess.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PostProcess.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +182,7 @@
 				23601574299A9CB100926ADB /* Deferred.metal */,
 				23A36B6429A5F6280028E92E /* Terrain.metal */,
 				23A36B6B29A65C5C0028E92E /* Tessellation.metal */,
+				23A36B7629A8D6C10028E92E /* PostProcess.metal */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 				2360153F299A90FA00926ADB /* TiledDeferredRenderPass.swift */,
 				23601541299A913200926ADB /* RenderPass.swift */,
 				23601569299A9AF000926ADB /* ShadowRenderPass.swift */,
+				23A36B7429A8C8C80028E92E /* PostProcessRenderPass.swift */,
 			);
 			path = RenderPass;
 			sourceTree = "<group>";
@@ -453,6 +459,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23601550299A958600926ADB /* VertexDescriptor.swift in Sources */,
+				23A36B7729A8D6C10028E92E /* PostProcess.metal in Sources */,
 				23601552299A95E300926ADB /* Renderer.swift in Sources */,
 				23601575299A9CB100926ADB /* Deferred.metal in Sources */,
 				23601533299A86D800926ADB /* InspectorView.swift in Sources */,
@@ -464,6 +471,7 @@
 				23601554299A960600926ADB /* InputController.swift in Sources */,
 				2360154A299A94BE00926ADB /* TextureController.swift in Sources */,
 				23A36B6529A5F6280028E92E /* Terrain.metal in Sources */,
+				23A36B7529A8C8C80028E92E /* PostProcessRenderPass.swift in Sources */,
 				23601596299B4D7500926ADB /* GameObject.swift in Sources */,
 				23A36B7129A7C06E0028E92E /* SceneJsonDecoder.swift in Sources */,
 				2360159A299B570200926ADB /* CullingResult.swift in Sources */,

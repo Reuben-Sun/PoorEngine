@@ -14,6 +14,7 @@ class RHI: NSObject {
     
     var shadowRenderPass: ShadowRenderPass
     var tiledDeferredRenderPass: TiledDeferredRenderPass
+    var postProcessRenderPass: PostProcessRenderPass
     
     var options: Options
     
@@ -43,6 +44,7 @@ class RHI: NSObject {
         }
         shadowRenderPass = ShadowRenderPass()
         tiledDeferredRenderPass = TiledDeferredRenderPass(view: metalView, options: options)
+        postProcessRenderPass = PostProcessRenderPass(view: metalView, options: options)
         
         super.init()
         
@@ -61,6 +63,7 @@ extension RHI {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         shadowRenderPass.resize(view: view, size: size)
         tiledDeferredRenderPass.resize(view: view, size: size)
+        postProcessRenderPass.resize(view: view, size: size)
     }
 
     /// update
@@ -88,6 +91,12 @@ extension RHI {
                                      uniforms: uniforms,
                                      params: params,
                                      options: options)
+        //后处理
+        postProcessRenderPass.draw(commandBuffer: commandBuffer,
+                                   cullingResult: cullingResult,
+                                   uniforms: uniforms,
+                                   params: params,
+                                   options: options)
         
         guard let drawable = view.currentDrawable else {
             return
