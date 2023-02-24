@@ -58,6 +58,25 @@ struct GameScene {
                                      scene.terrain.rotation[1].degreesToRadians,
                                      scene.terrain.rotation[2].degreesToRadians]
         }
+        for light in scene.lights {
+            var lightObject = Light()
+            lightObject.type = LightType(rawValue: UInt32(light.lightType))
+            lightObject.position = [light.position[0], light.position[1], light.position[2]]
+            lightObject.direction = [light.direction[0], light.direction[1], light.direction[2]]
+            lightObject.color = [light.color[0], light.color[1], light.color[2]]
+            lightObject.specularColor = [light.specularColor[0], light.specularColor[1], light.specularColor[2]]
+            lightObject.radius = light.radius
+            lightObject.attenuation = [light.attenuation[0], light.attenuation[1], light.attenuation[2]]
+            lightObject.coneAngle = light.coneAngle
+            lightObject.coneDirection = [light.coneDirection[0], light.coneDirection[1], light.coneDirection[2]]
+            lightObject.coneAttenuation = light.coneAttenuation
+            if lightObject.type == Dirtctional {
+                sceneLights.dirLights.append(lightObject)
+            } else {
+                sceneLights.pointLights.append(lightObject)
+            }
+        }
+        sceneLights.compileLightBuffer()
         
     }
     

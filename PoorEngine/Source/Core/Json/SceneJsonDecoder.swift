@@ -11,6 +11,7 @@ struct SceneContent: Codable {
     var sceneName: String
     var gameObject: [GOContent]
     var terrain: TerrainContent
+    var lights: [LightsContent]
 }
 
 struct GOContent: Codable {
@@ -28,6 +29,19 @@ struct TerrainContent: Codable {
     var position: [Float]
     var scale: Float
     var rotation: [Float]
+}
+
+struct LightsContent: Codable {
+    var lightType: Int
+    var position: [Float]
+    var direction: [Float]
+    var color: [Float]
+    var specularColor: [Float]
+    var radius: Float
+    var attenuation: [Float]
+    var coneAngle: Float
+    var coneDirection: [Float]
+    var coneAttenuation: Float
 }
 
 enum SceneJson {

@@ -96,9 +96,10 @@ struct Lights {
     
     /// 灯光初始化
     init() {
+        dirLights = []
         // TODO: 目前至少有一盏方向光，不然无法进行Light Pass，需要修复
-        dirLights = [sunlight, ambientLight]
-        dirBuffer = Self.createBuffer(lights: dirLights)
+//        dirLights = [sunlight, ambientLight]
+//        dirBuffer = Self.createBuffer(lights: dirLights)
         pointLights = []
         //        pointBuffer = Self.createBuffer(lights: pointLights)
     }

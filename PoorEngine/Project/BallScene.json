@@ -27,4 +27,18 @@
         "scale": 1,
         "rotation": [0, 90, 0],
     },
+    "lights": [
+        {
+            "lightType": 1,
+            "position": [0, 0, 0],
+            "direction": [3, 3, -2],
+            "color": [1, 1, 1],
+            "specularColor": [0.6, 0.6, 0.6],
+            "radius": 0,
+            "attenuation": [1, 0, 0],
+            "coneAngle": 0,
+            "coneDirection": [0, 0, 0],
+            "coneAttenuation": 0,
+        },
+    ],
 }
