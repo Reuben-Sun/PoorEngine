@@ -20,15 +20,6 @@ struct GameScene {
     var shouldDrawBoundingSphere = false
     var isPaused = false
     
-    init() {
-        sceneLights = Lights()
-        camera.far = 10
-        camera.transform = defaultView
-        camera.target = [0, 1, 0]
-        camera.distance = 4
-        goList = []
-    }
-    
     init(sceneJsonName: String) {
         sceneLights = Lights()
         camera.far = 10
@@ -67,7 +58,7 @@ struct GameScene {
             lightObject.specularColor = [light.specularColor[0], light.specularColor[1], light.specularColor[2]]
             lightObject.radius = light.radius
             lightObject.attenuation = [light.attenuation[0], light.attenuation[1], light.attenuation[2]]
-            lightObject.coneAngle = light.coneAngle
+            lightObject.coneAngle = light.coneAngle.degreesToRadians
             lightObject.coneDirection = [light.coneDirection[0], light.coneDirection[1], light.coneDirection[2]]
             lightObject.coneAttenuation = light.coneAttenuation
             if lightObject.type == Dirtctional {
