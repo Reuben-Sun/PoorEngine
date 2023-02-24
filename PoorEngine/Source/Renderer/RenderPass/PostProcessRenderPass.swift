@@ -42,7 +42,12 @@ struct PostProcessRenderPass: RenderPass {
         }
         renderEncoder.label = label
         renderEncoder.setRenderPipelineState(pipelineState)
-        
+        var params = params
+        renderEncoder.setFragmentBytes(
+            &params,
+            length: MemoryLayout<Params>.stride,
+            index: ParamsBuffer.index)
+        renderEncoder.setFragmentTexture(preTexture, index: 1)
         renderEncoder.drawPrimitives(type: .triangle,
                                      vertexStart: 0,
                                      vertexCount: 6)
