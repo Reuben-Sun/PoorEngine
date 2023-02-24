@@ -46,4 +46,5 @@ class Options: ObservableObject {
     @Published var drawGameObject = true
     @Published var useHeightmap = true
     @Published var terrainReplacePlane = false
+    @Published var shouldResolve = true
 }

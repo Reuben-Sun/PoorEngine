@@ -111,4 +111,10 @@ typedef struct {
     float height;
     uint maxTessellation;
 } Terrain;
+
+#define TileWidth 16
+#define TileHeight 16
+#define TileDataSize 256
+#define ThreadgroupBufferSize (AAPLTileWidth * AAPLTileHeight * sizeof(uint32_t))
+
 #endif /* Common_h */
