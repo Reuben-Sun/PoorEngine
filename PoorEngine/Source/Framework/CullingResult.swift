@@ -11,7 +11,7 @@ struct CullingResult{
     static var objectId: UInt32 = 1
     var models: [Model] = []
     var camera = ArcballCamera()
-    var sceneLights = Lights()
+    var sceneLights: Lights?
     var isPaused = false
     var terrainQuad: Quad?
     

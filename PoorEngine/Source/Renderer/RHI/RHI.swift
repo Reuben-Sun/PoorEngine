@@ -102,14 +102,14 @@ extension RHI {
         
         shadowCamera.viewSize = 16
         shadowCamera.far = 16
-        let sun = cullingResult.sceneLights.dirLights[0]
-        shadowCamera = OrthographicCamera.createShadowCamera(using: cullingResult.camera, lightPosition: sun.position)
+        let sun = cullingResult.sceneLights!.dirLights[0]
+        shadowCamera = OrthographicCamera.createShadowCamera(using: cullingResult.camera, lightPosition: sun.direction)
         uniforms.shadowProjectionMatrix = shadowCamera.projectionMatrix
         uniforms.shadowViewMatrix = float4x4(eye: shadowCamera.position, center: shadowCamera.center, up: [0, 1, 0])
     }
     
     func updateParams(cullingResult: CullingResult, options: Options) {
-        params.lightCount = UInt32(cullingResult.sceneLights.pointLights.count)
+        params.lightCount = UInt32(cullingResult.sceneLights!.pointLights.count)
         params.cameraPosition = cullingResult.camera.position
         params.inverseVPMatrix = (cullingResult.camera.viewMatrix.inverse * cullingResult.camera.projectionMatrix.inverse)
         //TODO: 通过Param传入Debug信息，未来会修改

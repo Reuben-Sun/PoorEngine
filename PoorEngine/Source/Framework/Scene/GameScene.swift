@@ -10,7 +10,7 @@ import MetalKit
 /// 创建场景
 struct GameScene {
     var camera = ArcballCamera()
-    var sceneLights = Lights()
+    var sceneLights: Lights
     var goList: [GameObject] = []
     var debugMainCamera: ArcballCamera?
     var debugShadowCamera: OrthographicCamera?
@@ -20,12 +20,55 @@ struct GameScene {
     var shouldDrawBoundingSphere = false
     var isPaused = false
     
-    init() {
+    init(sceneJsonName: String) {
+        sceneLights = Lights()
         camera.far = 10
         camera.transform = defaultView
         camera.target = [0, 1, 0]
         camera.distance = 4
-        goList = []        
+        goList = []
+        let scene = SceneJson.loadScene(fileName: sceneJsonName)
+        for go in scene.gameObject {
+            var gameObject = GameObject(name: go.name, meshName: go.modelName, exten: go.exten)
+            gameObject.position = [go.position[0], go.position[1], go.position[2]]
+            gameObject.scale = go.scale
+            gameObject.rotation = [go.rotation[0].degreesToRadians,
+                                   go.rotation[1].degreesToRadians,
+                                   go.rotation[2].degreesToRadians]
+            gameObject.model.transform = gameObject.transform
+            gameObject.tag = GameObjectTag(rawValue: go.tag) ?? .opaque
+            goList.append(gameObject)
+        }
+        if scene.terrain.haveTerrain {
+            terrainQuad = Quad()
+            terrainQuad?.position = [scene.terrain.position[0],
+                                     scene.terrain.position[1],
+                                     scene.terrain.position[2]]
+            terrainQuad?.scale = scene.terrain.scale
+            terrainQuad?.rotation = [scene.terrain.rotation[0].degreesToRadians,
+                                     scene.terrain.rotation[1].degreesToRadians,
+                                     scene.terrain.rotation[2].degreesToRadians]
+        }
+        for light in scene.lights {
+            var lightObject = Light()
+            lightObject.type = LightType(rawValue: UInt32(light.lightType))
+            lightObject.position = [light.position[0], light.position[1], light.position[2]]
+            lightObject.direction = [light.direction[0], light.direction[1], light.direction[2]]
+            lightObject.color = [light.color[0], light.color[1], light.color[2]]
+            lightObject.specularColor = [light.specularColor[0], light.specularColor[1], light.specularColor[2]]
+            lightObject.radius = light.radius
+            lightObject.attenuation = [light.attenuation[0], light.attenuation[1], light.attenuation[2]]
+            lightObject.coneAngle = light.coneAngle.degreesToRadians
+            lightObject.coneDirection = [light.coneDirection[0], light.coneDirection[1], light.coneDirection[2]]
+            lightObject.coneAttenuation = light.coneAttenuation
+            if lightObject.type == Dirtctional {
+                sceneLights.dirLights.append(lightObject)
+            } else {
+                sceneLights.pointLights.append(lightObject)
+            }
+        }
+        sceneLights.compileLightBuffer()
+        
     }
     
     

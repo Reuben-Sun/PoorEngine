@@ -204,11 +204,11 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder.pushDebugGroup("Dir Light")
         renderEncoder.setRenderPipelineState(lightingPassPSO)
         var params = params
-        params.lightCount = UInt32(cullingResult.sceneLights.dirLights.count)
+        params.lightCount = UInt32(cullingResult.sceneLights!.dirLights.count)
         renderEncoder.setFragmentBytes(&params,
                                        length: MemoryLayout<Params>.stride,
                                        index: ParamsBuffer.index)
-        renderEncoder.setFragmentBuffer(cullingResult.sceneLights.dirBuffer,
+        renderEncoder.setFragmentBuffer(cullingResult.sceneLights!.dirBuffer,
                                         offset: 0,
                                         index: LightBuffer.index)
         renderEncoder.drawPrimitives(type: .triangle,

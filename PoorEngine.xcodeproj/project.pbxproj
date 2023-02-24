@@ -54,6 +54,8 @@
 		23A36B6929A656760028E92E /* TessellationComputePass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6829A656760028E92E /* TessellationComputePass.swift */; };
 		23A36B6C29A65C5C0028E92E /* Tessellation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6B29A65C5C0028E92E /* Tessellation.metal */; };
 		23A36B6E29A727920028E92E /* DrawModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B6D29A727920028E92E /* DrawModel.swift */; };
+		23A36B7129A7C06E0028E92E /* SceneJsonDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A36B7029A7C06E0028E92E /* SceneJsonDecoder.swift */; };
+		23A36B7329A7C5F80028E92E /* BallScene.json in Resources */ = {isa = PBXBuildFile; fileRef = 23A36B7229A7C5F80028E92E /* BallScene.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +113,8 @@
 		23A36B6829A656760028E92E /* TessellationComputePass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TessellationComputePass.swift; sourceTree = "<group>"; };
 		23A36B6B29A65C5C0028E92E /* Tessellation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Tessellation.metal; sourceTree = "<group>"; };
 		23A36B6D29A727920028E92E /* DrawModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawModel.swift; sourceTree = "<group>"; };
+		23A36B7029A7C06E0028E92E /* SceneJsonDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneJsonDecoder.swift; sourceTree = "<group>"; };
+		23A36B7229A7C5F80028E92E /* BallScene.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BallScene.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,6 +283,7 @@
 		2360153B299A8A1700926ADB /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				23A36B6F29A7C0400028E92E /* Json */,
 				2360153C299A8A2C00926ADB /* Math */,
 			);
 			path = Core;
@@ -336,6 +341,7 @@
 				2360157F299AA37C00926ADB /* icosphere.obj */,
 				2360157D299AA26500926ADB /* sun_sphere.obj */,
 				2360157B299AA25800926ADB /* large_plane.obj */,
+				23A36B7229A7C5F80028E92E /* BallScene.json */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -358,6 +364,14 @@
 				23A36B6829A656760028E92E /* TessellationComputePass.swift */,
 			);
 			path = ComputePass;
+			sourceTree = "<group>";
+		};
+		23A36B6F29A7C0400028E92E /* Json */ = {
+			isa = PBXGroup;
+			children = (
+				23A36B7029A7C06E0028E92E /* SceneJsonDecoder.swift */,
+			);
+			path = Json;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -420,6 +434,7 @@
 			files = (
 				23601580299AA37C00926ADB /* icosphere.obj in Resources */,
 				236015AC299BE57F00926ADB /* shaderBall.obj in Resources */,
+				23A36B7329A7C5F80028E92E /* BallScene.json in Resources */,
 				2360158A299AA65B00926ADB /* large_plane.mtl in Resources */,
 				23601588299AA65B00926ADB /* sun_sphere.mtl in Resources */,
 				23601589299AA65B00926ADB /* icosphere.mtl in Resources */,
@@ -450,6 +465,7 @@
 				2360154A299A94BE00926ADB /* TextureController.swift in Sources */,
 				23A36B6529A5F6280028E92E /* Terrain.metal in Sources */,
 				23601596299B4D7500926ADB /* GameObject.swift in Sources */,
+				23A36B7129A7C06E0028E92E /* SceneJsonDecoder.swift in Sources */,
 				2360159A299B570200926ADB /* CullingResult.swift in Sources */,
 				23A36B5E29A3A3680028E92E /* ShaderType.metal in Sources */,
 				23601540299A90FA00926ADB /* TiledDeferredRenderPass.swift in Sources */,

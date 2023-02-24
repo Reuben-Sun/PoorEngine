@@ -19,12 +19,12 @@ class GameObject: Transformable {
         self.name = name
         self.meshName = meshName
         self.meshExten = exten
-        self.model = Model(name: name, exten: exten)
+        self.model = Model(name: meshName, exten: exten)
         self.tag = .opaque
     }
 }
 
-enum GameObjectTag {
-    case opaque
-    case ground
+enum GameObjectTag: String {
+    case opaque = "opaque"
+    case ground = "ground"
 }
