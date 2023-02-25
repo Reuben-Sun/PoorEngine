@@ -75,7 +75,7 @@ vertex VertexOut vertex_quad(uint vertexID [[vertex_id]])
 }
 
 
-fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
+fragment LightingOut fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
                                                 constant Params &params [[buffer(ParamsBuffer)]],
                                                 constant Light *lights [[buffer(LightBuffer)]],
                                                 GBufferOut gBuffer)
@@ -95,5 +95,5 @@ fragment float4 fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
         color = *debugColor;
     }
 
-    return float4(color, 1);
+    return LightingOut{float4(color, 1)};
 }
