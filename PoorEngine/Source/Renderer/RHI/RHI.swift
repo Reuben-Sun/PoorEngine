@@ -82,6 +82,7 @@ extension RHI {
                               options: options)
         //TBDR
         tiledDeferredRenderPass.shadowTexture = shadowRenderPass.shadowTexture
+        tiledDeferredRenderPass.finalTexture = view.currentDrawable?.texture
         tiledDeferredRenderPass.descriptor = descriptor
         tiledDeferredRenderPass.draw(commandBuffer: commandBuffer,
                                      cullingResult: cullingResult,
