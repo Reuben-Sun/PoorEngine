@@ -115,6 +115,32 @@ enum PipelineStates {
         return createPSO(descriptor: pipelineDescriptor)
     }
     
+    static func createPostProcessPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
+        let vertexFunction = RHI.library?.makeFunction(name: "vertex_quad")
+        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_postprocess")
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.vertexFunction = vertexFunction
+        pipelineDescriptor.fragmentFunction = fragmentFunction
+        pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+        return createPSO(descriptor: pipelineDescriptor)
+    }
+    
+    // MARK: 放弃使用MSAA，后续可能会添加TAA
+    static func createMSAAPassPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
+        let tileFunction = RHI.library?.makeFunction(name: "msaa_main")
+        let pipelineDescriptor = MTLTileRenderPipelineDescriptor()
+        pipelineDescriptor.tileFunction = tileFunction!
+        pipelineDescriptor.threadgroupSizeMatchesTileSize = true
+        pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+        pipelineDescriptor.rasterSampleCount = 4
+        let pipelineState: MTLRenderPipelineState
+        do {
+            pipelineState = try RHI.device.makeRenderPipelineState(tileDescriptor: pipelineDescriptor, options: MTLPipelineOption(rawValue: 0) , reflection: nil)
+        } catch let error {
+            fatalError(error.localizedDescription)
+        }
+        return pipelineState
+    }
 }
 
 extension MTLRenderPipelineDescriptor {

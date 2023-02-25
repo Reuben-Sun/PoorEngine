@@ -21,6 +21,12 @@
 #define DEBUG_SPECULAR      8
 #define DEBUG_LIGHTONLY     9
 
+#define TONEMAPPING_NONE    0
+#define TONEMAPPING_LINEAR  1
+#define TONEMAPPING_FILMIC  2
+#define TONEMAPPING_LUMA    3
+#define TONEMAPPING_WHITE   4
+
 typedef enum DebugFunctionConstant {
     ShaderedFunctionConstantIndex,
     AlbedoFunctionConstantIndex

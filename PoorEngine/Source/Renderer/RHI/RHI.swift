@@ -14,6 +14,7 @@ class RHI: NSObject {
     
     var shadowRenderPass: ShadowRenderPass
     var tiledDeferredRenderPass: TiledDeferredRenderPass
+    var postProcessRenderPass: PostProcessRenderPass
     
     var options: Options
     
@@ -43,6 +44,7 @@ class RHI: NSObject {
         }
         shadowRenderPass = ShadowRenderPass()
         tiledDeferredRenderPass = TiledDeferredRenderPass(view: metalView, options: options)
+        postProcessRenderPass = PostProcessRenderPass(view: metalView, options: options)
         
         super.init()
         
@@ -82,13 +84,21 @@ extension RHI {
                               options: options)
         //TBDR
         tiledDeferredRenderPass.shadowTexture = shadowRenderPass.shadowTexture
-        tiledDeferredRenderPass.finalTexture = view.currentDrawable?.texture
+//        tiledDeferredRenderPass.finalTexture = view.currentDrawable?.texture
         tiledDeferredRenderPass.descriptor = descriptor
         tiledDeferredRenderPass.draw(commandBuffer: commandBuffer,
                                      cullingResult: cullingResult,
                                      uniforms: uniforms,
                                      params: params,
                                      options: options)
+        
+        postProcessRenderPass.drawableTexture = view.currentDrawable?.texture
+        postProcessRenderPass.preTexture = tiledDeferredRenderPass.finalTexture
+        postProcessRenderPass.draw(commandBuffer: commandBuffer,
+                                   cullingResult: cullingResult,
+                                   uniforms: uniforms,
+                                   params: params,
+                                   options: options)
         
         guard let drawable = view.currentDrawable else {
             return
@@ -115,6 +125,7 @@ extension RHI {
         params.inverseVPMatrix = (cullingResult.camera.viewMatrix.inverse * cullingResult.camera.projectionMatrix.inverse)
         //TODO: 通过Param传入Debug信息，未来会修改
         params.debugMode = uint(options.renderChoice.rawValue)
+        params.tonemappingMode = uint(options.tonemappingMode.rawValue)
     }
 }
 

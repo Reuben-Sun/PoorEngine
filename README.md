@@ -32,7 +32,11 @@
 - [ ] 截图
 - [ ] 帧率显示
 - [ ] 抗锯齿
-  - [ ] MSAA
+  - [ ] ~~MSAA~~
+  - [ ] TAA
+- [x] Tone Mapping
+  - [ ] 更好的Tone Mapping
+  
 
 
 
