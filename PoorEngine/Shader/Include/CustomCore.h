@@ -44,4 +44,9 @@ struct GBufferOut {
     float4 MRT2 [[color(RenderTarget2)]];
 };
 
+struct LightingOut
+{
+    float4 Color [[color(0)]];
+};
+
 #endif /* CustomCore_h */
