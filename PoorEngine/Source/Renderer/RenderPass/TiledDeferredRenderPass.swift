@@ -30,6 +30,8 @@ struct TiledDeferredRenderPass: RenderPass{
     var snowTexture: MTLTexture?
     var grassTexture: MTLTexture?
     
+//    var finalTexture: MTLTexture?
+    
     init(view: MTKView, options: Options) {
         gBufferPassPSO = PipelineStates.createGBufferPassPSO(
             colorPixelFormat: view.colorPixelFormat,
@@ -92,6 +94,11 @@ struct TiledDeferredRenderPass: RenderPass{
             pixelFormat: .depth32Float_stencil8,
             label: "Depth Texture",
             storageMode: .memoryless)
+//        finalTexture = Self.makeTexture(
+//            size: size,
+//            pixelFormat: .bgra8Unorm,
+//            label: "Depth Texture",
+//            storageMode: .shared)
         
         do {
             heightMap = try TextureController.loadTexture(filename: "mountain")
@@ -112,6 +119,10 @@ struct TiledDeferredRenderPass: RenderPass{
         
         // MARK: G-buffer pass
         let descriptor = viewCurrentRenderPassDescriptor
+//        descriptor.colorAttachments[0].texture = finalTexture
+//        descriptor.colorAttachments[0].storeAction = .store
+//        descriptor.colorAttachments[0].loadAction = .clear
+        
         let textures = [
             albedoTexture,
             normalTexture,

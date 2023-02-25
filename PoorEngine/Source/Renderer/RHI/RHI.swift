@@ -92,12 +92,12 @@ extension RHI {
                                      params: params,
                                      options: options)
         //后处理
-        postProcessRenderPass.currentTexture = tiledDeferredRenderPass.descriptor?.colorAttachments[0].texture
-        postProcessRenderPass.draw(commandBuffer: commandBuffer,
-                                   cullingResult: cullingResult,
-                                   uniforms: uniforms,
-                                   params: params,
-                                   options: options)
+//        postProcessRenderPass.currentTexture = tiledDeferredRenderPass.descriptor?.colorAttachments[0].texture
+//        postProcessRenderPass.draw(commandBuffer: commandBuffer,
+//                                   cullingResult: cullingResult,
+//                                   uniforms: uniforms,
+//                                   params: params,
+//                                   options: options)
 
         guard let drawable = view.currentDrawable else {
             return
