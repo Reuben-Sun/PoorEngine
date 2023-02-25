@@ -126,8 +126,8 @@
             filePath = "PoorEngine/Source/Application/InspectorView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -210,6 +210,38 @@
             endingLineNumber = "32"
             landmarkName = "vertex_terrain(patch_control_point&lt;TerrainVertexIn&gt; in [[stage_in]], constant Uniforms &amp;uniforms [[buffer(UniformsBuffer)]], texture2d&lt;float&gt; heightMap [[texture(0)]], constant Terrain &amp;terrain [[buffer(TerrainBuffer)]], float2 patch_coord [[position_in_patch]])"
             landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2DAE0524-3514-4D05-9C56-D3073BD6DD1F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PoorEngine/Source/Renderer/RenderPass/TiledDeferredRenderPass.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "draw(commandBuffer:cullingResult:uniforms:params:options:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9A5D2985-87E3-455B-B539-C07FBBBD0B29"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PoorEngine/Source/Renderer/RenderPass/TiledDeferredRenderPass.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "draw(commandBuffer:cullingResult:uniforms:params:options:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

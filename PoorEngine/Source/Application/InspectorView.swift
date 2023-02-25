@@ -20,9 +20,14 @@ struct InspectorView: View {
                     }
                 }
                 .pickerStyle(.menu)
-                .onChange(of: op.renderChoice){ v in
-                    print("Change to \(v)")
+
+                Picker("Tone Mapping", selection: $op.tonemappingMode){
+                    ForEach(ToneMappingMode.allCases, id: \.id){choice in
+                        Text(choice.name).tag(choice)
+                    }
                 }
+                .pickerStyle(.menu)
+                
                 Toggle("Draw Triangle", isOn: $op.drawTriangle).toggleStyle(.switch)
                 
             }

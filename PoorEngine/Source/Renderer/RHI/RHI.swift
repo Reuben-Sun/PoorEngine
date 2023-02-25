@@ -125,6 +125,7 @@ extension RHI {
         params.inverseVPMatrix = (cullingResult.camera.viewMatrix.inverse * cullingResult.camera.projectionMatrix.inverse)
         //TODO: 通过Param传入Debug信息，未来会修改
         params.debugMode = uint(options.renderChoice.rawValue)
+        params.tonemappingMode = uint(options.tonemappingMode.rawValue)
     }
 }
 

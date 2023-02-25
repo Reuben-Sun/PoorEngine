@@ -13,6 +13,39 @@ using namespace metal;
 #import "Include/Sample.h"
 #import "Include/ShaderType.h"
 
+float3 linearToneMapping(float3 color)
+{
+    float exposure = 1.;
+    color = clamp(exposure * color, 0., 1.);
+    color = pow(color, float3(1. / GAMMA));
+    return color;
+}
+
+float3 filmicToneMapping(float3 color)
+{
+    color = max(float3(0.0), color - float3(0.004));
+    color = (color * (6.2 * color + .5)) / (color * (6.2 * color + 1.7) + 0.06);
+    return color;
+}
+
+float3 lumaBasedReinhardToneMapping(float3 color)
+{
+    float luma = dot(color, float3(0.2126, 0.7152, 0.0722));
+    float toneMappedLuma = luma / (1. + luma);
+    color *= toneMappedLuma / luma;
+    color = pow(color, float3(1. / GAMMA));
+    return color;
+}
+
+float3 whitePreservingLumaBasedReinhardToneMapping(float3 color)
+{
+    float white = 2.;
+    float luma = dot(color, float3(0.2126, 0.7152, 0.0722));
+    float toneMappedLuma = luma * (1. + luma / (white*white)) / (1. + luma);
+    color *= toneMappedLuma / luma;
+    color = pow(color, float3(1. / GAMMA));
+    return color;
+}
 
 fragment float4 fragment_postprocess(VertexOut in [[stage_in]],
                                      constant Params &params [[buffer(ParamsBuffer)]],
@@ -21,9 +54,24 @@ fragment float4 fragment_postprocess(VertexOut in [[stage_in]],
     constexpr sampler sample(filter::linear, address::repeat);
     in.uv.y = -in.uv.y;
     float4 color = preTexture.sample(sample, in.uv);
-    return float4(color.xyz, 1);
+    float3 HDRColor = color.xyz;
+    if(params.tonemappingMode == TONEMAPPING_LINEAR){
+        HDRColor = linearToneMapping(color.xyz);
+    }
+    if(params.tonemappingMode == TONEMAPPING_FILMIC){
+        HDRColor = filmicToneMapping(color.xyz);
+    }
+    if(params.tonemappingMode == TONEMAPPING_LUMA){
+        HDRColor = lumaBasedReinhardToneMapping(HDRColor);
+    }
+    if(params.tonemappingMode == TONEMAPPING_WHITE){
+        HDRColor = whitePreservingLumaBasedReinhardToneMapping(HDRColor);
+    }
+
+    return float4(HDRColor, 1);
 }
 
+// MARK: 放弃实现MSAA，后续会改为TAA
 kernel void msaa_main(imageblock<LightingOut> img_blk_colors,
                       uint pid [[thread_position_in_grid]])
 {

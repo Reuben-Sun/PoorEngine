@@ -35,7 +35,29 @@ enum RenderChoice: Int, CaseIterable {
     }
 }
 
+enum ToneMappingMode: Int, CaseIterable {
+    case none
+    case linear
+    case filmic
+    case luma
+    case white
+    
+    var name: String {
+        switch self {
+        case .none: return "None"
+        case .linear: return "Linear"
+        case .filmic: return "Filmic"
+        case .luma: return "Luma"
+        case .white: return "White"
+        }
+    }
+}
+
 extension RenderChoice: Identifiable{
+    var id: Self {self}
+}
+
+extension ToneMappingMode: Identifiable {
     var id: Self {self}
 }
 
@@ -46,4 +68,5 @@ class Options: ObservableObject {
     @Published var drawGameObject = true
     @Published var useHeightmap = true
     @Published var terrainReplacePlane = false
+    @Published var tonemappingMode = ToneMappingMode.none
 }

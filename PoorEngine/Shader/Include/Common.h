@@ -32,6 +32,7 @@ typedef struct {
     uint touchY;
     matrix_float4x4 inverseVPMatrix;    //VP矩阵的逆
     uint debugMode;
+    uint tonemappingMode;
 } Params;
 
 typedef enum {
@@ -111,4 +112,7 @@ typedef struct {
     float height;
     uint maxTessellation;
 } Terrain;
+
+#define GAMMA 2.2
+
 #endif /* Common_h */

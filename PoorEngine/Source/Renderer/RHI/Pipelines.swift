@@ -125,6 +125,7 @@ enum PipelineStates {
         return createPSO(descriptor: pipelineDescriptor)
     }
     
+    // MARK: 放弃使用MSAA，后续可能会添加TAA
     static func createMSAAPassPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
         let tileFunction = RHI.library?.makeFunction(name: "msaa_main")
         let pipelineDescriptor = MTLTileRenderPipelineDescriptor()
