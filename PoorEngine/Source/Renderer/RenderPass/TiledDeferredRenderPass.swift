@@ -26,7 +26,7 @@ struct TiledDeferredRenderPass: RenderPass{
     var depthTexture: MTLTexture?
     
     var finalTexture: MTLTexture?
-
+    
     var heightMap: MTLTexture?
     var cliffTexture: MTLTexture?
     var snowTexture: MTLTexture?
@@ -94,6 +94,12 @@ struct TiledDeferredRenderPass: RenderPass{
             pixelFormat: .depth32Float_stencil8,
             label: "Depth Texture",
             storageMode: .memoryless)
+//        finalTexture = Self.makeMultisampleTexture(
+//            size: size,
+//            pixelFormat: .bgra8Unorm,
+//            label: "Final Texture",
+//            storageMode: .shared,
+//            sampleCount: 4)
         finalTexture = Self.makeTexture(
             size: size,
             pixelFormat: .bgra8Unorm,
@@ -276,13 +282,13 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder.setTriangleFillMode(options.drawTriangle ? .fill : .lines)
         
         renderEncoder.drawPatches(
-              numberOfPatchControlPoints: 4,
-              patchStart: 0,
-              patchCount: tessellationComputePass.patchCount,
-              patchIndexBuffer: nil,
-              patchIndexBufferOffset: 0,
-              instanceCount: 1,
-              baseInstance: 0)
+            numberOfPatchControlPoints: 4,
+            patchStart: 0,
+            patchCount: tessellationComputePass.patchCount,
+            patchIndexBuffer: nil,
+            patchIndexBufferOffset: 0,
+            instanceCount: 1,
+            baseInstance: 0)
         
         renderEncoder.setTriangleFillMode(.fill)
     }
