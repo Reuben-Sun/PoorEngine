@@ -24,6 +24,8 @@ struct TiledDeferredRenderPass: RenderPass{
     var normalTexture: MTLTexture?
     var positionTexture: MTLTexture?
     var depthTexture: MTLTexture?
+    
+    var finalTexture: MTLTexture?
 
     var heightMap: MTLTexture?
     var cliffTexture: MTLTexture?
@@ -112,6 +114,8 @@ struct TiledDeferredRenderPass: RenderPass{
         
         // MARK: G-buffer pass
         let descriptor = viewCurrentRenderPassDescriptor
+        descriptor.colorAttachments[0].texture = finalTexture
+        descriptor.colorAttachments[0].texture?.label = "Final Texture"
         let textures = [
             albedoTexture,
             normalTexture,
