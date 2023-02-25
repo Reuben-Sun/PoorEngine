@@ -45,5 +45,30 @@ extension RenderPass{
         texture.label = label
         return texture
     }
+    
+    static func makeMultisampleTexture(size: CGSize,
+                                       pixelFormat: MTLPixelFormat,
+                                       label: String,
+                                       storageMode: MTLStorageMode = .private,
+                                       usage: MTLTextureUsage = [.shaderRead, .renderTarget],
+                                       sampleCount: Int = 1)
+    -> MTLTexture? {
+        let width = Int(size.width)
+        let height = Int(size.height)
+        guard width > 0 && height > 0 else { return nil }
+        let textureDesc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: pixelFormat,
+                                                                   width: width,
+                                                                   height: height,
+                                                                   mipmapped: false)
+        textureDesc.storageMode = storageMode
+        textureDesc.usage = usage
+        textureDesc.sampleCount = sampleCount
+        textureDesc.textureType  = MTLTextureType.type2DMultisample
+        guard let texture = RHI.device.makeTexture(descriptor: textureDesc) else {
+            fatalError("Failed to create texture")
+        }
+        texture.label = label
+        return texture
+    }
 }
 
