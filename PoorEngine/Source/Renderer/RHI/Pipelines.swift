@@ -115,6 +115,16 @@ enum PipelineStates {
         return createPSO(descriptor: pipelineDescriptor)
     }
     
+    static func createPostProcessPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
+        let vertexFunction = RHI.library?.makeFunction(name: "vertex_quad")
+        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_postprocess")
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.vertexFunction = vertexFunction
+        pipelineDescriptor.fragmentFunction = fragmentFunction
+        pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+        return createPSO(descriptor: pipelineDescriptor)
+    }
+    
 }
 
 extension MTLRenderPipelineDescriptor {

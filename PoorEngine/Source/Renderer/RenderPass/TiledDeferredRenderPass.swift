@@ -94,6 +94,11 @@ struct TiledDeferredRenderPass: RenderPass{
             pixelFormat: .depth32Float_stencil8,
             label: "Depth Texture",
             storageMode: .memoryless)
+        finalTexture = Self.makeTexture(
+            size: size,
+            pixelFormat: .bgra8Unorm,
+            label: "Final Texture",
+            storageMode: .shared)
         
         do {
             heightMap = try TextureController.loadTexture(filename: "mountain")

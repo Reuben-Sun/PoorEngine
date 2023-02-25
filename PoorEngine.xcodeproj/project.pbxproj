@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2332285D29AA4A8900169858 /* PostProcessRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2332285C29AA4A8900169858 /* PostProcessRenderPass.swift */; };
+		2332285F29AA4ADF00169858 /* PostProcess.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2332285E29AA4ADF00169858 /* PostProcess.metal */; };
 		2360151C299A80A300926ADB /* PoorEngineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2360151B299A80A300926ADB /* PoorEngineApp.swift */; };
 		2360151E299A80A300926ADB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2360151D299A80A300926ADB /* MainView.swift */; };
 		23601520299A80A400926ADB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2360151F299A80A400926ADB /* Assets.xcassets */; };
@@ -59,6 +61,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2332285C29AA4A8900169858 /* PostProcessRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProcessRenderPass.swift; sourceTree = "<group>"; };
+		2332285E29AA4ADF00169858 /* PostProcess.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PostProcess.metal; sourceTree = "<group>"; };
 		23601518299A80A300926ADB /* PoorEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PoorEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2360151B299A80A300926ADB /* PoorEngineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoorEngineApp.swift; sourceTree = "<group>"; };
 		2360151D299A80A300926ADB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -178,6 +182,7 @@
 				23601574299A9CB100926ADB /* Deferred.metal */,
 				23A36B6429A5F6280028E92E /* Terrain.metal */,
 				23A36B6B29A65C5C0028E92E /* Tessellation.metal */,
+				2332285E29AA4ADF00169858 /* PostProcess.metal */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 				2360153F299A90FA00926ADB /* TiledDeferredRenderPass.swift */,
 				23601541299A913200926ADB /* RenderPass.swift */,
 				23601569299A9AF000926ADB /* ShadowRenderPass.swift */,
+				2332285C29AA4A8900169858 /* PostProcessRenderPass.swift */,
 			);
 			path = RenderPass;
 			sourceTree = "<group>";
@@ -453,6 +459,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23601550299A958600926ADB /* VertexDescriptor.swift in Sources */,
+				2332285F29AA4ADF00169858 /* PostProcess.metal in Sources */,
 				23601552299A95E300926ADB /* Renderer.swift in Sources */,
 				23601575299A9CB100926ADB /* Deferred.metal in Sources */,
 				23601533299A86D800926ADB /* InspectorView.swift in Sources */,
@@ -462,6 +469,7 @@
 				23A36B6929A656760028E92E /* TessellationComputePass.swift in Sources */,
 				23601562299A974900926ADB /* ShadowCamera.swift in Sources */,
 				23601554299A960600926ADB /* InputController.swift in Sources */,
+				2332285D29AA4A8900169858 /* PostProcessRenderPass.swift in Sources */,
 				2360154A299A94BE00926ADB /* TextureController.swift in Sources */,
 				23A36B6529A5F6280028E92E /* Terrain.metal in Sources */,
 				23601596299B4D7500926ADB /* GameObject.swift in Sources */,
