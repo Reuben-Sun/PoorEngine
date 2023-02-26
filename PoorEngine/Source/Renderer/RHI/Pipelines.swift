@@ -141,6 +141,26 @@ enum PipelineStates {
         }
         return pipelineState
     }
+    
+    static func createSkyboxPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
+        let vertexFunction = RHI.library?.makeFunction(name: "vertex_skybox")
+        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_skybox")
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.vertexFunction = vertexFunction
+        pipelineDescriptor.fragmentFunction = fragmentFunction
+        pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+        pipelineDescriptor.setGBufferPixelFormats()
+        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float_stencil8
+        pipelineDescriptor.stencilAttachmentPixelFormat = .depth32Float_stencil8
+        
+        let vertexDescriptor = MTLVertexDescriptor()
+        vertexDescriptor.attributes[0].format = .float3
+        vertexDescriptor.attributes[0].offset = 0
+        vertexDescriptor.attributes[0].bufferIndex = 0
+        vertexDescriptor.layouts[0].stride = MemoryLayout<float3>.stride
+        pipelineDescriptor.vertexDescriptor = vertexDescriptor
+        return createPSO(descriptor: pipelineDescriptor)
+    }
 }
 
 extension MTLRenderPipelineDescriptor {

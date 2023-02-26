@@ -14,6 +14,7 @@ struct CullingResult{
     var sceneLights: Lights?
     var isPaused = false
     var terrainQuad: Quad?
+    var skybox: Skybox?
     
     mutating func cull(scene: GameScene, options: Options){
         models = []
@@ -39,7 +40,7 @@ struct CullingResult{
         } else {
             terrainQuad = nil
         }
-        
+        skybox = scene.skybox
         
     }
 }

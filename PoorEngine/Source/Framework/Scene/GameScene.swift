@@ -15,6 +15,7 @@ struct GameScene {
     var debugMainCamera: ArcballCamera?
     var debugShadowCamera: OrthographicCamera?
     var terrainQuad: Quad?
+    var skybox: Skybox?
     var shouldDrawMainCamera = false
     var shouldDrawLightCamera = false
     var shouldDrawBoundingSphere = false
@@ -27,6 +28,7 @@ struct GameScene {
         camera.target = [0, 1, 0]
         camera.distance = 4
         goList = []
+        skybox = Skybox(textureName: "111")
         let scene = SceneJson.loadScene(fileName: sceneJsonName)
         for go in scene.gameObject {
             var gameObject = GameObject(name: go.name, meshName: go.modelName, exten: go.exten)
