@@ -45,6 +45,7 @@ enum PipelineStates {
     static func createShadowPassPSO() -> MTLRenderPipelineState {
         let vertexFunction = RHI.library?.makeFunction(name: "vertex_depth")
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.label = "Shadow"
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.colorAttachments[0].pixelFormat = .invalid
         pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
@@ -56,6 +57,7 @@ enum PipelineStates {
         let vertexFunction = RHI.library?.makeFunction(name: "vertex_main")
         let fragmentFunction = RHI.library?.makeFunction(name: "fragment_gBuffer")
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.label = "GBuffer"
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
         
@@ -76,6 +78,7 @@ enum PipelineStates {
         // MARK: makeFunction后面添加constantValues用于开启宏，类似于#pragma keyword?
         let fragmentFunction = try! RHI.library?.makeFunction(name: fragment, constantValues: constantValues)
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.label = "Lighting"
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
         pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
@@ -92,6 +95,7 @@ enum PipelineStates {
         let vertexFunction = RHI.library?.makeFunction(name: "vertex_terrain")
         let fragmentFunction = RHI.library?.makeFunction(name: "fragment_terrain_gBuffer")
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.label = "Terrain"
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
         pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
@@ -119,6 +123,7 @@ enum PipelineStates {
         let vertexFunction = RHI.library?.makeFunction(name: "vertex_quad")
         let fragmentFunction = RHI.library?.makeFunction(name: "fragment_postprocess")
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.label = "PostProcess"
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
         pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
@@ -146,6 +151,7 @@ enum PipelineStates {
         let vertexFunction = RHI.library?.makeFunction(name: "vertex_skybox")
         let fragmentFunction = RHI.library?.makeFunction(name: "fragment_skybox")
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.label = "Skybox"
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
         pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
