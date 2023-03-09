@@ -11,6 +11,9 @@ extension MTLVertexDescriptor {
     static var defaultLayout: MTLVertexDescriptor? {
         MTKMetalVertexDescriptorFromModelIO(.defaultLayout)
     }
+    static var skyboxLayout: MTLVertexDescriptor? {
+        MTKMetalVertexDescriptorFromModelIO(.skyboxLayout)
+    }
 }
 
 extension MDLVertexDescriptor {
@@ -67,6 +70,21 @@ extension MDLVertexDescriptor {
             offset: 0,
             bufferIndex: BitangentBuffer.index)
         vertexDescriptor.layouts[BitangentBuffer.index] = MDLVertexBufferLayout(stride: MemoryLayout<float3>.stride)
+        
+        return vertexDescriptor
+    }
+    
+    static var skyboxLayout: MDLVertexDescriptor {
+        let vertexDescriptor = MDLVertexDescriptor()
+        var offset = 0
+        //顶点坐标
+        vertexDescriptor.attributes[Position.index] = MDLVertexAttribute(
+            name: MDLVertexAttributePosition,
+            format: .float3,
+            offset: 0,
+            bufferIndex: VertexBuffer.index)
+        offset += MemoryLayout<float3>.stride
+        vertexDescriptor.layouts[VertexBuffer.index] = MDLVertexBufferLayout(stride: offset)
         
         return vertexDescriptor
     }

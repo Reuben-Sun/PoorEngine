@@ -158,13 +158,7 @@ enum PipelineStates {
         pipelineDescriptor.setGBufferPixelFormats()
         pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float_stencil8
         pipelineDescriptor.stencilAttachmentPixelFormat = .depth32Float_stencil8
-        
-        let vertexDescriptor = MTLVertexDescriptor()
-        vertexDescriptor.attributes[0].format = .float3
-        vertexDescriptor.attributes[0].offset = 0
-        vertexDescriptor.attributes[0].bufferIndex = 0
-        vertexDescriptor.layouts[0].stride = MemoryLayout<float3>.stride
-        pipelineDescriptor.vertexDescriptor = vertexDescriptor
+        pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.skyboxLayout
         return createPSO(descriptor: pipelineDescriptor)
     }
 }
