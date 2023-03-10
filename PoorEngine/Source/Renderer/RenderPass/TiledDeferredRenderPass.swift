@@ -15,9 +15,11 @@ struct TiledDeferredRenderPass: RenderPass{
     var lightingPassPSO: MTLRenderPipelineState
     var terrainPassPSO: MTLRenderPipelineState
     var tessellationComputePass: TessellationComputePass
+    var skyboxPassPSO: MTLRenderPipelineState
     
     let depthStencilState: MTLDepthStencilState?
     let lightingDepthStencilState: MTLDepthStencilState?
+    let skyboxDepthStencilState: MTLDepthStencilState?
     
     weak var shadowTexture: MTLTexture?
     var albedoTexture: MTLTexture?
@@ -32,6 +34,8 @@ struct TiledDeferredRenderPass: RenderPass{
     var snowTexture: MTLTexture?
     var grassTexture: MTLTexture?
     
+    var skyboxCube: Skybox?
+    
     init(view: MTKView, options: Options) {
         gBufferPassPSO = PipelineStates.createGBufferPassPSO(
             colorPixelFormat: view.colorPixelFormat,
@@ -40,9 +44,11 @@ struct TiledDeferredRenderPass: RenderPass{
             colorPixelFormat: view.colorPixelFormat,
             options: options)
         terrainPassPSO = PipelineStates.createTerrainPSO(colorPixelFormat: view.colorPixelFormat)
+        skyboxPassPSO = PipelineStates.createSkyboxPSO(colorPixelFormat: view.colorPixelFormat)
         
         depthStencilState = Self.buildDepthStencilState()
         lightingDepthStencilState = Self.buildLightingDepthStencilState()
+        skyboxDepthStencilState = Self.buildSkyboxDepthStencilState()
         
         tessellationComputePass = TessellationComputePass(view: view, options: options)
     }
@@ -72,6 +78,13 @@ struct TiledDeferredRenderPass: RenderPass{
         return RHI.device.makeDepthStencilState(descriptor: descriptor)
     }
     
+    static func buildSkyboxDepthStencilState() -> MTLDepthStencilState? {
+        let descriptor = MTLDepthStencilDescriptor()
+        descriptor.depthCompareFunction = .lessEqual
+        descriptor.isDepthWriteEnabled = true
+        return RHI.device.makeDepthStencilState(descriptor: descriptor)
+    }
+    
     mutating func resize(view: MTKView, size: CGSize) {
         //将贴图类型设为memoryless
         albedoTexture = Self.makeTexture(
@@ -94,12 +107,6 @@ struct TiledDeferredRenderPass: RenderPass{
             pixelFormat: .depth32Float_stencil8,
             label: "Depth Texture",
             storageMode: .memoryless)
-//        finalTexture = Self.makeMultisampleTexture(
-//            size: size,
-//            pixelFormat: .bgra8Unorm,
-//            label: "Final Texture",
-//            storageMode: .shared,
-//            sampleCount: 4)
         finalTexture = Self.makeTexture(
             size: size,
             pixelFormat: .bgra8Unorm,
@@ -163,6 +170,13 @@ struct TiledDeferredRenderPass: RenderPass{
             options: options)
         
         drawTerrainRenderPass(
+            renderEncoder: renderEncoder,
+            cullingResult: cullingResult,
+            uniforms: uniforms,
+            params: params,
+            options: options)
+        
+        drawSkyboxRenderPass(
             renderEncoder: renderEncoder,
             cullingResult: cullingResult,
             uniforms: uniforms,
@@ -291,6 +305,36 @@ struct TiledDeferredRenderPass: RenderPass{
             baseInstance: 0)
         
         renderEncoder.setTriangleFillMode(.fill)
+    }
+    
+    func drawSkyboxRenderPass(
+        renderEncoder: MTLRenderCommandEncoder,
+        cullingResult: CullingResult,
+        uniforms: Uniforms,
+        params: Params,
+        options: Options
+    ) {
+        renderEncoder.pushDebugGroup("Skybox")
+        renderEncoder.label = "Skybox render pass"
+        //        renderEncoder.setDepthStencilState(depthStencilState)
+        renderEncoder.setRenderPipelineState(skyboxPassPSO)
+        
+        renderEncoder.setVertexBuffer(skyboxCube?.mesh.vertexBuffers[0].buffer,
+                                      offset: 0,
+                                      index: 0)
+        var uniforms = uniforms
+        uniforms.modelMatrix = (skyboxCube?.transform.modelMatrix)!
+        //        uniforms.viewMatrix.columns.3 = [0, 0, 0, 1]
+        renderEncoder.setVertexBytes(&uniforms,
+                                     length: MemoryLayout<Uniforms>.stride,
+                                     index: UniformsBuffer.index)
+        let submesh = skyboxCube?.mesh.submeshes[0]
+        renderEncoder.drawIndexedPrimitives(type: .triangle,
+                                            indexCount: submesh!.indexCount,
+                                            indexType: submesh!.indexType,
+                                            indexBuffer: submesh!.indexBuffer.buffer,
+                                            indexBufferOffset: 0)
+        renderEncoder.popDebugGroup()
     }
 }
 

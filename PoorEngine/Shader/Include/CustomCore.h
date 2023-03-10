@@ -49,4 +49,9 @@ struct LightingOut
     float4 Color [[color(0)]];
 };
 
+struct SkyboxVertexIn {
+    float4 position [[attribute(Position)]];
+    float3 normal [[attribute(Normal)]];
+};
+
 #endif /* CustomCore_h */

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2332285D29AA4A8900169858 /* PostProcessRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2332285C29AA4A8900169858 /* PostProcessRenderPass.swift */; };
 		2332285F29AA4ADF00169858 /* PostProcess.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2332285E29AA4ADF00169858 /* PostProcess.metal */; };
+		2332286529AB112900169858 /* Skybox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2332286429AB112900169858 /* Skybox.swift */; };
+		2332286729AB2B1E00169858 /* Skybox.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2332286629AB2B1E00169858 /* Skybox.metal */; };
 		2360151C299A80A300926ADB /* PoorEngineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2360151B299A80A300926ADB /* PoorEngineApp.swift */; };
 		2360151E299A80A300926ADB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2360151D299A80A300926ADB /* MainView.swift */; };
 		23601520299A80A400926ADB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2360151F299A80A400926ADB /* Assets.xcassets */; };
@@ -63,6 +65,8 @@
 /* Begin PBXFileReference section */
 		2332285C29AA4A8900169858 /* PostProcessRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProcessRenderPass.swift; sourceTree = "<group>"; };
 		2332285E29AA4ADF00169858 /* PostProcess.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PostProcess.metal; sourceTree = "<group>"; };
+		2332286429AB112900169858 /* Skybox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skybox.swift; sourceTree = "<group>"; };
+		2332286629AB2B1E00169858 /* Skybox.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Skybox.metal; sourceTree = "<group>"; };
 		23601518299A80A300926ADB /* PoorEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PoorEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2360151B299A80A300926ADB /* PoorEngineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoorEngineApp.swift; sourceTree = "<group>"; };
 		2360151D299A80A300926ADB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -183,6 +187,7 @@
 				23A36B6429A5F6280028E92E /* Terrain.metal */,
 				23A36B6B29A65C5C0028E92E /* Tessellation.metal */,
 				2332285E29AA4ADF00169858 /* PostProcess.metal */,
+				2332286629AB2B1E00169858 /* Skybox.metal */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -360,6 +365,7 @@
 				23601547299A946700926ADB /* Submesh.swift */,
 				2360154B299A94E800926ADB /* Mesh.swift */,
 				23A36B6229A5CF830028E92E /* TerrainQuad.swift */,
+				2332286429AB112900169858 /* Skybox.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -482,7 +488,9 @@
 				2360156A299A9AF000926ADB /* ShadowRenderPass.swift in Sources */,
 				23601544299A932000926ADB /* MathLibrary.swift in Sources */,
 				23601542299A913200926ADB /* RenderPass.swift in Sources */,
+				2332286729AB2B1E00169858 /* Skybox.metal in Sources */,
 				23601560299A972400926ADB /* Lights.swift in Sources */,
+				2332286529AB112900169858 /* Skybox.swift in Sources */,
 				2360154E299A94FC00926ADB /* Model.swift in Sources */,
 				2360154C299A94E800926ADB /* Mesh.swift in Sources */,
 				2360155D299A96F600926ADB /* PlayerCamera.swift in Sources */,
