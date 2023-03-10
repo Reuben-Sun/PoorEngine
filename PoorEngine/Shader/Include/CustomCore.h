@@ -40,8 +40,10 @@ struct GBufferOut {
     float4 MRT0 [[color(RenderTarget0)]];
     // RGB: normal
     float4 MRT1 [[color(RenderTarget1)]];
-    // R: depth
+    // R: depth, G: metallic, B: roughness, A: ao
     float4 MRT2 [[color(RenderTarget2)]];
+    // RGB: shiness + indirect, A: lighting model
+    float4 MRT3 [[color(RenderTarget3)]];
 };
 
 struct LightingOut

@@ -51,6 +51,7 @@ fragment GBufferOut fragment_gBuffer(VertexOut in [[stage_in]],
     out.MRT0 = float4(_material.baseColor, getShadowAttenuation(in.shadowPosition, shadowTexture));
     out.MRT1 = float4(normalize(normal), 1.0);
     out.MRT2 = float4(in.position.z, _material.metallic, _material.roughness, _material.ambientOcclusion);
+    out.MRT3 = float4(_material.shininess, 0);
     return out;
 }
 

@@ -25,6 +25,8 @@ struct TiledDeferredRenderPass: RenderPass{
     var albedoTexture: MTLTexture?
     var normalTexture: MTLTexture?
     var positionTexture: MTLTexture?
+    var shinnessTexture: MTLTexture?
+    
     var depthTexture: MTLTexture?
     
     var finalTexture: MTLTexture?
@@ -100,6 +102,10 @@ struct TiledDeferredRenderPass: RenderPass{
             pixelFormat: .rgba16Float,
             label: "Position Texture",
             storageMode: .memoryless)
+        shinnessTexture = Self.makeTexture(
+            size: size,
+            pixelFormat: .rgba16Float,
+            label: "Shiness Texture")
         depthTexture = Self.makeTexture(
             size: size,
             pixelFormat: .depth32Float_stencil8,
@@ -135,7 +141,8 @@ struct TiledDeferredRenderPass: RenderPass{
         let textures = [
             albedoTexture,
             normalTexture,
-            positionTexture
+            positionTexture,
+            shinnessTexture
         ]
         //将贴图存储操作设为dontCare
         for (index, texture) in textures.enumerated() {

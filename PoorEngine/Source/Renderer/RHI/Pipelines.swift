@@ -168,5 +168,6 @@ extension MTLRenderPipelineDescriptor {
         colorAttachments[RenderTarget0.index].pixelFormat = .bgra8Unorm
         colorAttachments[RenderTarget1.index].pixelFormat = .rgba16Float
         colorAttachments[RenderTarget2.index].pixelFormat = .rgba16Float
+        colorAttachments[RenderTarget3.index].pixelFormat = .rgba16Float
     }
 }

@@ -96,14 +96,15 @@ typedef struct {
     float roughness;
     float metallic;
     float ambientOcclusion;
-    float shininess;   //emission
+    vector_float3 shininess;   //emission
 } Material;     //Surface
 
 // GBuffer index
 typedef enum {
     RenderTarget0 = 1,
     RenderTarget1 = 2,
-    RenderTarget2 = 3
+    RenderTarget2 = 3,
+    RenderTarget3 = 4,
 } RenderTargetIndices;
 
 // Terrain

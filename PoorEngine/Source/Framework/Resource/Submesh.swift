@@ -67,8 +67,8 @@ extension Material {
             self.specularColor = specular.float3Value
         }
         if let shininess = material?.property(with: .specularExponent),
-           shininess.type == .float {
-            self.shininess = shininess.floatValue
+           shininess.type == .float3 {
+            self.shininess = shininess.float3Value
         }
         if let roughness = material?.property(with: .roughness),
            roughness.type == .float3{
