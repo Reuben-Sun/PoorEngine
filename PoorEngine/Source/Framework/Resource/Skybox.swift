@@ -7,10 +7,10 @@
 
 import MetalKit
 
-struct Skybox {
+class Skybox : Transformable {
     let mesh: MTKMesh
     var skyTexture: MTLTexture?
-    var transform: Transform
+    var transform = Transform()
     
     init(textureName: String?) {
         let allocator = MTKMeshBufferAllocator(device: RHI.device)
@@ -29,8 +29,7 @@ struct Skybox {
         } catch {
             fatalError("Failed to create skybox mesh")
         }
-        transform = Transform();
-        transform.position = [0, 1, 0]
+        transform.position = [0, 0, 0]
         transform.rotation = [0, 0, 0]
     }
 }

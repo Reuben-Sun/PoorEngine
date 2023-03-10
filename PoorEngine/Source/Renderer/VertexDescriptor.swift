@@ -84,6 +84,15 @@ extension MDLVertexDescriptor {
             offset: 0,
             bufferIndex: VertexBuffer.index)
         offset += MemoryLayout<float3>.stride
+        
+        //顶点法线
+        vertexDescriptor.attributes[Normal.index] = MDLVertexAttribute(
+            name: MDLVertexAttributeNormal,
+            format: .float3,
+            offset: offset,
+            bufferIndex: VertexBuffer.index)
+        offset += MemoryLayout<float3>.stride
+        
         vertexDescriptor.layouts[VertexBuffer.index] = MDLVertexBufferLayout(stride: offset)
         
         return vertexDescriptor

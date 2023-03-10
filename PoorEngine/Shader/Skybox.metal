@@ -10,16 +10,13 @@ using namespace metal;
 
 #import "Include/CustomCore.h"
 
-struct SkyboxVertexIn {
-    float4 position [[attribute(0)]];
-};
-
 vertex VertexOut vertex_skybox(const SkyboxVertexIn in [[stage_in]],
                                constant Uniforms &uniforms [[buffer(UniformsBuffer)]])
 {
     VertexOut out;
-    float4x4 vp = uniforms.projectionMatrix * uniforms.viewMatrix;
-    out.position = (vp * in.position).xyww;
+    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * in.position;
+//    out.position = uniforms.modelMatrix * in.position;
+//    out.position = in.position;
     return out;
 }
 

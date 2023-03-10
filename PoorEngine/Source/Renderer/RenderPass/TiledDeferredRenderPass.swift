@@ -323,18 +323,17 @@ struct TiledDeferredRenderPass: RenderPass{
                                       offset: 0,
                                       index: 0)
         var uniforms = uniforms
-        uniforms.viewMatrix.columns.3 = [0, 0, 0, 1]
-        renderEncoder.setVertexBytes(
-            &uniforms,
-            length: MemoryLayout<Uniforms>.stride,
-            index: UniformsBuffer.index)
+        uniforms.modelMatrix = (skyboxCube?.transform.modelMatrix)!
+        //        uniforms.viewMatrix.columns.3 = [0, 0, 0, 1]
+        renderEncoder.setVertexBytes(&uniforms,
+                                     length: MemoryLayout<Uniforms>.stride,
+                                     index: UniformsBuffer.index)
         let submesh = skyboxCube?.mesh.submeshes[0]
-        renderEncoder.drawIndexedPrimitives(
-            type: .triangle,
-            indexCount: submesh!.indexCount,
-            indexType: submesh!.indexType,
-            indexBuffer: submesh!.indexBuffer.buffer,
-            indexBufferOffset: 0)
+        renderEncoder.drawIndexedPrimitives(type: .triangle,
+                                            indexCount: submesh!.indexCount,
+                                            indexType: submesh!.indexType,
+                                            indexBuffer: submesh!.indexBuffer.buffer,
+                                            indexBufferOffset: 0)
         renderEncoder.popDebugGroup()
     }
 }
