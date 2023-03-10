@@ -29,11 +29,12 @@ struct InspectorView: View {
                 .pickerStyle(.menu)
                 
                 Toggle("Draw Triangle", isOn: $op.drawTriangle).toggleStyle(.switch)
+                Toggle("Draw GameObject", isOn: $op.drawGameObject).toggleStyle(.switch)
+                Toggle("Draw Skybox", isOn: $op.drawSkybox).toggleStyle(.switch)
                 
             }
             Section(header: Text("Terrain")){
                 Toggle("Terrain Replace Plane", isOn: $op.terrainReplacePlane).toggleStyle(.switch)
-                Toggle("Draw GameObject", isOn: $op.drawGameObject).toggleStyle(.switch)
                 Toggle("Use Heightmap", isOn: $op.useHeightmap).toggleStyle(.switch)
             }
             Section(header: Text("CCCCC")){

@@ -34,8 +34,6 @@ struct TiledDeferredRenderPass: RenderPass{
     var snowTexture: MTLTexture?
     var grassTexture: MTLTexture?
     
-    var skyboxCube: Skybox?
-    
     init(view: MTKView, options: Options) {
         gBufferPassPSO = PipelineStates.createGBufferPassPSO(
             colorPixelFormat: view.colorPixelFormat,
@@ -314,21 +312,26 @@ struct TiledDeferredRenderPass: RenderPass{
         params: Params,
         options: Options
     ) {
+        if options.drawSkybox == false {
+            return
+        }
         renderEncoder.pushDebugGroup("Skybox")
         renderEncoder.label = "Skybox render pass"
         //        renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(skyboxPassPSO)
         
-        renderEncoder.setVertexBuffer(skyboxCube?.mesh.vertexBuffers[0].buffer,
+        let skybox = cullingResult.skybox
+        
+        renderEncoder.setVertexBuffer(skybox?.mesh.vertexBuffers[0].buffer,
                                       offset: 0,
                                       index: 0)
         var uniforms = uniforms
-        uniforms.modelMatrix = (skyboxCube?.transform.modelMatrix)!
+        uniforms.modelMatrix = (skybox?.transform.modelMatrix)!
         //        uniforms.viewMatrix.columns.3 = [0, 0, 0, 1]
         renderEncoder.setVertexBytes(&uniforms,
                                      length: MemoryLayout<Uniforms>.stride,
                                      index: UniformsBuffer.index)
-        let submesh = skyboxCube?.mesh.submeshes[0]
+        let submesh = skybox?.mesh.submeshes[0]
         renderEncoder.drawIndexedPrimitives(type: .triangle,
                                             indexCount: submesh!.indexCount,
                                             indexType: submesh!.indexType,

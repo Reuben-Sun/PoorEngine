@@ -83,7 +83,6 @@ extension RHI {
                               params: params,
                               options: options)
         //TBDR
-        tiledDeferredRenderPass.skyboxCube = cullingResult.skybox
         tiledDeferredRenderPass.shadowTexture = shadowRenderPass.shadowTexture
         tiledDeferredRenderPass.descriptor = descriptor
         tiledDeferredRenderPass.draw(commandBuffer: commandBuffer,
