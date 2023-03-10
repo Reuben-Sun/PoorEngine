@@ -81,7 +81,7 @@ struct TiledDeferredRenderPass: RenderPass{
     static func buildSkyboxDepthStencilState() -> MTLDepthStencilState? {
         let descriptor = MTLDepthStencilDescriptor()
         descriptor.depthCompareFunction = .lessEqual
-        descriptor.isDepthWriteEnabled = true
+        descriptor.isDepthWriteEnabled = false
         return RHI.device.makeDepthStencilState(descriptor: descriptor)
     }
     
@@ -325,7 +325,7 @@ struct TiledDeferredRenderPass: RenderPass{
         }
         renderEncoder.pushDebugGroup("Skybox")
         renderEncoder.label = "Skybox render pass"
-        //        renderEncoder.setDepthStencilState(depthStencilState)
+//        renderEncoder.setDepthStencilState(skyboxDepthStencilState)
         renderEncoder.setRenderPipelineState(skyboxPassPSO)
         
         let skybox = cullingResult.skybox
@@ -335,7 +335,7 @@ struct TiledDeferredRenderPass: RenderPass{
                                       index: 0)
         var uniforms = uniforms
         uniforms.modelMatrix = (skybox?.transform.modelMatrix)!
-        //        uniforms.viewMatrix.columns.3 = [0, 0, 0, 1]
+        uniforms.viewMatrix.columns.3 = [0, 0, 0, 1]
         renderEncoder.setVertexBytes(&uniforms,
                                      length: MemoryLayout<Uniforms>.stride,
                                      index: UniformsBuffer.index)

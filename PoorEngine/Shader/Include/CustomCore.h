@@ -56,4 +56,9 @@ struct SkyboxVertexIn {
     float3 normal [[attribute(Normal)]];
 };
 
+struct SkyboxVertexOut {
+    float4 position [[position]];
+    float3 uvw;
+};
+
 #endif /* CustomCore_h */

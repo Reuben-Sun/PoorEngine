@@ -19,9 +19,9 @@ class Skybox : Transformable {
 //                           inwardNormals: true,
 //                           geometryType: .triangles,
 //                           allocator: allocator)
-        let sphere = MDLMesh(sphereWithExtent: [1, 1, 1],
+        let sphere = MDLMesh(sphereWithExtent: [10, 10, 10],
                              segments: [20, 20],
-                             inwardNormals: false,
+                             inwardNormals: true,
                              geometryType: .triangles,
                              allocator: allocator)
         do {
