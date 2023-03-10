@@ -205,6 +205,7 @@ struct TiledDeferredRenderPass: RenderPass{
         params: Params,
         options: Options
     ) {
+        renderEncoder.pushDebugGroup("GBuffer")
         renderEncoder.label = "G-buffer render pass"
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(gBufferPassPSO)
@@ -219,6 +220,7 @@ struct TiledDeferredRenderPass: RenderPass{
                 params: params,
                 options: options)
         }
+        renderEncoder.popDebugGroup()
     }
     
     func drawLightingRenderPass(
@@ -228,6 +230,7 @@ struct TiledDeferredRenderPass: RenderPass{
         params: Params,
         options: Options
     ) {
+        renderEncoder.pushDebugGroup("Dir Light")
         renderEncoder.label = "Lighting render pass"
         renderEncoder.setDepthStencilState(lightingDepthStencilState)
         var uniforms = uniforms
@@ -236,7 +239,6 @@ struct TiledDeferredRenderPass: RenderPass{
                                      index: UniformsBuffer.index)
         
         // MARK: DirLight support, Point Light un support
-        renderEncoder.pushDebugGroup("Dir Light")
         renderEncoder.setRenderPipelineState(lightingPassPSO)
         var params = params
         params.lightCount = UInt32(cullingResult.sceneLights!.dirLights.count)
@@ -262,6 +264,7 @@ struct TiledDeferredRenderPass: RenderPass{
         if cullingResult.terrainQuad == nil {
             return
         }
+        renderEncoder.pushDebugGroup("Terrain")
         renderEncoder.label = "Terrain render pass"
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(terrainPassPSO)
@@ -311,6 +314,7 @@ struct TiledDeferredRenderPass: RenderPass{
             baseInstance: 0)
         
         renderEncoder.setTriangleFillMode(.fill)
+        renderEncoder.popDebugGroup()
     }
     
     func drawSkyboxRenderPass(
