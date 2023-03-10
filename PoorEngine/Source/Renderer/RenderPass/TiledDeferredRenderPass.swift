@@ -105,7 +105,8 @@ struct TiledDeferredRenderPass: RenderPass{
         shinnessTexture = Self.makeTexture(
             size: size,
             pixelFormat: .rgba16Float,
-            label: "Shiness Texture")
+            label: "Shiness Texture",
+            storageMode: .memoryless)
         depthTexture = Self.makeTexture(
             size: size,
             pixelFormat: .depth32Float_stencil8,
