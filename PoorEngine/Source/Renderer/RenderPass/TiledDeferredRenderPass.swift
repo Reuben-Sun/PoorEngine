@@ -70,7 +70,7 @@ struct TiledDeferredRenderPass: RenderPass{
         let descriptor = MTLDepthStencilDescriptor()
         descriptor.isDepthWriteEnabled = false
         let frontFaceStencil = MTLStencilDescriptor()
-        frontFaceStencil.stencilCompareFunction = .notEqual
+        frontFaceStencil.stencilCompareFunction = .lessEqual
         frontFaceStencil.stencilFailureOperation = .keep
         frontFaceStencil.depthFailureOperation = .keep
         frontFaceStencil.depthStencilPassOperation = .keep
@@ -80,8 +80,14 @@ struct TiledDeferredRenderPass: RenderPass{
     
     static func buildSkyboxDepthStencilState() -> MTLDepthStencilState? {
         let descriptor = MTLDepthStencilDescriptor()
-        descriptor.depthCompareFunction = .lessEqual
+        descriptor.depthCompareFunction = .less
         descriptor.isDepthWriteEnabled = false
+        let backFaceStencil = MTLStencilDescriptor()
+        backFaceStencil.stencilCompareFunction = .equal
+        backFaceStencil.stencilFailureOperation = .keep
+        backFaceStencil.depthFailureOperation = .keep
+        backFaceStencil.depthStencilPassOperation = .incrementClamp
+        descriptor.backFaceStencil = backFaceStencil
         return RHI.device.makeDepthStencilState(descriptor: descriptor)
     }
     
@@ -329,7 +335,7 @@ struct TiledDeferredRenderPass: RenderPass{
         }
         renderEncoder.pushDebugGroup("Skybox")
         renderEncoder.label = "Skybox render pass"
-//        renderEncoder.setDepthStencilState(skyboxDepthStencilState)
+        renderEncoder.setDepthStencilState(skyboxDepthStencilState)
         renderEncoder.setRenderPipelineState(skyboxPassPSO)
         
         let skybox = cullingResult.skybox
