@@ -23,7 +23,7 @@ fragment GBufferOut fragment_skybox(SkyboxVertexOut in [[stage_in]],
                                     constant Params &params [[buffer(ParamsBuffer)]])
 {
     GBufferOut out;
-    out.MRT0 = float4(1, 0, 0, 1);
+    out.MRT0 = float4(0.73, 0.92, 1, 1);
     out.MRT1 = float4(0,1,0,0);
     out.MRT2 = float4(in.position.z, 0, 0, 0);
     return out;

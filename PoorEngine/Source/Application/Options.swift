@@ -66,7 +66,7 @@ class Options: ObservableObject {
     @Published var renderChoice = RenderChoice.shadered
     @Published var drawTriangle = true
     @Published var drawGameObject = true
-    @Published var drawSkybox = false
+    @Published var drawSkybox = true
     @Published var useHeightmap = true
     @Published var terrainReplacePlane = false
     @Published var tonemappingMode = ToneMappingMode.linear
