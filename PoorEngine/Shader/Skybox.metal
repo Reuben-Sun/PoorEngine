@@ -20,10 +20,15 @@ vertex SkyboxVertexOut vertex_skybox(const SkyboxVertexIn in [[stage_in]],
 }
 
 fragment GBufferOut fragment_skybox(SkyboxVertexOut in [[stage_in]],
-                                    constant Params &params [[buffer(ParamsBuffer)]])
+                                    constant Params &params [[buffer(ParamsBuffer)]],
+                                    texturecube<float> skyboxTexture [[texture(SkyboxTexture)]] )
 {
+    constexpr sampler linearSampler(mip_filter::linear, mag_filter::linear, min_filter::linear);
+
+    float4 color = skyboxTexture.sample(linearSampler, in.uvw);
+    
     GBufferOut out;
-    out.MRT0 = float4(0.73, 0.92, 1, 1);
+    out.MRT0 = float4(color.xyz, 1);
     out.MRT1 = float4(0,1,0,0);
     out.MRT2 = float4(in.position.z, 0, 0, 0);
     return out;
