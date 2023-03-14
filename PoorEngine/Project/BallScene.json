@@ -41,4 +41,8 @@
             "coneAttenuation": 0,
         },
     ],
+    "skybox": {
+        "textureName": "sky",
+        "shape": "sphere",
+    },
 }

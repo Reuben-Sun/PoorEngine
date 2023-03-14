@@ -28,8 +28,8 @@ struct GameScene {
         camera.target = [0, 1, 0]
         camera.distance = 4
         goList = []
-        skybox = Skybox(textureName: "111")
         let scene = SceneJson.loadScene(fileName: sceneJsonName)
+        // load gameobject
         for go in scene.gameObject {
             var gameObject = GameObject(name: go.name, meshName: go.modelName, exten: go.exten)
             gameObject.position = [go.position[0], go.position[1], go.position[2]]
@@ -41,6 +41,7 @@ struct GameScene {
             gameObject.tag = GameObjectTag(rawValue: go.tag) ?? .opaque
             goList.append(gameObject)
         }
+        // load terrain
         if scene.terrain.haveTerrain {
             terrainQuad = Quad()
             terrainQuad?.position = [scene.terrain.position[0],
@@ -51,6 +52,7 @@ struct GameScene {
                                      scene.terrain.rotation[1].degreesToRadians,
                                      scene.terrain.rotation[2].degreesToRadians]
         }
+        // load lights
         for light in scene.lights {
             var lightObject = Light()
             lightObject.type = LightType(rawValue: UInt32(light.lightType))
@@ -70,7 +72,8 @@ struct GameScene {
             }
         }
         sceneLights.compileLightBuffer()
-        
+        // load skybox
+        skybox = Skybox(textureName: scene.skybox.textureName, shape: SkyboxShape(rawValue: scene.skybox.shape) ?? .sphere)
     }
     
     

@@ -10,27 +10,34 @@ import MetalKit
 class Skybox : Transformable {
     let mesh: MTKMesh
     var skyTexture: MTLTexture?
+    var skyShape: SkyboxShape
     var transform = Transform()
     var skySettings = SkySettings()
     
-    init(textureName: String?) {
+    init(textureName: String, shape: SkyboxShape) {
+        skyShape = shape
         let allocator = MTKMeshBufferAllocator(device: RHI.device)
-        //        let cube = MDLMesh(boxWithExtent: [10,10,10],
-        //                           segments: [5,5,5],
-        //                           inwardNormals: true,
-        //                           geometryType: .triangles,
-        //                           allocator: allocator)
-        let sphere = MDLMesh(sphereWithExtent: [10, 10, 10],
-                             segments: [20, 20],
-                             inwardNormals: true,
-                             geometryType: .triangles,
-                             allocator: allocator)
+        var shape = MDLMesh()
+        if skyShape == .cube {
+            shape = MDLMesh(boxWithExtent: [10,10,10],
+                            segments: [5,5,5],
+                            inwardNormals: true,
+                            geometryType: .triangles,
+                            allocator: allocator)
+        }
+        else if skyShape == .sphere {
+            shape = MDLMesh(sphereWithExtent: [10, 10, 10],
+                            segments: [20, 20],
+                            inwardNormals: true,
+                            geometryType: .triangles,
+                            allocator: allocator)
+        }
         do {
-            mesh = try MTKMesh(mesh: sphere, device: RHI.device)
+            mesh = try MTKMesh(mesh: shape, device: RHI.device)
         } catch {
             fatalError("Failed to create skybox mesh")
         }
-        skyTexture = loadGeneratedSkyboxTexture(textureName: "daySky", dimensions: [256, 256])
+        skyTexture = loadGeneratedSkyboxTexture(textureName: textureName, dimensions: [256, 256])
     }
     
     func loadGeneratedSkyboxTexture(textureName: String, dimensions: SIMD2<Int32>) -> MTLTexture? {
@@ -58,5 +65,10 @@ struct SkySettings {
     var sunElevation: Float = 0.6
     var upperAtmosphereScattering: Float = 0.4
     var groundAlbedo: Float = 0.8
+}
+
+enum SkyboxShape: String {
+    case cube = "cube"
+    case sphere = "sphere"
 }
 
