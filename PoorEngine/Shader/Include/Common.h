@@ -64,7 +64,8 @@ typedef enum {
     RoughnessTexture = 2,
     MetallicTexture = 3,
     AOTexture = 4,
-    ShadowTexture = 5
+    ShadowTexture = 5,
+    SkyboxTexture = 6
 } TextureIndices;
 
 //灯光种类

@@ -349,6 +349,8 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder.setVertexBytes(&uniforms,
                                      length: MemoryLayout<Uniforms>.stride,
                                      index: UniformsBuffer.index)
+        renderEncoder.setFragmentTexture(skybox?.skyTexture, index: SkyboxTexture.index)
+        
         let submesh = skybox?.mesh.submeshes[0]
         renderEncoder.drawIndexedPrimitives(type: .triangle,
                                             indexCount: submesh!.indexCount,
