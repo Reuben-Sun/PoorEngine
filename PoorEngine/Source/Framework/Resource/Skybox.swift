@@ -28,10 +28,11 @@ class Skybox : Transformable {
         else if skyShape == .sphere {
             shape = MDLMesh(sphereWithExtent: [10, 10, 10],
                             segments: [20, 20],
-                            inwardNormals: true,
+                            inwardNormals: false,
                             geometryType: .triangles,
                             allocator: allocator)
         }
+        shape.vertexDescriptor = .skyboxLayout
         do {
             mesh = try MTKMesh(mesh: shape, device: RHI.device)
         } catch {
