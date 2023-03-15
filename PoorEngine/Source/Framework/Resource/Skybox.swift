@@ -44,25 +44,6 @@ class Skybox : Transformable {
         }
         
     }
-    
-    func loadGeneratedSkyboxTexture(textureName: String, dimensions: SIMD2<Int32>) -> MTLTexture? {
-        var texture: MTLTexture?
-        let skyTexture = MDLSkyCubeTexture(
-            name: textureName,
-            channelEncoding: .float16,
-            textureDimensions: dimensions,
-            turbidity: skySettings.turbidity,
-            sunElevation: skySettings.sunElevation,
-            upperAtmosphereScattering:skySettings.upperAtmosphereScattering,
-            groundAlbedo: skySettings.groundAlbedo)
-        do {
-            let textureLoader = MTKTextureLoader(device: RHI.device)
-            texture = try textureLoader.newTexture(texture: skyTexture, options: nil)
-        } catch {
-            print(error.localizedDescription)
-        }
-        return texture
-    }
 }
 
 struct SkySettings {
