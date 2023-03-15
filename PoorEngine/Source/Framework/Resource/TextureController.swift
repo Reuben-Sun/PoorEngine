@@ -10,7 +10,18 @@ import MetalKit
 enum TextureController {
     static var textures: [String: MTLTexture] = [:]
     
-    /// 加载贴图
+    /// 返回贴图，内置一个缓存机制
+    static func texture(filename: String) -> MTLTexture? {
+        if let tex = textures[filename] {
+            return tex
+        }
+        let tex = try? loadTexture(filename: filename)
+        if tex != nil {
+            textures[filename] = tex
+        }
+        return tex
+    }
+    
     static func loadTexture(filename: String) throws -> MTLTexture? {
         let textureLoader = MTKTextureLoader(device: RHI.device)
         //优先使用Asset Catalog加载贴图
@@ -34,16 +45,23 @@ enum TextureController {
         return texture
     }
     
-    /// 返回贴图，内置一个缓存机制
-    static func texture(filename: String) -> MTLTexture? {
-        if let tex = textures[filename] {
-            return tex
+    static func loadCubeTexture(imageName: String) throws -> MTLTexture {
+        let textureLoader = MTKTextureLoader(device: RHI.device)
+        if let texture = MDLTexture(cubeWithImagesNamed: [imageName]) {
+            let options: [MTKTextureLoader.Option: Any] = [
+                .origin: MTKTextureLoader.Origin.topLeft,
+                .SRGB: false,
+                .generateMipmaps: NSNumber(booleanLiteral: false)
+            ]
+            return try textureLoader.newTexture(
+                texture: texture,
+                options: options)
         }
-        let tex = try? loadTexture(filename: filename)
-        if tex != nil {
-            textures[filename] = tex
-        }
-        return tex
+        let texture = try textureLoader.newTexture(
+            name: imageName,
+            scaleFactor: 1.0,
+            bundle: .main)
+        return texture
     }
 }
 

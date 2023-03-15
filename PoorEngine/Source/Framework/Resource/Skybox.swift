@@ -37,7 +37,12 @@ class Skybox : Transformable {
         } catch {
             fatalError("Failed to create skybox mesh")
         }
-        skyTexture = loadGeneratedSkyboxTexture(textureName: textureName, dimensions: [256, 256])
+        do {
+            skyTexture = try TextureController.loadCubeTexture(imageName: textureName)
+        } catch {
+            fatalError("Failed to load skybox texture")
+        }
+        
     }
     
     func loadGeneratedSkyboxTexture(textureName: String, dimensions: SIMD2<Int32>) -> MTLTexture? {
