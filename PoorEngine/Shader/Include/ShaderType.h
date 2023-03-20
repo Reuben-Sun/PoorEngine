@@ -20,6 +20,7 @@
 #define DEBUG_DIFFUSE       7
 #define DEBUG_SPECULAR      8
 #define DEBUG_LIGHTONLY     9
+#define DEBUG_SKYBOX        10
 
 #define TONEMAPPING_NONE    0
 #define TONEMAPPING_LINEAR  1
@@ -32,7 +33,7 @@ typedef enum DebugFunctionConstant {
     AlbedoFunctionConstantIndex
 } DebugFunctionConstant;
 
-void getDebugColor(Material mat, Params params, device float3& debugColor, float3 color, float3 normal);
+void getDebugColor(Material mat, Params params, device float3& debugColor, float3 color, float3 normal, float3 skyboxColor);
 
 constant bool is_shadered [[function_constant(ShaderedFunctionConstantIndex)]];
 constant bool is_albedo [[function_constant(AlbedoFunctionConstantIndex)]];

@@ -18,6 +18,7 @@ enum RenderChoice: Int, CaseIterable {
     case diffuse
     case specular
     case lightOnly
+    case skybox
     
     var name: String{
         switch self{
@@ -31,6 +32,7 @@ enum RenderChoice: Int, CaseIterable {
         case .diffuse: return "Diffuse"
         case .specular: return "Specular"
         case .lightOnly: return "LightOnly"
+        case .skybox: return "Skybox"
         }
     }
 }

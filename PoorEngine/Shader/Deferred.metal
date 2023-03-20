@@ -93,15 +93,14 @@ fragment LightingOut fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     float3 color = directLighting(normal, position, params, lights, material, *debugColor);
     
     // indirect lighting
-    float3 skyboxColor = sampleSkybox(skyboxTexture, position, normal, params);
-    float3 indirectColor = skyboxColor * material.baseColor * material.metallic;
-    color += indirectColor;
+    float3 skyboxColor = sampleSkybox(skyboxTexture, material, position, normal, params);
+    color += skyboxColor;
     
     // shadow
     color *= gBuffer.MRT0.a;
     
     // debug
-    getDebugColor(material, params, *debugColor, color, normal);
+    getDebugColor(material, params, *debugColor, color, normal, skyboxColor);
     if(params.debugMode != 0){
         color = *debugColor;
     }
