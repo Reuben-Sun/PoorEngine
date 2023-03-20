@@ -77,9 +77,10 @@ vertex VertexOut vertex_quad(uint vertexID [[vertex_id]])
 
 
 fragment LightingOut fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
-                                                constant Params &params [[buffer(ParamsBuffer)]],
-                                                constant Light *lights [[buffer(LightBuffer)]],
-                                                GBufferOut gBuffer)
+                                                     constant Params &params [[buffer(ParamsBuffer)]],
+                                                     constant Light *lights [[buffer(LightBuffer)]],
+                                                     texturecube<float> skyboxTexture [[texture(SkyboxTexture)]],
+                                                     GBufferOut gBuffer)
 {
     device float3* debugColor = 0;
     
@@ -87,14 +88,23 @@ fragment LightingOut fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     float4 pos = float4(2 * in.uv -1, 1, gBuffer.MRT2.x);
     float3 position = (params.inverseVPMatrix * pos).xyz;
     Material material = decodeGBuffer(gBuffer);
-    float3 color = phongLighting(normal, position, params, lights, material, *debugColor);
-    color *= gBuffer.MRT0.a;    //shadow
+
+    // direct lighting
+    float3 color = directLighting(normal, position, params, lights, material, *debugColor);
     
-    //debug
+    // indirect lighting
+    float3 skyboxColor = sampleSkybox(skyboxTexture, position, normal, params);
+    float3 indirectColor = skyboxColor * material.baseColor * material.metallic;
+    color += indirectColor;
+    
+    // shadow
+    color *= gBuffer.MRT0.a;
+    
+    // debug
     getDebugColor(material, params, *debugColor, color, normal);
     if(params.debugMode != 0){
         color = *debugColor;
     }
-
+    
     return LightingOut{float4(color, 1)};
 }

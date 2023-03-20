@@ -254,6 +254,7 @@ struct TiledDeferredRenderPass: RenderPass{
         renderEncoder.setFragmentBuffer(cullingResult.sceneLights!.dirBuffer,
                                         offset: 0,
                                         index: LightBuffer.index)
+        renderEncoder.setFragmentTexture(cullingResult.skybox?.skyTexture, index: SkyboxTexture.index)
         renderEncoder.drawPrimitives(type: .triangle,
                                      vertexStart: 0,
                                      vertexCount: 6)

@@ -19,7 +19,7 @@ float3 BRDF(float3  L,
             Material material);
 
     
-float3 phongLighting(float3 normalWS,
+float3 directLighting(float3 normalWS,
                      float3 positionWS,
                      constant Params &params,
                      constant Light *lights,

@@ -109,7 +109,7 @@ float3 BRDF(float3  L,
     return spec;
 }
 
-float3 phongLighting(float3 normalWS,
+float3 directLighting(float3 normalWS,
                      float3 positionWS,
                      constant Params &params,
                      constant Light *lights,
@@ -218,7 +218,6 @@ float3 calculatePoint(Light light,
     color *= attenuation;
     return color;
 }
-
 
 
 

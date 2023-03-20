@@ -103,3 +103,12 @@ float3 getNormal(texture2d<float> normalTexture, float2 uv, float3 normalWS, flo
     normal = normalize(normal);
     return normal;
 }
+
+float3 sampleSkybox(texturecube<float> skyboxTexture, float3 posWS, float3 normalWS, Params params)
+{
+    constexpr sampler skyboxSampler(filter::linear);
+    float3 viewDir = normalize(posWS - params.cameraPosition);
+    float3 uvw = reflect(viewDir, normalWS);
+    float4 color = skyboxTexture.sample(skyboxSampler, uvw);
+    return color.xyz;
+}
