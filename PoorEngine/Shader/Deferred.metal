@@ -51,7 +51,7 @@ fragment GBufferOut fragment_gBuffer(VertexOut in [[stage_in]],
     out.MRT0 = float4(_material.baseColor, getShadowAttenuation(in.shadowPosition, shadowTexture));
     out.MRT1 = float4(normalize(normal), 1.0);
     out.MRT2 = float4(in.position.z, _material.metallic, _material.roughness, _material.ambientOcclusion);
-    out.MRT3 = float4(_material.shininess, 0);
+    out.MRT3 = float4(_material.shininess, LIGHTING_MODE_OPAQUE);
     return out;
 }
 
@@ -90,11 +90,20 @@ fragment LightingOut fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     Material material = decodeGBuffer(gBuffer);
     Illumination indirect = getIndirect(position, normal, params, skyboxTexture);
 
+    float3 color = 0;
+    float lightMode = gBuffer.MRT3.a;
     // direct lighting
-    float3 color = directLighting(normal, position, params, lights, material, *debugColor);
-    
+    if(lightMode == LIGHTING_MODE_OPAQUE){
+        color = directLighting(normal, position, params, lights, material, *debugColor);
+    }
+    else if(lightMode == LIGHTING_MODE_SKYBOX){
+        color = material.baseColor;
+    }
+    else{
+        color = material.baseColor;
+    }
     // indirect lighting
-    color += indirect.skybox;
+    // color += indirect.skybox;
     
     // shadow
     color *= gBuffer.MRT0.a;

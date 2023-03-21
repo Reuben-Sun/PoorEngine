@@ -77,6 +77,6 @@ fragment GBufferOut fragment_terrain_gBuffer(VertexOut in [[stage_in]],
     GBufferOut out;
     out.MRT0 = float4(color.xyz, 1);
     out.MRT1 = float4(0,1,0,0);
-    out.MRT2 = float4(in.position.z, 0, 0, 0);
+    out.MRT2 = float4(in.position.z, 0, 0, LIGHTING_MODE_OPAQUE);
     return out;
 }

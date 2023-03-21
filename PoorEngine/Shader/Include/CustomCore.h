@@ -13,6 +13,9 @@ using namespace metal;
 
 #import "Common.h"
 
+#define LIGHTING_MODE_OPAQUE 0
+#define LIGHTING_MODE_SKYBOX 1
+
 struct VertexIn {
     float4 position [[attribute(Position)]];
     float3 normal [[attribute(Normal)]];
