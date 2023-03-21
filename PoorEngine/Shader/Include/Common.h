@@ -115,6 +115,11 @@ typedef struct {
     uint maxTessellation;
 } Terrain;
 
+// Indirect
+typedef struct {
+    vector_float3 skybox;
+} Illumination;
+
 #define GAMMA 2.2
 
 #endif /* Common_h */

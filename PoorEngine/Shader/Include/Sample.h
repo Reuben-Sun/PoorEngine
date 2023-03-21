@@ -26,6 +26,6 @@ Material decodeGBuffer(GBufferOut gBuffer);
 
 float3 getNormal(texture2d<float> normalTexture, float2 uv, float3 normalWS, float3 tangentWS, float3 bitangentWS, Params params);
 
-float3 sampleSkybox(texturecube<float> skyboxTexture, Material material, float3 posWS, float3 normalWS, Params params);
+Illumination getIndirect(float3 posWS, float3 normalWS, Params params, texturecube<float> skyboxTexture);
 
 #endif /* Sample_h */

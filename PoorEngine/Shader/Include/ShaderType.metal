@@ -12,7 +12,7 @@ using namespace metal;
 
 
 
-void getDebugColor(Material mat, Params params, device float3& debugColor, float3 color, float3 normal, float3 skyboxColor){
+void getDebugColor(Material mat, Params params, device float3& debugColor, float3 color, float3 normal){
     // Options.swift
     float3 c = debugColor;
     if(params.debugMode == DEBUG_NORMAL_WS){
@@ -32,9 +32,6 @@ void getDebugColor(Material mat, Params params, device float3& debugColor, float
     }
     else if(params.debugMode == DEBUG_SHININESS){
         c = mat.shininess;
-    }
-    else if(params.debugMode == DEBUG_SKYBOX){
-        c = skyboxColor;
     }
     debugColor = c;
 }
