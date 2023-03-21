@@ -18,13 +18,14 @@ float3 BRDF(float3  L,
             float3  F0,
             Material material);
 
-    
+
 float3 directLighting(float3 normalWS,
-                     float3 positionWS,
-                     constant Params &params,
-                     constant Light *lights,
-                     Material material,
-                     device float3& debugColor);
+                      float3 positionWS,
+                      constant Params &params,
+                      constant Light *lights,
+                      Material material,
+                      Illumination indirect,
+                      device float3& debugColor);
 
 float3 computeDiffuse(Material material,
                       float3 normalWS,
