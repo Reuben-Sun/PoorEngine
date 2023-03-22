@@ -110,15 +110,30 @@ float3 BRDF(float3  L,
 }
 
 float3 directLighting(float3 normalWS,
+<<<<<<< HEAD
                      float3 positionWS,
                      constant Params &params,
                      constant Light *lights,
                      Material material)
+=======
+                      float3 positionWS,
+                      constant Params &params,
+                      constant Light *lights,
+                      Material material,
+                      Illumination indirect,
+                      device float3& debugColor)
+>>>>>>> main
 {
     float3 color(0,0,0);
     float3 diffuse = float3(0.0);
     float3 specular = float3(0.0);
+<<<<<<< HEAD
+=======
+    float3 indirectSpecular = float3(0.0);
+    float3 tempColor = float3(0.0); // debug use
+>>>>>>> main
     
+    // lighting loop
     for (uint i = 0; i < params.lightCount; i++){
         Light light = lights[i];
         float attenuation = getAttenuation(light, positionWS);
@@ -128,11 +143,14 @@ float3 directLighting(float3 normalWS,
         
         float NoL = clamp(dot(normalWS, lightDir), 0.0, 1.0);
         float3 intensity = light.color * attenuation * NoL;
-        color += intensity; //MARK: 这里是用于debug记录light only，后面会被覆盖为真正的着色结果
+        // MARK: 这里是用于debug记录light only，后面会被覆盖为真正的着色结果
+        color += intensity;
         diffuse += material.baseColor * intensity;
         specular += BRDF(lightDir, viewDir, normalWS, material.specularColor, material) * intensity;
     }
-    //debug
+    // indirect
+    indirectSpecular = indirect.skybox;
+    // debug
     if(params.debugMode == DEBUG_DIFFUSE){
         return diffuse;
     }
@@ -142,8 +160,13 @@ float3 directLighting(float3 normalWS,
     else if(params.debugMode == DEBUG_LIGHTONLY){
         return color;
     }
+<<<<<<< HEAD
+=======
+
+    debugColor = tempColor;
+>>>>>>> main
     
-    color = diffuse + specular;
+    color = diffuse + specular + indirectSpecular;
     
     return color;
 }
