@@ -110,28 +110,16 @@ float3 BRDF(float3  L,
 }
 
 float3 directLighting(float3 normalWS,
-<<<<<<< HEAD
-                     float3 positionWS,
-                     constant Params &params,
-                     constant Light *lights,
-                     Material material)
-=======
                       float3 positionWS,
                       constant Params &params,
                       constant Light *lights,
                       Material material,
-                      Illumination indirect,
-                      device float3& debugColor)
->>>>>>> main
+                      Illumination indirect)
 {
     float3 color(0,0,0);
     float3 diffuse = float3(0.0);
     float3 specular = float3(0.0);
-<<<<<<< HEAD
-=======
     float3 indirectSpecular = float3(0.0);
-    float3 tempColor = float3(0.0); // debug use
->>>>>>> main
     
     // lighting loop
     for (uint i = 0; i < params.lightCount; i++){
@@ -155,16 +143,14 @@ float3 directLighting(float3 normalWS,
         return diffuse;
     }
     else if(params.debugMode == DEBUG_SPECULAR){
-         return specular;
+        return specular;
     }
     else if(params.debugMode == DEBUG_LIGHTONLY){
         return color;
     }
-<<<<<<< HEAD
-=======
-
-    debugColor = tempColor;
->>>>>>> main
+    else if(params.debugMode == DEBUG_SKYBOX){
+        return indirectSpecular;
+    }
     
     color = diffuse + specular + indirectSpecular;
     

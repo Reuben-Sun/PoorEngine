@@ -100,12 +100,9 @@ fragment LightingOut fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     float lightMode = gBuffer.MRT3.a;
     // direct lighting
     if(lightMode == LIGHTING_MODE_OPAQUE){
-        color = directLighting(normal, position, params, lights, material);
+        color = directLighting(normal, position, params, lights, material, indirect);
     }
     else if(lightMode == LIGHTING_MODE_SKYBOX){
-        color = material.baseColor;
-    }
-    else{
         color = material.baseColor;
     }
     
