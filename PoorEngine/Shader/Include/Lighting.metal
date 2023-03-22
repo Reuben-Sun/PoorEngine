@@ -134,10 +134,12 @@ float3 directLighting(float3 normalWS,
         // MARK: 这里是用于debug记录light only，后面会被覆盖为真正的着色结果
         color += intensity;
         diffuse += material.baseColor * intensity;
+        // TODO: 能量守恒的PBR，听人说要先计算高光，再把剩下的能量用于漫反射
         specular += BRDF(lightDir, viewDir, normalWS, material.specularColor, material) * intensity;
     }
     // indirect
-    indirectSpecular = indirect.skybox;
+    // TODO: better IBL
+    indirectSpecular = indirect.skybox * material.baseColor * material.metallic;
     // debug
     if(params.debugMode == DEBUG_DIFFUSE){
         return diffuse;
