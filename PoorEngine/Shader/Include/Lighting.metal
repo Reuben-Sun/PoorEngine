@@ -113,13 +113,11 @@ float3 directLighting(float3 normalWS,
                      float3 positionWS,
                      constant Params &params,
                      constant Light *lights,
-                     Material material,
-                     device float3& debugColor)
+                     Material material)
 {
     float3 color(0,0,0);
     float3 diffuse = float3(0.0);
     float3 specular = float3(0.0);
-    float3 tempColor = float3(0.0); //debug
     
     for (uint i = 0; i < params.lightCount; i++){
         Light light = lights[i];
@@ -136,15 +134,14 @@ float3 directLighting(float3 normalWS,
     }
     //debug
     if(params.debugMode == DEBUG_DIFFUSE){
-        tempColor = diffuse;
+        return diffuse;
     }
     else if(params.debugMode == DEBUG_SPECULAR){
-        tempColor = specular;
+         return specular;
     }
     else if(params.debugMode == DEBUG_LIGHTONLY){
-        tempColor = color;
+        return color;
     }
-    debugColor = tempColor;
     
     color = diffuse + specular;
     

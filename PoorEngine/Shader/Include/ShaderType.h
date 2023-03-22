@@ -11,6 +11,8 @@
 #import "Common.h"
 #import "CustomCore.h"
 
+#define DISABLE_DEBUG       0
+
 #define DEBUG_NORMAL_WS     1
 #define DEBUG_ALBEDO        2
 #define DEBUG_METALLIC      3
@@ -33,7 +35,7 @@ typedef enum DebugFunctionConstant {
     AlbedoFunctionConstantIndex
 } DebugFunctionConstant;
 
-void getDebugColor(Material mat, Params params, device float3& debugColor, float3 color, float3 normal);
+float3 getDebugColor(Material mat, Params params, float3 normal);
 
 constant bool is_shadered [[function_constant(ShaderedFunctionConstantIndex)]];
 constant bool is_albedo [[function_constant(AlbedoFunctionConstantIndex)]];

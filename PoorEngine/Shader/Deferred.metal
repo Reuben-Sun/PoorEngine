@@ -82,7 +82,7 @@ fragment LightingOut fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
                                                      texturecube<float> skyboxTexture [[texture(SkyboxTexture)]],
                                                      GBufferOut gBuffer)
 {
-    device float3* debugColor = 0;
+    //device float3* debugColor = 0;
     
     float3 normal = gBuffer.MRT1.xyz;
     float4 pos = float4(2 * in.uv -1, 1, gBuffer.MRT2.x);
@@ -90,11 +90,17 @@ fragment LightingOut fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     Material material = decodeGBuffer(gBuffer);
     Illumination indirect = getIndirect(position, normal, params, skyboxTexture);
 
+    // debug
+    if(params.debugMode > DISABLE_DEBUG && params.debugMode <= DEBUG_SHININESS ){
+        float3 debugColor = getDebugColor(material, params, normal);
+        return LightingOut{float4(debugColor, 1)};
+    }
+    
     float3 color = 0;
     float lightMode = gBuffer.MRT3.a;
     // direct lighting
     if(lightMode == LIGHTING_MODE_OPAQUE){
-        color = directLighting(normal, position, params, lights, material, *debugColor);
+        color = directLighting(normal, position, params, lights, material);
     }
     else if(lightMode == LIGHTING_MODE_SKYBOX){
         color = material.baseColor;
@@ -102,17 +108,9 @@ fragment LightingOut fragment_tiled_deferredLighting(VertexOut in [[stage_in]],
     else{
         color = material.baseColor;
     }
-    // indirect lighting
-    // color += indirect.skybox;
     
     // shadow
     color *= gBuffer.MRT0.a;
-    
-    // debug
-    getDebugColor(material, params, *debugColor, color, normal);
-    if(params.debugMode != 0){
-        color = *debugColor;
-    }
     
     return LightingOut{float4(color, 1)};
 }

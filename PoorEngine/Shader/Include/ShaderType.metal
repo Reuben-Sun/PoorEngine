@@ -12,26 +12,25 @@ using namespace metal;
 
 
 
-void getDebugColor(Material mat, Params params, device float3& debugColor, float3 color, float3 normal){
+float3 getDebugColor(Material mat, Params params, float3 normal){
     // Options.swift
-    float3 c = debugColor;
     if(params.debugMode == DEBUG_NORMAL_WS){
-        c = normal;
+        return normal;
     }
     else if(params.debugMode == DEBUG_ALBEDO){
-        c = mat.baseColor;
+        return mat.baseColor;
     }
     else if(params.debugMode == DEBUG_METALLIC){
-        c = mat.metallic;
+        return mat.metallic;
     }
     else if(params.debugMode == DEBUG_ROUGHNESS){
-        c = mat.roughness;
+        return mat.roughness;
     }
     else if(params.debugMode == DEBUG_AO){
-        c = mat.ambientOcclusion;
+        return mat.ambientOcclusion;
     }
     else if(params.debugMode == DEBUG_SHININESS){
-        c = mat.shininess;
+        return mat.shininess;
     }
-    debugColor = c;
+    return mat.baseColor;
 }
