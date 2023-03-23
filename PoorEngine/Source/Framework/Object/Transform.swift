@@ -7,9 +7,11 @@
 
 import Foundation
 
+// TODO: 使用四元数表示旋转，欧拉角不太好用
+
 struct Transform {
     var position: float3 = [0, 0, 0]
-    var rotation: float3 = [0, 0, 0]    //MARK: 旋转的单位为弧度，3.14就是绕轴旋转180度
+    var rotation: float3 = [0, 0, 0]    //MARK: 旋转的单位为弧度，3.14就是绕轴旋转180度，旋转顺序为xzy，forward方向为z
     var scale: Float = 1
 }
 

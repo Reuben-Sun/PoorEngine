@@ -23,7 +23,7 @@ extension Movement {
     /// 水平向前
     var forwardVector: float3 {
         //这个坐标系，y轴是垂直地面的，z轴向前，x轴向右
-        normalize([sin(rotation.y), 0, cos(rotation.y)])
+        normalize([sin(rotation.y), sin(rotation.x)*cos(rotation.z), cos(rotation.y)])
     }
     /// 水平向右
     var rightVector: float3 {
