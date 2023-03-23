@@ -8,7 +8,7 @@
             "exten": "obj",
             "position" : [0, 0, 0],
             "scale": 0.01,
-            "rotation": [0, 90, 0],
+            "rotation": [0, 0, 0],
             "tag": "opaque",
         },
         {
@@ -30,7 +30,7 @@
     "lights": [
         {
             "lightType": 1,
-            "position": [0, 0, 0],
+            "position": [6, 14, -4],
             "direction": [3, 3, -2],
             "color": [1, 1, 1],
             "specularColor": [0.6, 0.6, 0.6],

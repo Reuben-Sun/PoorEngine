@@ -10,20 +10,24 @@ import CoreGraphics
 struct PlayerCamera: Camera {
     var transform = Transform()
     
-    var aspect: Float = 1.0
+    var aspect: CGFloat = 1.0
+    var viewSize: CGFloat = 10
     var fov = Float(70).degreesToRadians
     var near: Float = 0.1
     var far: Float = 100
+    var minDistance: Float = 0
+    var maxDistance: Float = 20
+    
     var projectionMatrix: float4x4 {
         float4x4(
             projectionFov: fov,
             near: near,
             far: far,
-            aspect: aspect)
+            aspect: Float(aspect))
     }
     
     mutating func update(size: CGSize) {
-        aspect = Float(size.width / size.height)
+        aspect = CGFloat(Float(size.width / size.height))
     }
     
     var viewMatrix: float4x4 {

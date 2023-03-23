@@ -113,7 +113,7 @@ extension RHI {
         shadowCamera.viewSize = 16
         shadowCamera.far = 16
         let sun = cullingResult.sceneLights!.dirLights[0]
-        shadowCamera = OrthographicCamera.createShadowCamera(using: cullingResult.camera, lightPosition: sun.direction)
+        shadowCamera = OrthographicCamera.createShadowCamera(using: cullingResult.camera, lightPosition: sun.position)
         uniforms.shadowProjectionMatrix = shadowCamera.projectionMatrix
         uniforms.shadowViewMatrix = float4x4(eye: shadowCamera.position, center: shadowCamera.center, up: [0, 1, 0])
     }
