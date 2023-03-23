@@ -23,7 +23,7 @@ struct GameScene {
     
     init(sceneJsonName: String) {
         sceneLights = Lights()
-        camera = ArcballCamera()
+        camera = PlayerCamera()
         goList = []
         let scene = SceneJson.loadScene(fileName: sceneJsonName)
         // load gameobject
