@@ -24,6 +24,7 @@ struct GameScene {
     init(sceneJsonName: String) {
         sceneLights = Lights()
         camera = PlayerCamera()
+        camera.transform  = defaultView
         goList = []
         let scene = SceneJson.loadScene(fileName: sceneJsonName)
         // load gameobject
@@ -120,7 +121,7 @@ struct GameScene {
                 //camera.fov = 120
             }
         }
-        input.keysPressed.removeAll()
+        // input.keysPressed.removeAll()
         camera.update(deltaTime: deltaTime)
         //sun.position = sceneLights.lights[0].position
     }
