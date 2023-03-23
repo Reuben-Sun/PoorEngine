@@ -57,6 +57,13 @@ struct ArcballCamera: Camera {
     var target: float3 = [0, 0, 0]
     var distance: Float = 25
     
+    init(){
+        far = 10
+        transform = Transform(position: [3.2, 3.1, 1.0], rotation: [-0.6, 10.7, 0.0])
+        target = [0, 1, 0]
+        distance = 4
+    }
+    
     var projectionMatrix: float4x4 {
         float4x4(projectionFov: fov, near: near, far: far, aspect: aspect)
     }

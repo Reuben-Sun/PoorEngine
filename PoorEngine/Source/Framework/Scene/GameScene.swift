@@ -9,7 +9,7 @@ import MetalKit
 
 /// 创建场景
 struct GameScene {
-    var camera = ArcballCamera()
+    var camera: Camera
     var sceneLights: Lights
     var goList: [GameObject] = []
     var debugMainCamera: ArcballCamera?
@@ -23,10 +23,7 @@ struct GameScene {
     
     init(sceneJsonName: String) {
         sceneLights = Lights()
-        camera.far = 10
-        camera.transform = defaultView
-        camera.target = [0, 1, 0]
-        camera.distance = 4
+        camera = ArcballCamera()
         goList = []
         let scene = SceneJson.loadScene(fileName: sceneJsonName)
         // load gameobject
@@ -83,7 +80,7 @@ struct GameScene {
         let input = InputController.shared
         if input.keysPressed.contains(.one) ||
             input.keysPressed.contains(.two) {
-            camera.distance = 4
+            //camera.distance = 4
             if let mainCamera = debugMainCamera {
                 camera = mainCamera
                 debugMainCamera = nil
@@ -112,15 +109,15 @@ struct GameScene {
         if !isPaused {
             if shouldDrawMainCamera || shouldDrawLightCamera || shouldDrawBoundingSphere {
                 isPaused = true
-                debugMainCamera = camera
+                //debugMainCamera = camera
                 debugShadowCamera = OrthographicCamera()
                 debugShadowCamera?.viewSize = 16
                 debugShadowCamera?.far = 16
                 let sun = sceneLights.dirLights[0]
                 debugShadowCamera?.position = sun.position
-                camera.distance = 40
-                camera.far = 50
-                camera.fov = 120
+                //camera.distance = 40
+                //camera.far = 50
+                //camera.fov = 120
             }
         }
         input.keysPressed.removeAll()
