@@ -14,7 +14,7 @@ struct PlayerCamera: Camera {
     var viewSize: CGFloat = 10
     var fov = Float(70).degreesToRadians
     var near: Float = 0.1
-    var far: Float = 100
+    var far: Float = 10
     var minDistance: Float = 0
     var maxDistance: Float = 20
     
