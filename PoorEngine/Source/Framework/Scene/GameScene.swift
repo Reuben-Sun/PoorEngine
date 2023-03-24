@@ -129,7 +129,7 @@ struct GameScene {
     
     var farView: Transform {
         Transform(
-            position: [4.8, 7.6, 10.2],
+            position: [2.8, 5.1, 6.2],
             rotation: [-0.5645003, 3.593275, 0.0])
     }
 }
