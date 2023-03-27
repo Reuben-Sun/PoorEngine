@@ -15,14 +15,20 @@ struct GameScene {
     var terrainQuad: Quad?
     var skybox: Skybox?
     var isPaused = false
+    var pawn: Pawn
     
     init(sceneJsonName: String) {
-        sceneLights = Lights()
-        camera = PlayerCamera()
-        camera.transform  = defaultView
-        goList = []
+        // load json
         let scene = SceneJson.loadScene(fileName: sceneJsonName)
+        // load pawn
+        pawn = Pawn(name: "pawn", meshName: "sun_sphere")
+        pawn.position = [3,0,3]
+        pawn.model.transform = pawn.transform
+        // load camera
+        camera = PlayerCamera()
+        camera.transform = GameScene.defaultView
         // load gameobject
+        goList = []
         for go in scene.gameObject {
             var gameObject = GameObject(name: go.name, meshName: go.modelName, exten: go.exten)
             gameObject.position = [go.position[0], go.position[1], go.position[2]]
@@ -46,6 +52,7 @@ struct GameScene {
                                      scene.terrain.rotation[2].degreesToRadians]
         }
         // load lights
+        sceneLights = Lights()
         for light in scene.lights {
             var lightObject = Light()
             lightObject.type = LightType(rawValue: UInt32(light.lightType))
@@ -76,7 +83,7 @@ struct GameScene {
         let input = InputController.shared
         // 相机位置
         if input.keysPressed.contains(.one) {
-            camera.transform = defaultView
+            camera.transform = GameScene.defaultView
         }
         if input.keysPressed.contains(.two) {
             camera.transform = frontView
@@ -104,7 +111,7 @@ struct GameScene {
         camera.update(size: size)
     }
     
-    var defaultView: Transform {
+    static var defaultView: Transform {
         Transform(
             position: [1.4, 3.4, 3.2],
             rotation: [-0.5645003, 3.593275, 0.0])

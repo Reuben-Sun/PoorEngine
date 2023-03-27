@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2305FB6329D169FA009AC3B9 /* Pawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2305FB6229D169FA009AC3B9 /* Pawn.swift */; };
 		2332285D29AA4A8900169858 /* PostProcessRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2332285C29AA4A8900169858 /* PostProcessRenderPass.swift */; };
 		2332285F29AA4ADF00169858 /* PostProcess.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2332285E29AA4ADF00169858 /* PostProcess.metal */; };
 		2332286529AB112900169858 /* Skybox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2332286429AB112900169858 /* Skybox.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2305FB6229D169FA009AC3B9 /* Pawn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pawn.swift; sourceTree = "<group>"; };
 		2332285C29AA4A8900169858 /* PostProcessRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProcessRenderPass.swift; sourceTree = "<group>"; };
 		2332285E29AA4ADF00169858 /* PostProcess.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PostProcess.metal; sourceTree = "<group>"; };
 		2332286429AB112900169858 /* Skybox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skybox.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 			children = (
 				23601545299A942700926ADB /* Transform.swift */,
 				23601595299B4D7500926ADB /* GameObject.swift */,
+				2305FB6229D169FA009AC3B9 /* Pawn.swift */,
 			);
 			path = Object;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				2360159A299B570200926ADB /* CullingResult.swift in Sources */,
 				23A36B5E29A3A3680028E92E /* ShaderType.metal in Sources */,
 				23601540299A90FA00926ADB /* TiledDeferredRenderPass.swift in Sources */,
+				2305FB6329D169FA009AC3B9 /* Pawn.swift in Sources */,
 				2360158E299B1A3A00926ADB /* ContentView.swift in Sources */,
 				23A36B6C29A65C5C0028E92E /* Tessellation.metal in Sources */,
 				2360156A299A9AF000926ADB /* ShadowRenderPass.swift in Sources */,

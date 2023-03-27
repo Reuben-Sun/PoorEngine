@@ -35,6 +35,8 @@ struct CullingResult{
                     }
                 }
             }
+            models.append(scene.pawn.model)
+            
         }     
         camera = scene.camera
         isPaused = scene.isPaused
