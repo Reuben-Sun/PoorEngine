@@ -10,6 +10,13 @@ import CoreGraphics
 /// 相机
 /// Swift知识：protocol是协议的关键词
 protocol Camera: Transformable {
+    var aspect: CGFloat {get}
+    var viewSize: CGFloat {get}
+    var near: Float {get}
+    var far: Float {get}
+    var minDistance: Float {get}
+    var maxDistance: Float  {get}
+    var fov: Float {get}
     var projectionMatrix: float4x4 {get}
     var viewMatrix: float4x4 {get}
     mutating func update(size: CGSize)
@@ -19,16 +26,19 @@ protocol Camera: Transformable {
 /// 第一人称相机
 struct FPCamera: Camera {
     var transform = Transform()
-    var aspect: Float = 1.0
+    var aspect: CGFloat = 1
+    var viewSize: CGFloat = 10
     var fov = Float(70).degreesToRadians
     var near: Float = 0.1
     var far: Float = 100
+    var minDistance: Float = 0
+    var maxDistance: Float = 20
     var projectionMatrix: float4x4 {
-        float4x4(projectionFov: fov, near: near, far: far, aspect: aspect)
+        float4x4(projectionFov: fov, near: near, far: far, aspect: Float(aspect))
     }
     
     mutating func update(size: CGSize) {
-        aspect = Float(size.width / size.height)
+        aspect = CGFloat(Float(size.width / size.height))
     }
     
     var viewMatrix: float4x4 {
@@ -47,7 +57,8 @@ extension FPCamera: Movement {}
 /// 锚点相机
 struct ArcballCamera: Camera {
     var transform = Transform()
-    var aspect: Float = 1.0
+    var aspect: CGFloat = 1
+    var viewSize: CGFloat = 10
     var fov = Float(70).degreesToRadians
     var near: Float = 0.1
     var far: Float = 100
@@ -57,12 +68,19 @@ struct ArcballCamera: Camera {
     var target: float3 = [0, 0, 0]
     var distance: Float = 25
     
+    init(){
+        far = 10
+        transform = Transform(position: [3.2, 3.1, 1.0], rotation: [-0.6, 10.7, 0.0])
+        target = [0, 1, 0]
+        distance = 4
+    }
+    
     var projectionMatrix: float4x4 {
-        float4x4(projectionFov: fov, near: near, far: far, aspect: aspect)
+        float4x4(projectionFov: fov, near: near, far: far, aspect: Float(aspect))
     }
     
     mutating func update(size: CGSize) {
-        aspect = Float(size.width / size.height)
+        aspect = CGFloat(Float(size.width / size.height))
     }
     
     var viewMatrix: float4x4 {
@@ -77,6 +95,7 @@ struct ArcballCamera: Camera {
     
     mutating func update(deltaTime: Float) {
         let input = InputController.shared
+
         let scrollSensitivity = Settings.mouseScrollSensitivity
         distance -= (input.mouseScroll.x + input.mouseScroll.y) * scrollSensitivity
         distance = min(maxDistance, distance)
@@ -106,6 +125,10 @@ struct OrthographicCamera: Camera, Movement {
     var near: Float = 0.1
     var far: Float = 100
     var center = float3.zero
+    var fov: Float = Float(70).degreesToRadians
+    
+    var minDistance: Float = 0.0
+    var maxDistance: Float = 20
     
     var viewMatrix: float4x4 {
         (float4x4(translation: position) * float4x4(rotation: rotation)).inverse

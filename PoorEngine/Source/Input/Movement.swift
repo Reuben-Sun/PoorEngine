@@ -10,7 +10,7 @@ import Foundation
 /// 移动参数
 enum Settings {
     static var rotationSpeed: Float {2.0}
-    static var translationSpeed: Float {3.0}
+    static var translationSpeed: Float {5.0}
     static var mouseScrollSensitivity: Float {0.1}
     static var mousePanSensitivity: Float {0.008}
     static var touchZoomSensitivity: Float {10}
@@ -23,7 +23,7 @@ extension Movement {
     /// 水平向前
     var forwardVector: float3 {
         //这个坐标系，y轴是垂直地面的，z轴向前，x轴向右
-        normalize([sin(rotation.y), 0, cos(rotation.y)])
+        normalize([sin(rotation.y), sin(rotation.x)*cos(rotation.z), cos(rotation.y)])
     }
     /// 水平向右
     var rightVector: float3 {
@@ -36,10 +36,10 @@ extension Movement {
         let input = InputController.shared
         
         //旋转
-        if input.keysPressed.contains(.leftArrow) {
+        if input.keysPressed.contains(.keyQ) {
             transform.rotation.y -= rotationAmount
         }
-        if input.keysPressed.contains(.rightArrow) {
+        if input.keysPressed.contains(.keyE) {
             transform.rotation.y += rotationAmount
         }
         //移动

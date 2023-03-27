@@ -9,24 +9,17 @@ import MetalKit
 
 /// 创建场景
 struct GameScene {
-    var camera = ArcballCamera()
+    var camera: Camera
     var sceneLights: Lights
     var goList: [GameObject] = []
-    var debugMainCamera: ArcballCamera?
-    var debugShadowCamera: OrthographicCamera?
     var terrainQuad: Quad?
     var skybox: Skybox?
-    var shouldDrawMainCamera = false
-    var shouldDrawLightCamera = false
-    var shouldDrawBoundingSphere = false
     var isPaused = false
     
     init(sceneJsonName: String) {
         sceneLights = Lights()
-        camera.far = 10
-        camera.transform = defaultView
-        camera.target = [0, 1, 0]
-        camera.distance = 4
+        camera = PlayerCamera()
+        camera.transform  = defaultView
         goList = []
         let scene = SceneJson.loadScene(fileName: sceneJsonName)
         // load gameobject
@@ -81,49 +74,27 @@ struct GameScene {
     /// Swift知识：mutating是异变函数的关键词，使得不可变的结构体，通过创建新结构体赋值的方式可变
     mutating func update(deltaTime: Float) {
         let input = InputController.shared
-        if input.keysPressed.contains(.one) ||
-            input.keysPressed.contains(.two) {
-            camera.distance = 4
-            if let mainCamera = debugMainCamera {
-                camera = mainCamera
-                debugMainCamera = nil
-                debugShadowCamera = nil
-            }
-            shouldDrawMainCamera = false
-            shouldDrawLightCamera = false
-            shouldDrawBoundingSphere = false
-            isPaused = false
-        }
+        // 相机位置
         if input.keysPressed.contains(.one) {
-            camera.transform = Transform()
-        }
-        if input.keysPressed.contains(.two) {
             camera.transform = defaultView
         }
+        if input.keysPressed.contains(.two) {
+            camera.transform = frontView
+        }
         if input.keysPressed.contains(.three) {
-            shouldDrawMainCamera.toggle()
+            camera.transform = sideView
         }
         if input.keysPressed.contains(.four) {
-            shouldDrawLightCamera.toggle()
+            camera.transform = topView
         }
         if input.keysPressed.contains(.five) {
-            shouldDrawBoundingSphere.toggle()
+            camera.transform = farView
         }
-        if !isPaused {
-            if shouldDrawMainCamera || shouldDrawLightCamera || shouldDrawBoundingSphere {
-                isPaused = true
-                debugMainCamera = camera
-                debugShadowCamera = OrthographicCamera()
-                debugShadowCamera?.viewSize = 16
-                debugShadowCamera?.far = 16
-                let sun = sceneLights.dirLights[0]
-                debugShadowCamera?.position = sun.position
-                camera.distance = 40
-                camera.far = 50
-                camera.fov = 120
-            }
+        // 输出相机信息
+        if input.keysPressed.contains(.keyP){
+            print(camera.transform)
         }
-        input.keysPressed.removeAll()
+       
         camera.update(deltaTime: deltaTime)
         //sun.position = sceneLights.lights[0].position
     }
@@ -135,7 +106,31 @@ struct GameScene {
     
     var defaultView: Transform {
         Transform(
-            position: [3.2, 3.1, 1.0],
-            rotation: [-0.6, 10.7, 0.0])
+            position: [1.4, 3.4, 3.2],
+            rotation: [-0.5645003, 3.593275, 0.0])
+    }
+    
+    var frontView: Transform {
+        Transform(
+            position: [0, 1, 3],
+            rotation: [0, Float(180).degreesToRadians, 0])
+    }
+    
+    var sideView: Transform {
+        Transform(
+            position: [3, 1, 0],
+            rotation: [0, Float(-90).degreesToRadians, 0])
+    }
+    
+    var topView: Transform {
+        Transform(
+            position: [0, 5, 0],
+            rotation: [Float(-90).degreesToRadians, 0, 0.0])
+    }
+    
+    var farView: Transform {
+        Transform(
+            position: [2.8, 5.1, 6.2],
+            rotation: [-0.5645003, 3.593275, 0.0])
     }
 }
