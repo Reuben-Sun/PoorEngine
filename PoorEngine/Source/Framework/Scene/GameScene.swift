@@ -90,7 +90,8 @@ struct GameScene {
         if input.keysPressed.contains(.five) {
             camera.transform = farView
         }
-        if input.keysPressed.contains(.keyQ){
+        // 输出相机信息
+        if input.keysPressed.contains(.keyP){
             print(camera.transform)
         }
        

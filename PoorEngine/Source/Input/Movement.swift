@@ -36,10 +36,10 @@ extension Movement {
         let input = InputController.shared
         
         //旋转
-        if input.keysPressed.contains(.leftArrow) {
+        if input.keysPressed.contains(.keyQ) {
             transform.rotation.y -= rotationAmount
         }
-        if input.keysPressed.contains(.rightArrow) {
+        if input.keysPressed.contains(.keyE) {
             transform.rotation.y += rotationAmount
         }
         //移动
