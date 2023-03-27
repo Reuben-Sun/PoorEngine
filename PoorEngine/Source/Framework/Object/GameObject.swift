@@ -7,8 +7,7 @@
 
 import MetalKit
 
-class GameObject: Transformable {
-    var transform = Transform()
+class GameObject {
     let name: String
     let meshName: String
     let meshExten: String
