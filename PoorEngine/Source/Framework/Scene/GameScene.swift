@@ -21,7 +21,7 @@ struct GameScene {
         // load json
         let scene = SceneJson.loadScene(fileName: sceneJsonName)
         // load pawn
-        pawn = Pawn(name: "pawn", meshName: "sun_sphere")
+        pawn = Pawn(name: "pawn", meshName: "luoluo")
         pawn.model.position = [3,0,3]
         // load camera
         camera = PlayerCamera()
@@ -29,7 +29,7 @@ struct GameScene {
         // load gameobject
         goList = []
         for go in scene.gameObject {
-            var gameObject = GameObject(name: go.name, meshName: go.modelName, exten: go.exten)
+            let gameObject = GameObject(name: go.name, meshName: go.modelName, exten: go.exten)
             gameObject.model.position = [go.position[0], go.position[1], go.position[2]]
             gameObject.model.scale = go.scale
             gameObject.model.rotation = [go.rotation[0].degreesToRadians,
