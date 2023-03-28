@@ -255,7 +255,6 @@
 			isa = PBXGroup;
 			children = (
 				23601553299A960600926ADB /* InputController.swift */,
-				23601555299A962400926ADB /* Movement.swift */,
 			);
 			path = Input;
 			sourceTree = "<group>";
@@ -276,6 +275,7 @@
 				2360153A299A89CF00926ADB /* Object */,
 				23601539299A89C100926ADB /* Scene */,
 				23601599299B570200926ADB /* CullingResult.swift */,
+				23601555299A962400926ADB /* Movement.swift */,
 			);
 			path = Framework;
 			sourceTree = "<group>";
