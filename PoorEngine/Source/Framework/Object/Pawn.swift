@@ -29,15 +29,19 @@ class Pawn: GameObject {
         
         if input.keysPressed.contains(.leftArrow){
             model.transform.position -= rightVector * moveSpeed
+            model.transform.rotation = [0, camera.rotation.y - Float(90), 0]
         }
         if input.keysPressed.contains(.rightArrow){
             model.transform.position += rightVector * moveSpeed
+            model.transform.rotation = [0, camera.rotation.y + Float(90), 0]
         }
         if input.keysPressed.contains(.upArrow){
             model.transform.position += forwardVector * moveSpeed
+            model.transform.rotation = [0, camera.rotation.y, 0]
         }
         if input.keysPressed.contains(.downArrow){
             model.transform.position -= forwardVector * moveSpeed
+            model.transform.rotation = [0, Float(180) - camera.rotation.y, 0]
         }
         
     }
