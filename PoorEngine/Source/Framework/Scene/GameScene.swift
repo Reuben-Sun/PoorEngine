@@ -102,6 +102,7 @@ struct GameScene {
        
         camera.update(deltaTime: deltaTime)
         //sun.position = sceneLights.lights[0].position
+        pawn.move(camera: camera)
     }
     
     
