@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2305FB6329D169FA009AC3B9 /* Pawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2305FB6229D169FA009AC3B9 /* Pawn.swift */; };
+		2305FB6529D281FD009AC3B9 /* luoluo.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2305FB6429D281FD009AC3B9 /* luoluo.obj */; };
+		2305FB6729D28203009AC3B9 /* luoluo.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 2305FB6629D28203009AC3B9 /* luoluo.mtl */; };
 		2332285D29AA4A8900169858 /* PostProcessRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2332285C29AA4A8900169858 /* PostProcessRenderPass.swift */; };
 		2332285F29AA4ADF00169858 /* PostProcess.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2332285E29AA4ADF00169858 /* PostProcess.metal */; };
 		2332286529AB112900169858 /* Skybox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2332286429AB112900169858 /* Skybox.swift */; };
@@ -63,6 +66,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2305FB6229D169FA009AC3B9 /* Pawn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pawn.swift; sourceTree = "<group>"; };
+		2305FB6429D281FD009AC3B9 /* luoluo.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = luoluo.obj; sourceTree = "<group>"; };
+		2305FB6629D28203009AC3B9 /* luoluo.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = luoluo.mtl; sourceTree = "<group>"; };
 		2332285C29AA4A8900169858 /* PostProcessRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProcessRenderPass.swift; sourceTree = "<group>"; };
 		2332285E29AA4ADF00169858 /* PostProcess.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PostProcess.metal; sourceTree = "<group>"; };
 		2332286429AB112900169858 /* Skybox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skybox.swift; sourceTree = "<group>"; };
@@ -249,7 +255,6 @@
 			isa = PBXGroup;
 			children = (
 				23601553299A960600926ADB /* InputController.swift */,
-				23601555299A962400926ADB /* Movement.swift */,
 			);
 			path = Input;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				2360153A299A89CF00926ADB /* Object */,
 				23601539299A89C100926ADB /* Scene */,
 				23601599299B570200926ADB /* CullingResult.swift */,
+				23601555299A962400926ADB /* Movement.swift */,
 			);
 			path = Framework;
 			sourceTree = "<group>";
@@ -287,6 +293,7 @@
 			children = (
 				23601545299A942700926ADB /* Transform.swift */,
 				23601595299B4D7500926ADB /* GameObject.swift */,
+				2305FB6229D169FA009AC3B9 /* Pawn.swift */,
 			);
 			path = Object;
 			sourceTree = "<group>";
@@ -344,15 +351,17 @@
 		23601576299AA0FB00926ADB /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				236015AB299BE57F00926ADB /* shaderBall.obj */,
-				236015A7299BBA9600926ADB /* shaderBall.mtl */,
-				23601584299AA65B00926ADB /* icosphere.mtl */,
-				23601585299AA65B00926ADB /* large_plane.mtl */,
-				23601583299AA65B00926ADB /* sun_sphere.mtl */,
-				2360157F299AA37C00926ADB /* icosphere.obj */,
-				2360157D299AA26500926ADB /* sun_sphere.obj */,
-				2360157B299AA25800926ADB /* large_plane.obj */,
 				23A36B7229A7C5F80028E92E /* BallScene.json */,
+				23601584299AA65B00926ADB /* icosphere.mtl */,
+				2360157F299AA37C00926ADB /* icosphere.obj */,
+				23601585299AA65B00926ADB /* large_plane.mtl */,
+				2360157B299AA25800926ADB /* large_plane.obj */,
+				2305FB6629D28203009AC3B9 /* luoluo.mtl */,
+				2305FB6429D281FD009AC3B9 /* luoluo.obj */,
+				236015A7299BBA9600926ADB /* shaderBall.mtl */,
+				236015AB299BE57F00926ADB /* shaderBall.obj */,
+				23601583299AA65B00926ADB /* sun_sphere.mtl */,
+				2360157D299AA26500926ADB /* sun_sphere.obj */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -451,7 +460,9 @@
 				23601588299AA65B00926ADB /* sun_sphere.mtl in Resources */,
 				23601589299AA65B00926ADB /* icosphere.mtl in Resources */,
 				2360157E299AA26500926ADB /* sun_sphere.obj in Resources */,
+				2305FB6529D281FD009AC3B9 /* luoluo.obj in Resources */,
 				236015A8299BBA9600926ADB /* shaderBall.mtl in Resources */,
+				2305FB6729D28203009AC3B9 /* luoluo.mtl in Resources */,
 				2360157C299AA25800926ADB /* large_plane.obj in Resources */,
 				23601520299A80A400926ADB /* Assets.xcassets in Resources */,
 			);
@@ -483,6 +494,7 @@
 				2360159A299B570200926ADB /* CullingResult.swift in Sources */,
 				23A36B5E29A3A3680028E92E /* ShaderType.metal in Sources */,
 				23601540299A90FA00926ADB /* TiledDeferredRenderPass.swift in Sources */,
+				2305FB6329D169FA009AC3B9 /* Pawn.swift in Sources */,
 				2360158E299B1A3A00926ADB /* ContentView.swift in Sources */,
 				23A36B6C29A65C5C0028E92E /* Tessellation.metal in Sources */,
 				2360156A299A9AF000926ADB /* ShadowRenderPass.swift in Sources */,

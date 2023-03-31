@@ -15,22 +15,26 @@ struct GameScene {
     var terrainQuad: Quad?
     var skybox: Skybox?
     var isPaused = false
+    var pawn: Pawn
     
     init(sceneJsonName: String) {
-        sceneLights = Lights()
-        camera = PlayerCamera()
-        camera.transform  = defaultView
-        goList = []
+        // load json
         let scene = SceneJson.loadScene(fileName: sceneJsonName)
+        // load pawn
+        pawn = Pawn(name: "pawn", meshName: "luoluo")
+        pawn.model.position = [3,0,3]
+        // load camera
+        camera = PlayerCamera()
+        camera.transform = GameScene.defaultView
         // load gameobject
+        goList = []
         for go in scene.gameObject {
-            var gameObject = GameObject(name: go.name, meshName: go.modelName, exten: go.exten)
-            gameObject.position = [go.position[0], go.position[1], go.position[2]]
-            gameObject.scale = go.scale
-            gameObject.rotation = [go.rotation[0].degreesToRadians,
+            let gameObject = GameObject(name: go.name, meshName: go.modelName, exten: go.exten)
+            gameObject.model.position = [go.position[0], go.position[1], go.position[2]]
+            gameObject.model.scale = go.scale
+            gameObject.model.rotation = [go.rotation[0].degreesToRadians,
                                    go.rotation[1].degreesToRadians,
                                    go.rotation[2].degreesToRadians]
-            gameObject.model.transform = gameObject.transform
             gameObject.tag = GameObjectTag(rawValue: go.tag) ?? .opaque
             goList.append(gameObject)
         }
@@ -46,6 +50,7 @@ struct GameScene {
                                      scene.terrain.rotation[2].degreesToRadians]
         }
         // load lights
+        sceneLights = Lights()
         for light in scene.lights {
             var lightObject = Light()
             lightObject.type = LightType(rawValue: UInt32(light.lightType))
@@ -76,7 +81,7 @@ struct GameScene {
         let input = InputController.shared
         // 相机位置
         if input.keysPressed.contains(.one) {
-            camera.transform = defaultView
+            camera.transform = GameScene.defaultView
         }
         if input.keysPressed.contains(.two) {
             camera.transform = frontView
@@ -97,6 +102,7 @@ struct GameScene {
        
         camera.update(deltaTime: deltaTime)
         //sun.position = sceneLights.lights[0].position
+        pawn.move(camera: camera)
     }
     
     
@@ -104,7 +110,7 @@ struct GameScene {
         camera.update(size: size)
     }
     
-    var defaultView: Transform {
+    static var defaultView: Transform {
         Transform(
             position: [1.4, 3.4, 3.2],
             rotation: [-0.5645003, 3.593275, 0.0])
