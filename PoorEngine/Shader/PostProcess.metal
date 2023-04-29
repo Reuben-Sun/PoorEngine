@@ -49,11 +49,9 @@ float3 whitePreservingLumaBasedReinhardToneMapping(float3 color)
 
 fragment float4 fragment_postprocess(VertexOut in [[stage_in]],
                                      constant Params &params [[buffer(ParamsBuffer)]],
-                                     texture2d<float> preTexture [[texture(1)]])
+                                     LightingOut lightingOut)
 {
-    constexpr sampler sample(filter::linear, address::repeat);
-    in.uv.y = -in.uv.y;
-    float4 color = preTexture.sample(sample, in.uv);
+    float4 color = lightingOut.Color;
     float3 HDRColor = color.xyz;
     if(params.tonemappingMode == TONEMAPPING_LINEAR){
         HDRColor = linearToneMapping(color.xyz);

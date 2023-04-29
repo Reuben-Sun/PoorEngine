@@ -15,6 +15,7 @@ struct TiledDeferredRenderPass: RenderPass{
     var lightingPass: LightingPass
     var skyboxPass: SkyboxPass
     var terrainPass: TerrainPass
+    var postProcessPass: PostProcessPass
     
     var tessellationComputePass: TessellationComputePass
     
@@ -52,6 +53,8 @@ struct TiledDeferredRenderPass: RenderPass{
         skyboxPass.depthStencilState = skyboxDepthStencilState
         terrainPass = TerrainPass(view: view, options: options)
         terrainPass.depthStencilState = depthStencilState
+        postProcessPass = PostProcessPass(view: view, options: options)
+        postProcessPass.depthStencilState = depthStencilState
     }
     
     
@@ -138,6 +141,7 @@ struct TiledDeferredRenderPass: RenderPass{
                 commandBuffer.makeRenderCommandEncoder(
                     descriptor: descriptor
                 ) else { return }
+        renderEncoder.label = "TBDR"
         
         gBufferPass.shadowTexture = shadowTexture
         gBufferPass.draw(renderEncoder: renderEncoder,
@@ -171,6 +175,11 @@ struct TiledDeferredRenderPass: RenderPass{
                           uniforms: uniforms,
                           params: params,
                           options: options)
+        postProcessPass.draw(renderEncoder: renderEncoder,
+                             cullingResult: cullingResult,
+                             uniforms: uniforms,
+                             params: params,
+                             options: options)
         renderEncoder.endEncoding()
     }
     

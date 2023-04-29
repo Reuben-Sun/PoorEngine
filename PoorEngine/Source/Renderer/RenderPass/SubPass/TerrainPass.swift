@@ -31,7 +31,6 @@ class TerrainPass: SubPass{
             return
         }
         renderEncoder.pushDebugGroup("Terrain")
-        renderEncoder.label = "Terrain render pass"
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(subPassPSO)
         //        renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)

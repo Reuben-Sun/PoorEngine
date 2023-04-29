@@ -21,7 +21,6 @@ class SkyboxPass: SubPass{
             return
         }
         renderEncoder.pushDebugGroup("Skybox")
-        renderEncoder.label = "Skybox render pass"
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(subPassPSO)
         

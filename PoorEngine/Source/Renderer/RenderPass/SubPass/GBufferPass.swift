@@ -20,7 +20,6 @@ class GBufferPass: SubPass{
     
     func draw(renderEncoder: MTLRenderCommandEncoder, cullingResult: CullingResult, uniforms: Uniforms, params: Params, options: Options) {
         renderEncoder.pushDebugGroup("GBuffer")
-        renderEncoder.label = "G-buffer render pass"
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(subPassPSO)
         renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
