@@ -38,7 +38,7 @@ struct TiledDeferredRenderPass: RenderPass{
     var grassTexture: MTLTexture?
     
     init(view: MTKView, options: Options) {
-        depthStencilState = Self.buildDepthStencilState()
+        depthStencilState = Self.buildGBufferDepthStencilState()
         lightingDepthStencilState = Self.buildLightingDepthStencilState()
         skyboxDepthStencilState = Self.buildSkyboxDepthStencilState()
         
@@ -54,43 +54,7 @@ struct TiledDeferredRenderPass: RenderPass{
         terrainPass.depthStencilState = depthStencilState
     }
     
-    static func buildDepthStencilState() -> MTLDepthStencilState? {
-        let descriptor = MTLDepthStencilDescriptor()
-        descriptor.depthCompareFunction = .less
-        descriptor.isDepthWriteEnabled = true
-        let frontFaceStencil = MTLStencilDescriptor()
-        frontFaceStencil.stencilCompareFunction = .always
-        frontFaceStencil.stencilFailureOperation = .keep
-        frontFaceStencil.depthFailureOperation = .keep
-        frontFaceStencil.depthStencilPassOperation = .incrementClamp
-        descriptor.frontFaceStencil = frontFaceStencil
-        return RHI.device.makeDepthStencilState(descriptor: descriptor)
-    }
     
-    static func buildLightingDepthStencilState() -> MTLDepthStencilState? {
-        let descriptor = MTLDepthStencilDescriptor()
-        descriptor.isDepthWriteEnabled = false
-        let frontFaceStencil = MTLStencilDescriptor()
-        frontFaceStencil.stencilCompareFunction = .lessEqual
-        frontFaceStencil.stencilFailureOperation = .keep
-        frontFaceStencil.depthFailureOperation = .keep
-        frontFaceStencil.depthStencilPassOperation = .keep
-        descriptor.frontFaceStencil = frontFaceStencil
-        return RHI.device.makeDepthStencilState(descriptor: descriptor)
-    }
-    
-    static func buildSkyboxDepthStencilState() -> MTLDepthStencilState? {
-        let descriptor = MTLDepthStencilDescriptor()
-        descriptor.depthCompareFunction = .less
-        descriptor.isDepthWriteEnabled = false
-        let backFaceStencil = MTLStencilDescriptor()
-        backFaceStencil.stencilCompareFunction = .equal
-        backFaceStencil.stencilFailureOperation = .keep
-        backFaceStencil.depthFailureOperation = .keep
-        backFaceStencil.depthStencilPassOperation = .incrementClamp
-        descriptor.backFaceStencil = backFaceStencil
-        return RHI.device.makeDepthStencilState(descriptor: descriptor)
-    }
     
     mutating func resize(view: MTKView, size: CGSize) {
         //将贴图类型设为memoryless
@@ -142,7 +106,7 @@ struct TiledDeferredRenderPass: RenderPass{
         // MARK: tesselation pass
         tessellationComputePass.tessellation(commandBuffer: commandBuffer, cullingResult: cullingResult)
         
-        // MARK: G-buffer pass
+        // MARK: TBDR
         let descriptor = viewCurrentRenderPassDescriptor
         descriptor.colorAttachments[0].texture = finalTexture
         descriptor.colorAttachments[0].texture?.label = "Final Texture"
