@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1BB05E4C29FD31AA00415E50 /* SubPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E4B29FD31AA00415E50 /* SubPass.swift */; };
+		1BB05E4E29FD378D00415E50 /* GBufferPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E4D29FD378D00415E50 /* GBufferPass.swift */; };
+		1BB05E5029FD461D00415E50 /* LightingPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E4F29FD461D00415E50 /* LightingPass.swift */; };
 		2305FB6329D169FA009AC3B9 /* Pawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2305FB6229D169FA009AC3B9 /* Pawn.swift */; };
 		2305FB6529D281FD009AC3B9 /* luoluo.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2305FB6429D281FD009AC3B9 /* luoluo.obj */; };
 		2305FB6729D28203009AC3B9 /* luoluo.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 2305FB6629D28203009AC3B9 /* luoluo.mtl */; };
@@ -66,6 +69,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1BB05E4B29FD31AA00415E50 /* SubPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubPass.swift; sourceTree = "<group>"; };
+		1BB05E4D29FD378D00415E50 /* GBufferPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBufferPass.swift; sourceTree = "<group>"; };
+		1BB05E4F29FD461D00415E50 /* LightingPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingPass.swift; sourceTree = "<group>"; };
 		2305FB6229D169FA009AC3B9 /* Pawn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pawn.swift; sourceTree = "<group>"; };
 		2305FB6429D281FD009AC3B9 /* luoluo.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = luoluo.obj; sourceTree = "<group>"; };
 		2305FB6629D28203009AC3B9 /* luoluo.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = luoluo.mtl; sourceTree = "<group>"; };
@@ -142,6 +148,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1BB05E4A29FD318300415E50 /* SubPass */ = {
+			isa = PBXGroup;
+			children = (
+				1BB05E4B29FD31AA00415E50 /* SubPass.swift */,
+				1BB05E4D29FD378D00415E50 /* GBufferPass.swift */,
+				1BB05E4F29FD461D00415E50 /* LightingPass.swift */,
+			);
+			path = SubPass;
+			sourceTree = "<group>";
+		};
 		2360150F299A80A300926ADB = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +259,7 @@
 		23601535299A891500926ADB /* RenderPass */ = {
 			isa = PBXGroup;
 			children = (
+				1BB05E4A29FD318300415E50 /* SubPass */,
 				2360153F299A90FA00926ADB /* TiledDeferredRenderPass.swift */,
 				23601541299A913200926ADB /* RenderPass.swift */,
 				23601569299A9AF000926ADB /* ShadowRenderPass.swift */,
@@ -495,6 +512,7 @@
 				23A36B5E29A3A3680028E92E /* ShaderType.metal in Sources */,
 				23601540299A90FA00926ADB /* TiledDeferredRenderPass.swift in Sources */,
 				2305FB6329D169FA009AC3B9 /* Pawn.swift in Sources */,
+				1BB05E5029FD461D00415E50 /* LightingPass.swift in Sources */,
 				2360158E299B1A3A00926ADB /* ContentView.swift in Sources */,
 				23A36B6C29A65C5C0028E92E /* Tessellation.metal in Sources */,
 				2360156A299A9AF000926ADB /* ShadowRenderPass.swift in Sources */,
@@ -504,6 +522,7 @@
 				23601560299A972400926ADB /* Lights.swift in Sources */,
 				2332286529AB112900169858 /* Skybox.swift in Sources */,
 				2360154E299A94FC00926ADB /* Model.swift in Sources */,
+				1BB05E4C29FD31AA00415E50 /* SubPass.swift in Sources */,
 				2360154C299A94E800926ADB /* Mesh.swift in Sources */,
 				2360155D299A96F600926ADB /* PlayerCamera.swift in Sources */,
 				2360151C299A80A300926ADB /* PoorEngineApp.swift in Sources */,
@@ -516,6 +535,7 @@
 				23601564299A97FA00926ADB /* Pipelines.swift in Sources */,
 				23601548299A946700926ADB /* Submesh.swift in Sources */,
 				23601546299A942700926ADB /* Transform.swift in Sources */,
+				1BB05E4E29FD378D00415E50 /* GBufferPass.swift in Sources */,
 				2360156F299A9BB300926ADB /* Lighting.metal in Sources */,
 				23601556299A962400926ADB /* Movement.swift in Sources */,
 				23601531299A839700926ADB /* SceneView.swift in Sources */,

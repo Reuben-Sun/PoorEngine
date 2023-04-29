@@ -11,8 +11,9 @@ struct TiledDeferredRenderPass: RenderPass{
     var label = "Tiled Deferred Render Pass"
     var descriptor: MTLRenderPassDescriptor?
     
-    var gBufferPassPSO: MTLRenderPipelineState
-    var lightingPassPSO: MTLRenderPipelineState
+    var gBufferPass: GBufferPass
+    var lightingPass: LightingPass
+    
     var terrainPassPSO: MTLRenderPipelineState
     var tessellationComputePass: TessellationComputePass
     var skyboxPassPSO: MTLRenderPipelineState
@@ -37,12 +38,7 @@ struct TiledDeferredRenderPass: RenderPass{
     var grassTexture: MTLTexture?
     
     init(view: MTKView, options: Options) {
-        gBufferPassPSO = PipelineStates.createGBufferPassPSO(
-            colorPixelFormat: view.colorPixelFormat,
-            options: options)
-        lightingPassPSO = PipelineStates.createLightingPassPSO(
-            colorPixelFormat: view.colorPixelFormat,
-            options: options)
+        
         terrainPassPSO = PipelineStates.createTerrainPSO(colorPixelFormat: view.colorPixelFormat)
         skyboxPassPSO = PipelineStates.createSkyboxPSO(colorPixelFormat: view.colorPixelFormat)
         
@@ -51,6 +47,11 @@ struct TiledDeferredRenderPass: RenderPass{
         skyboxDepthStencilState = Self.buildSkyboxDepthStencilState()
         
         tessellationComputePass = TessellationComputePass(view: view, options: options)
+        
+        gBufferPass = GBufferPass(view: view, options: options)
+        gBufferPass.depthStencilState = depthStencilState
+        lightingPass = LightingPass(view: view, options: options)
+        lightingPass.depthStencilState = lightingDepthStencilState
     }
     
     static func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -174,12 +175,12 @@ struct TiledDeferredRenderPass: RenderPass{
                     descriptor: descriptor
                 ) else { return }
         
-        drawGBufferRenderPass(
-            renderEncoder: renderEncoder,
-            cullingResult: cullingResult,
-            uniforms: uniforms,
-            params: params,
-            options: options)
+        gBufferPass.shadowTexture = shadowTexture
+        gBufferPass.draw(renderEncoder: renderEncoder,
+                         cullingResult: cullingResult,
+                         uniforms: uniforms,
+                         params: params,
+                         options: options)
         
         drawTerrainRenderPass(
             renderEncoder: renderEncoder,
@@ -195,71 +196,15 @@ struct TiledDeferredRenderPass: RenderPass{
             params: params,
             options: options)
         
-        drawLightingRenderPass(
-            renderEncoder: renderEncoder,
-            cullingResult: cullingResult,
-            uniforms: uniforms,
-            params: params,
-            options: options)
+        lightingPass.draw(renderEncoder: renderEncoder,
+                          cullingResult: cullingResult,
+                          uniforms: uniforms,
+                          params: params,
+                          options: options)
         renderEncoder.endEncoding()
     }
     
-    func drawGBufferRenderPass(
-        renderEncoder: MTLRenderCommandEncoder,
-        cullingResult: CullingResult,
-        uniforms: Uniforms,
-        params: Params,
-        options: Options
-    ) {
-        renderEncoder.pushDebugGroup("GBuffer")
-        renderEncoder.label = "G-buffer render pass"
-        renderEncoder.setDepthStencilState(depthStencilState)
-        renderEncoder.setRenderPipelineState(gBufferPassPSO)
-        renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
-        //        renderEncoder.setFrontFacing(.clockwise)
-        //        renderEncoder.setCullMode(.back)
-        
-        for model in cullingResult.models {
-            model.render(
-                encoder: renderEncoder,
-                uniforms: uniforms,
-                params: params,
-                options: options)
-        }
-        renderEncoder.popDebugGroup()
-    }
     
-    func drawLightingRenderPass(
-        renderEncoder: MTLRenderCommandEncoder,
-        cullingResult: CullingResult,
-        uniforms: Uniforms,
-        params: Params,
-        options: Options
-    ) {
-        renderEncoder.pushDebugGroup("Dir Light")
-        renderEncoder.label = "Lighting render pass"
-        renderEncoder.setDepthStencilState(lightingDepthStencilState)
-        var uniforms = uniforms
-        renderEncoder.setVertexBytes(&uniforms,
-                                     length: MemoryLayout<Uniforms>.stride,
-                                     index: UniformsBuffer.index)
-        
-        // MARK: DirLight support, Point Light un support
-        renderEncoder.setRenderPipelineState(lightingPassPSO)
-        var params = params
-        params.lightCount = UInt32(cullingResult.sceneLights!.dirLights.count)
-        renderEncoder.setFragmentBytes(&params,
-                                       length: MemoryLayout<Params>.stride,
-                                       index: ParamsBuffer.index)
-        renderEncoder.setFragmentBuffer(cullingResult.sceneLights!.dirBuffer,
-                                        offset: 0,
-                                        index: LightBuffer.index)
-        renderEncoder.setFragmentTexture(cullingResult.skybox?.skyTexture, index: SkyboxTexture.index)
-        renderEncoder.drawPrimitives(type: .triangle,
-                                     vertexStart: 0,
-                                     vertexCount: 6)
-        renderEncoder.popDebugGroup()
-    }
     
     func drawTerrainRenderPass(
         renderEncoder: MTLRenderCommandEncoder,
