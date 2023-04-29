@@ -9,7 +9,9 @@ import MetalKit
 
 class GBufferPass: SubPass{
     var subPassPSO: MTLRenderPipelineState
+    
     var depthStencilState: MTLDepthStencilState?
+    
     weak var shadowTexture: MTLTexture?
     
     required init(view: MTKView, options: Options) {

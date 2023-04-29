@@ -10,6 +10,8 @@
 		1BB05E4C29FD31AA00415E50 /* SubPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E4B29FD31AA00415E50 /* SubPass.swift */; };
 		1BB05E4E29FD378D00415E50 /* GBufferPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E4D29FD378D00415E50 /* GBufferPass.swift */; };
 		1BB05E5029FD461D00415E50 /* LightingPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E4F29FD461D00415E50 /* LightingPass.swift */; };
+		1BB05E5229FD480600415E50 /* SkyboxPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E5129FD480600415E50 /* SkyboxPass.swift */; };
+		1BB05E5429FD491900415E50 /* TerrainPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E5329FD491900415E50 /* TerrainPass.swift */; };
 		2305FB6329D169FA009AC3B9 /* Pawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2305FB6229D169FA009AC3B9 /* Pawn.swift */; };
 		2305FB6529D281FD009AC3B9 /* luoluo.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2305FB6429D281FD009AC3B9 /* luoluo.obj */; };
 		2305FB6729D28203009AC3B9 /* luoluo.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 2305FB6629D28203009AC3B9 /* luoluo.mtl */; };
@@ -72,6 +74,8 @@
 		1BB05E4B29FD31AA00415E50 /* SubPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubPass.swift; sourceTree = "<group>"; };
 		1BB05E4D29FD378D00415E50 /* GBufferPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBufferPass.swift; sourceTree = "<group>"; };
 		1BB05E4F29FD461D00415E50 /* LightingPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingPass.swift; sourceTree = "<group>"; };
+		1BB05E5129FD480600415E50 /* SkyboxPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyboxPass.swift; sourceTree = "<group>"; };
+		1BB05E5329FD491900415E50 /* TerrainPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainPass.swift; sourceTree = "<group>"; };
 		2305FB6229D169FA009AC3B9 /* Pawn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pawn.swift; sourceTree = "<group>"; };
 		2305FB6429D281FD009AC3B9 /* luoluo.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = luoluo.obj; sourceTree = "<group>"; };
 		2305FB6629D28203009AC3B9 /* luoluo.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = luoluo.mtl; sourceTree = "<group>"; };
@@ -154,6 +158,8 @@
 				1BB05E4B29FD31AA00415E50 /* SubPass.swift */,
 				1BB05E4D29FD378D00415E50 /* GBufferPass.swift */,
 				1BB05E4F29FD461D00415E50 /* LightingPass.swift */,
+				1BB05E5129FD480600415E50 /* SkyboxPass.swift */,
+				1BB05E5329FD491900415E50 /* TerrainPass.swift */,
 			);
 			path = SubPass;
 			sourceTree = "<group>";
@@ -520,12 +526,14 @@
 				23601542299A913200926ADB /* RenderPass.swift in Sources */,
 				2332286729AB2B1E00169858 /* Skybox.metal in Sources */,
 				23601560299A972400926ADB /* Lights.swift in Sources */,
+				1BB05E5429FD491900415E50 /* TerrainPass.swift in Sources */,
 				2332286529AB112900169858 /* Skybox.swift in Sources */,
 				2360154E299A94FC00926ADB /* Model.swift in Sources */,
 				1BB05E4C29FD31AA00415E50 /* SubPass.swift in Sources */,
 				2360154C299A94E800926ADB /* Mesh.swift in Sources */,
 				2360155D299A96F600926ADB /* PlayerCamera.swift in Sources */,
 				2360151C299A80A300926ADB /* PoorEngineApp.swift in Sources */,
+				1BB05E5229FD480600415E50 /* SkyboxPass.swift in Sources */,
 				23601571299A9BCF00926ADB /* Sample.metal in Sources */,
 				2360155B299A96DA00926ADB /* Camera.swift in Sources */,
 				23601558299A966000926ADB /* GameScene.swift in Sources */,
