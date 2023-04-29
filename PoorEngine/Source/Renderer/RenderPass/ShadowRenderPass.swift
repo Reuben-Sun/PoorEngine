@@ -37,7 +37,7 @@ struct ShadowRenderPass: RenderPass {
         guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
             return
         }
-        renderEncoder.label = "Shadow Encoder"
+        renderEncoder.label = "Shadow"
         renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(pipelineState)
         for model in cullingResult.models {

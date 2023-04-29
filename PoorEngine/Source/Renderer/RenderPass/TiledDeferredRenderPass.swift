@@ -11,11 +11,13 @@ struct TiledDeferredRenderPass: RenderPass{
     var label = "Tiled Deferred Render Pass"
     var descriptor: MTLRenderPassDescriptor?
     
-    var gBufferPassPSO: MTLRenderPipelineState
-    var lightingPassPSO: MTLRenderPipelineState
-    var terrainPassPSO: MTLRenderPipelineState
+    var gBufferPass: GBufferPass
+    var lightingPass: LightingPass
+    var skyboxPass: SkyboxPass
+    var terrainPass: TerrainPass
+    var postProcessPass: PostProcessPass
+    
     var tessellationComputePass: TessellationComputePass
-    var skyboxPassPSO: MTLRenderPipelineState
     
     let depthStencilState: MTLDepthStencilState?
     let lightingDepthStencilState: MTLDepthStencilState?
@@ -37,59 +39,25 @@ struct TiledDeferredRenderPass: RenderPass{
     var grassTexture: MTLTexture?
     
     init(view: MTKView, options: Options) {
-        gBufferPassPSO = PipelineStates.createGBufferPassPSO(
-            colorPixelFormat: view.colorPixelFormat,
-            options: options)
-        lightingPassPSO = PipelineStates.createLightingPassPSO(
-            colorPixelFormat: view.colorPixelFormat,
-            options: options)
-        terrainPassPSO = PipelineStates.createTerrainPSO(colorPixelFormat: view.colorPixelFormat)
-        skyboxPassPSO = PipelineStates.createSkyboxPSO(colorPixelFormat: view.colorPixelFormat)
-        
-        depthStencilState = Self.buildDepthStencilState()
+        depthStencilState = Self.buildGBufferDepthStencilState()
         lightingDepthStencilState = Self.buildLightingDepthStencilState()
         skyboxDepthStencilState = Self.buildSkyboxDepthStencilState()
         
         tessellationComputePass = TessellationComputePass(view: view, options: options)
+        
+        gBufferPass = GBufferPass(view: view, options: options)
+        gBufferPass.depthStencilState = depthStencilState
+        lightingPass = LightingPass(view: view, options: options)
+        lightingPass.depthStencilState = lightingDepthStencilState
+        skyboxPass = SkyboxPass(view: view, options: options)
+        skyboxPass.depthStencilState = skyboxDepthStencilState
+        terrainPass = TerrainPass(view: view, options: options)
+        terrainPass.depthStencilState = depthStencilState
+        postProcessPass = PostProcessPass(view: view, options: options)
+        postProcessPass.depthStencilState = depthStencilState
     }
     
-    static func buildDepthStencilState() -> MTLDepthStencilState? {
-        let descriptor = MTLDepthStencilDescriptor()
-        descriptor.depthCompareFunction = .less
-        descriptor.isDepthWriteEnabled = true
-        let frontFaceStencil = MTLStencilDescriptor()
-        frontFaceStencil.stencilCompareFunction = .always
-        frontFaceStencil.stencilFailureOperation = .keep
-        frontFaceStencil.depthFailureOperation = .keep
-        frontFaceStencil.depthStencilPassOperation = .incrementClamp
-        descriptor.frontFaceStencil = frontFaceStencil
-        return RHI.device.makeDepthStencilState(descriptor: descriptor)
-    }
     
-    static func buildLightingDepthStencilState() -> MTLDepthStencilState? {
-        let descriptor = MTLDepthStencilDescriptor()
-        descriptor.isDepthWriteEnabled = false
-        let frontFaceStencil = MTLStencilDescriptor()
-        frontFaceStencil.stencilCompareFunction = .lessEqual
-        frontFaceStencil.stencilFailureOperation = .keep
-        frontFaceStencil.depthFailureOperation = .keep
-        frontFaceStencil.depthStencilPassOperation = .keep
-        descriptor.frontFaceStencil = frontFaceStencil
-        return RHI.device.makeDepthStencilState(descriptor: descriptor)
-    }
-    
-    static func buildSkyboxDepthStencilState() -> MTLDepthStencilState? {
-        let descriptor = MTLDepthStencilDescriptor()
-        descriptor.depthCompareFunction = .less
-        descriptor.isDepthWriteEnabled = false
-        let backFaceStencil = MTLStencilDescriptor()
-        backFaceStencil.stencilCompareFunction = .equal
-        backFaceStencil.stencilFailureOperation = .keep
-        backFaceStencil.depthFailureOperation = .keep
-        backFaceStencil.depthStencilPassOperation = .incrementClamp
-        descriptor.backFaceStencil = backFaceStencil
-        return RHI.device.makeDepthStencilState(descriptor: descriptor)
-    }
     
     mutating func resize(view: MTKView, size: CGSize) {
         //将贴图类型设为memoryless
@@ -141,7 +109,7 @@ struct TiledDeferredRenderPass: RenderPass{
         // MARK: tesselation pass
         tessellationComputePass.tessellation(commandBuffer: commandBuffer, cullingResult: cullingResult)
         
-        // MARK: G-buffer pass
+        // MARK: TBDR
         let descriptor = viewCurrentRenderPassDescriptor
         descriptor.colorAttachments[0].texture = finalTexture
         descriptor.colorAttachments[0].texture?.label = "Final Texture"
@@ -173,192 +141,47 @@ struct TiledDeferredRenderPass: RenderPass{
                 commandBuffer.makeRenderCommandEncoder(
                     descriptor: descriptor
                 ) else { return }
+        renderEncoder.label = "TBDR"
         
-        drawGBufferRenderPass(
-            renderEncoder: renderEncoder,
-            cullingResult: cullingResult,
-            uniforms: uniforms,
-            params: params,
-            options: options)
+        gBufferPass.shadowTexture = shadowTexture
+        gBufferPass.draw(renderEncoder: renderEncoder,
+                         cullingResult: cullingResult,
+                         uniforms: uniforms,
+                         params: params,
+                         options: options)
         
-        drawTerrainRenderPass(
-            renderEncoder: renderEncoder,
-            cullingResult: cullingResult,
-            uniforms: uniforms,
-            params: params,
-            options: options)
+        terrainPass.heightMap = heightMap
+        terrainPass.cliffTexture = cliffTexture
+        terrainPass.snowTexture = snowTexture
+        terrainPass.grassTexture = grassTexture
+        terrainPass.tessellationFactorsBuffer = tessellationComputePass.tessellationFactorsBuffer
+        terrainPass.controlPointsBuffer = tessellationComputePass.controlPointsBuffer
+        terrainPass.terrain = tessellationComputePass.terrain
+        terrainPass.patchCount = tessellationComputePass.patchCount
+        terrainPass.draw(renderEncoder: renderEncoder,
+                         cullingResult: cullingResult,
+                         uniforms: uniforms,
+                         params: params,
+                         options: options)
         
-        drawSkyboxRenderPass(
-            renderEncoder: renderEncoder,
-            cullingResult: cullingResult,
-            uniforms: uniforms,
-            params: params,
-            options: options)
+        skyboxPass.draw(renderEncoder: renderEncoder,
+                        cullingResult: cullingResult,
+                        uniforms: uniforms,
+                        params: params,
+                        options: options)
         
-        drawLightingRenderPass(
-            renderEncoder: renderEncoder,
-            cullingResult: cullingResult,
-            uniforms: uniforms,
-            params: params,
-            options: options)
+        lightingPass.draw(renderEncoder: renderEncoder,
+                          cullingResult: cullingResult,
+                          uniforms: uniforms,
+                          params: params,
+                          options: options)
+        postProcessPass.draw(renderEncoder: renderEncoder,
+                             cullingResult: cullingResult,
+                             uniforms: uniforms,
+                             params: params,
+                             options: options)
         renderEncoder.endEncoding()
     }
     
-    func drawGBufferRenderPass(
-        renderEncoder: MTLRenderCommandEncoder,
-        cullingResult: CullingResult,
-        uniforms: Uniforms,
-        params: Params,
-        options: Options
-    ) {
-        renderEncoder.pushDebugGroup("GBuffer")
-        renderEncoder.label = "G-buffer render pass"
-        renderEncoder.setDepthStencilState(depthStencilState)
-        renderEncoder.setRenderPipelineState(gBufferPassPSO)
-        renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
-        //        renderEncoder.setFrontFacing(.clockwise)
-        //        renderEncoder.setCullMode(.back)
-        
-        for model in cullingResult.models {
-            model.render(
-                encoder: renderEncoder,
-                uniforms: uniforms,
-                params: params,
-                options: options)
-        }
-        renderEncoder.popDebugGroup()
-    }
-    
-    func drawLightingRenderPass(
-        renderEncoder: MTLRenderCommandEncoder,
-        cullingResult: CullingResult,
-        uniforms: Uniforms,
-        params: Params,
-        options: Options
-    ) {
-        renderEncoder.pushDebugGroup("Dir Light")
-        renderEncoder.label = "Lighting render pass"
-        renderEncoder.setDepthStencilState(lightingDepthStencilState)
-        var uniforms = uniforms
-        renderEncoder.setVertexBytes(&uniforms,
-                                     length: MemoryLayout<Uniforms>.stride,
-                                     index: UniformsBuffer.index)
-        
-        // MARK: DirLight support, Point Light un support
-        renderEncoder.setRenderPipelineState(lightingPassPSO)
-        var params = params
-        params.lightCount = UInt32(cullingResult.sceneLights!.dirLights.count)
-        renderEncoder.setFragmentBytes(&params,
-                                       length: MemoryLayout<Params>.stride,
-                                       index: ParamsBuffer.index)
-        renderEncoder.setFragmentBuffer(cullingResult.sceneLights!.dirBuffer,
-                                        offset: 0,
-                                        index: LightBuffer.index)
-        renderEncoder.setFragmentTexture(cullingResult.skybox?.skyTexture, index: SkyboxTexture.index)
-        renderEncoder.drawPrimitives(type: .triangle,
-                                     vertexStart: 0,
-                                     vertexCount: 6)
-        renderEncoder.popDebugGroup()
-    }
-    
-    func drawTerrainRenderPass(
-        renderEncoder: MTLRenderCommandEncoder,
-        cullingResult: CullingResult,
-        uniforms: Uniforms,
-        params: Params,
-        options: Options
-    ) {
-        if cullingResult.terrainQuad == nil {
-            return
-        }
-        renderEncoder.pushDebugGroup("Terrain")
-        renderEncoder.label = "Terrain render pass"
-        renderEncoder.setDepthStencilState(depthStencilState)
-        renderEncoder.setRenderPipelineState(terrainPassPSO)
-        //        renderEncoder.setFragmentTexture(shadowTexture, index: ShadowTexture.index)
-        var uniforms = uniforms
-        uniforms.modelMatrix = cullingResult.terrainQuad!.transform.modelMatrix
-        renderEncoder.setVertexBytes(
-            &uniforms,
-            length: MemoryLayout<Uniforms>.stride,
-            index: UniformsBuffer.index)
-        
-        var params = params
-        renderEncoder.setFragmentBytes(
-            &params,
-            length: MemoryLayout<Params>.stride,
-            index: ParamsBuffer.index)
-        
-        // draw
-        renderEncoder.setTessellationFactorBuffer(tessellationComputePass.tessellationFactorsBuffer, offset: 0, instanceStride: 0)
-        
-        renderEncoder.setVertexBuffer(
-            tessellationComputePass.controlPointsBuffer,
-            offset: 0,
-            index: 0)
-        
-        if options.useHeightmap {
-            renderEncoder.setVertexTexture(heightMap, index: 0)
-        }
-        
-        var terrain = tessellationComputePass.terrain
-        renderEncoder.setVertexBytes(&terrain, length: MemoryLayout<Terrain>.stride, index: TerrainBuffer.index)
-        
-        renderEncoder.setFragmentTexture(cliffTexture, index: 1)
-        renderEncoder.setFragmentTexture(snowTexture, index: 2)
-        renderEncoder.setFragmentTexture(grassTexture, index: 3)
-        
-        // MARK: 线框debug，由于我们使用TBDR，只有一个Encoder，因此执行CS后要恢复.fill
-        renderEncoder.setTriangleFillMode(options.drawTriangle ? .fill : .lines)
-        
-        renderEncoder.drawPatches(
-            numberOfPatchControlPoints: 4,
-            patchStart: 0,
-            patchCount: tessellationComputePass.patchCount,
-            patchIndexBuffer: nil,
-            patchIndexBufferOffset: 0,
-            instanceCount: 1,
-            baseInstance: 0)
-        
-        renderEncoder.setTriangleFillMode(.fill)
-        renderEncoder.popDebugGroup()
-    }
-    
-    func drawSkyboxRenderPass(
-        renderEncoder: MTLRenderCommandEncoder,
-        cullingResult: CullingResult,
-        uniforms: Uniforms,
-        params: Params,
-        options: Options
-    ) {
-        if options.drawSkybox == false {
-            return
-        }
-        renderEncoder.pushDebugGroup("Skybox")
-        renderEncoder.label = "Skybox render pass"
-        renderEncoder.setDepthStencilState(skyboxDepthStencilState)
-        renderEncoder.setRenderPipelineState(skyboxPassPSO)
-        
-        let skybox = cullingResult.skybox
-        
-        renderEncoder.setVertexBuffer(skybox?.mesh.vertexBuffers[0].buffer,
-                                      offset: 0,
-                                      index: 0)
-        var uniforms = uniforms
-        uniforms.modelMatrix = (skybox?.transform.modelMatrix)!
-        uniforms.viewMatrix.columns.3 = [0, 0, 0, 1]
-        renderEncoder.setVertexBytes(&uniforms,
-                                     length: MemoryLayout<Uniforms>.stride,
-                                     index: UniformsBuffer.index)
-        renderEncoder.setFragmentTexture(skybox?.skyTexture, index: SkyboxTexture.index)
-        
-        let submesh = skybox?.mesh.submeshes[0]
-        renderEncoder.drawIndexedPrimitives(type: .triangle,
-                                            indexCount: submesh!.indexCount,
-                                            indexType: submesh!.indexType,
-                                            indexBuffer: submesh!.indexBuffer.buffer,
-                                            indexBufferOffset: 0)
-        renderEncoder.popDebugGroup()
-    }
 }
 
