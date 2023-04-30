@@ -14,6 +14,7 @@ class RHI: NSObject {
     
     var shadowRenderPass: ShadowRenderPass
     var tiledDeferredRenderPass: TiledDeferredRenderPass
+    var blitRenderPass: BlitRenderPass
     
     var options: Options
     
@@ -43,6 +44,7 @@ class RHI: NSObject {
         }
         shadowRenderPass = ShadowRenderPass()
         tiledDeferredRenderPass = TiledDeferredRenderPass(view: metalView, options: options)
+        blitRenderPass = BlitRenderPass(view: metalView, options: options)
         
         super.init()
         
@@ -81,7 +83,6 @@ extension RHI {
                               params: params,
                               options: options)
         //TBDR
-        tiledDeferredRenderPass.finalTexture = view.currentDrawable?.texture
         tiledDeferredRenderPass.shadowTexture = shadowRenderPass.shadowTexture
         tiledDeferredRenderPass.descriptor = descriptor
         tiledDeferredRenderPass.draw(commandBuffer: commandBuffer,
@@ -89,6 +90,14 @@ extension RHI {
                                      uniforms: uniforms,
                                      params: params,
                                      options: options)
+        
+        blitRenderPass.sourceTexture = tiledDeferredRenderPass.finalTexture
+        blitRenderPass.targetTexture = view.currentDrawable?.texture
+        blitRenderPass.draw(commandBuffer: commandBuffer,
+                            cullingResult: cullingResult,
+                            uniforms: uniforms,
+                            params: params,
+                            options: options)
         
         guard let drawable = view.currentDrawable else {
             return

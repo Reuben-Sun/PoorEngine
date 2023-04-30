@@ -164,6 +164,17 @@ enum PipelineStates {
         pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.skyboxLayout
         return createPSO(descriptor: pipelineDescriptor)
     }
+    
+    static func createBlitPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
+        let vertexFunction = RHI.library?.makeFunction(name: "vertex_quad")
+        let fragmentFunction = RHI.library?.makeFunction(name: "fragment_blit")
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.label = "Blit"
+        pipelineDescriptor.vertexFunction = vertexFunction
+        pipelineDescriptor.fragmentFunction = fragmentFunction
+        pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+        return createPSO(descriptor: pipelineDescriptor)
+    }
 }
 
 extension MTLRenderPipelineDescriptor {

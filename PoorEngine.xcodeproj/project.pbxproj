@@ -13,6 +13,8 @@
 		1BB05E5229FD480600415E50 /* SkyboxPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E5129FD480600415E50 /* SkyboxPass.swift */; };
 		1BB05E5429FD491900415E50 /* TerrainPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E5329FD491900415E50 /* TerrainPass.swift */; };
 		1BB05E5629FD583D00415E50 /* PostProcessPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E5529FD583D00415E50 /* PostProcessPass.swift */; };
+		1BB05E5829FE56B200415E50 /* BlitRenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E5729FE56B200415E50 /* BlitRenderPass.swift */; };
+		1BB05E5A29FE59AC00415E50 /* Blit.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1BB05E5929FE59AC00415E50 /* Blit.metal */; };
 		2305FB6329D169FA009AC3B9 /* Pawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2305FB6229D169FA009AC3B9 /* Pawn.swift */; };
 		2305FB6529D281FD009AC3B9 /* luoluo.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2305FB6429D281FD009AC3B9 /* luoluo.obj */; };
 		2305FB6729D28203009AC3B9 /* luoluo.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 2305FB6629D28203009AC3B9 /* luoluo.mtl */; };
@@ -77,6 +79,8 @@
 		1BB05E5129FD480600415E50 /* SkyboxPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyboxPass.swift; sourceTree = "<group>"; };
 		1BB05E5329FD491900415E50 /* TerrainPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrainPass.swift; sourceTree = "<group>"; };
 		1BB05E5529FD583D00415E50 /* PostProcessPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProcessPass.swift; sourceTree = "<group>"; };
+		1BB05E5729FE56B200415E50 /* BlitRenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlitRenderPass.swift; sourceTree = "<group>"; };
+		1BB05E5929FE59AC00415E50 /* Blit.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Blit.metal; sourceTree = "<group>"; };
 		2305FB6229D169FA009AC3B9 /* Pawn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pawn.swift; sourceTree = "<group>"; };
 		2305FB6429D281FD009AC3B9 /* luoluo.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = luoluo.obj; sourceTree = "<group>"; };
 		2305FB6629D28203009AC3B9 /* luoluo.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = luoluo.mtl; sourceTree = "<group>"; };
@@ -217,6 +221,7 @@
 				23A36B6B29A65C5C0028E92E /* Tessellation.metal */,
 				2332285E29AA4ADF00169858 /* PostProcess.metal */,
 				2332286629AB2B1E00169858 /* Skybox.metal */,
+				1BB05E5929FE59AC00415E50 /* Blit.metal */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				2360153F299A90FA00926ADB /* TiledDeferredRenderPass.swift */,
 				23601541299A913200926ADB /* RenderPass.swift */,
 				23601569299A9AF000926ADB /* ShadowRenderPass.swift */,
+				1BB05E5729FE56B200415E50 /* BlitRenderPass.swift */,
 			);
 			path = RenderPass;
 			sourceTree = "<group>";
@@ -507,6 +513,7 @@
 				2360151E299A80A300926ADB /* MainView.swift in Sources */,
 				23601568299A99E900926ADB /* Options.swift in Sources */,
 				23A36B6929A656760028E92E /* TessellationComputePass.swift in Sources */,
+				1BB05E5829FE56B200415E50 /* BlitRenderPass.swift in Sources */,
 				23601562299A974900926ADB /* ShadowCamera.swift in Sources */,
 				23601554299A960600926ADB /* InputController.swift in Sources */,
 				1BB05E5629FD583D00415E50 /* PostProcessPass.swift in Sources */,
@@ -535,6 +542,7 @@
 				2360151C299A80A300926ADB /* PoorEngineApp.swift in Sources */,
 				1BB05E5229FD480600415E50 /* SkyboxPass.swift in Sources */,
 				23601571299A9BCF00926ADB /* Sample.metal in Sources */,
+				1BB05E5A29FE59AC00415E50 /* Blit.metal in Sources */,
 				2360155B299A96DA00926ADB /* Camera.swift in Sources */,
 				23601558299A966000926ADB /* GameScene.swift in Sources */,
 				23A36B6E29A727920028E92E /* DrawModel.swift in Sources */,
