@@ -93,7 +93,7 @@ struct TiledDeferredRenderPass: RenderPass{
             storageMode: .shared)
         
         do {
-            heightMap = try TextureController.loadTexture(filename: "mountain")
+//            heightMap = try TextureController.loadTexture(filename: "mountain")
             cliffTexture = try TextureController.loadTexture(filename: "cliff-color")
             snowTexture = try TextureController.loadTexture(filename: "snow-color")
             grassTexture = try TextureController.loadTexture(filename: "grass-color")
