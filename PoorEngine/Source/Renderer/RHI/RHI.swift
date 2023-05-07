@@ -15,6 +15,7 @@ class RHI: NSObject {
     var shadowRenderPass: ShadowRenderPass
     var tiledDeferredRenderPass: TiledDeferredRenderPass
     var blitRenderPass: BlitRenderPass
+    var heightmapRenderPass: HeightmapRenderPass
     
     var options: Options
     
@@ -45,6 +46,7 @@ class RHI: NSObject {
         shadowRenderPass = ShadowRenderPass()
         tiledDeferredRenderPass = TiledDeferredRenderPass(view: metalView, options: options)
         blitRenderPass = BlitRenderPass(view: metalView, options: options)
+        heightmapRenderPass = HeightmapRenderPass(view: metalView, options: options)
         
         super.init()
         
@@ -82,6 +84,13 @@ extension RHI {
                               uniforms: uniforms,
                               params: params,
                               options: options)
+        
+        heightmapRenderPass.draw(commandBuffer: commandBuffer,
+                                 cullingResult: cullingResult,
+                                 uniforms: uniforms,
+                                 params: params,
+                                 options: options)
+        
         //TBDR
         tiledDeferredRenderPass.shadowTexture = shadowRenderPass.shadowTexture
         tiledDeferredRenderPass.descriptor = descriptor

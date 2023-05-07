@@ -184,7 +184,7 @@ enum PipelineStates {
         pipelineDescriptor.label = "Heightmap"
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
-        pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+        pipelineDescriptor.colorAttachments[0].pixelFormat = .rgba16Float
         return createPSO(descriptor: pipelineDescriptor)
     }
 }
