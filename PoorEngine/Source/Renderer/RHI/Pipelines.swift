@@ -175,6 +175,18 @@ enum PipelineStates {
         pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
         return createPSO(descriptor: pipelineDescriptor)
     }
+    
+    static func createHeightmapPassPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
+        let vertexFunction = RHI.library?.makeFunction(name: "vertex_quad")
+        let fragment = "fragment_heightmap"
+        let fragmentFunction =  RHI.library?.makeFunction(name: fragment)
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.label = "Heightmap"
+        pipelineDescriptor.vertexFunction = vertexFunction
+        pipelineDescriptor.fragmentFunction = fragmentFunction
+        pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+        return createPSO(descriptor: pipelineDescriptor)
+    }
 }
 
 extension MTLRenderPipelineDescriptor {
