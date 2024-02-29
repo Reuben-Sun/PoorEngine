@@ -1,6 +1,12 @@
 # PoorEngine
 基于Metal的小引擎
 
+### 效果
+
+![demo](Doc/demo.png)
+
+![terrain](Doc/terrain.png)
+
 ### 开发清单
 
 - [x] TBDR
